@@ -1,0 +1,14 @@
+.container-text {
+  text-align: left;
+}
+
+@media (max-width: 1499px) {
+  .container-text {
+    text-align: center;
+  }
+
+  .container-text button {
+    margin: auto;
+    margin-top: 50px;
+  }
+}
