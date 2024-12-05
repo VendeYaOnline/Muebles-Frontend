@@ -6,13 +6,12 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <div>
-      {/* Barra de navegación */}
       <nav className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
+          <div className="flex justify-between items-center h-16">
             <div className="flex">
-              <div className="flex-shrink-0 flex items-center">
-                <span className="text-2xl font-bold text-gray-800">MEM</span>
+              <div className="flex-shrink-0 flex items-center bg-indigo-600 w-[80px] h-[40px] rounded-full justify-center">
+                <span className="text-lg font-bold text-white">MEM</span>
               </div>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
@@ -30,10 +29,6 @@ const NavBar = () => {
               </a>
             </div>
             <div className="hidden sm:flex sm:items-center sm:space-x-4">
-              <Button variant="ghost" size="icon">
-                <Search className="h-5 w-5" />
-                <span className="sr-only">Buscar</span>
-              </Button>
               <Button variant="ghost" size="icon">
                 <ShoppingCart className="h-5 w-5" />
                 <span className="sr-only">Carrito</span>
@@ -59,7 +54,7 @@ const NavBar = () => {
 
       {/* Menú móvil */}
       {isMenuOpen && (
-        <div className="sm:hidden">
+        <div className="sm:hidden absolute z-30 bg-white w-full border-t-2">
           <div className="pt-2 pb-3 space-y-1">
             <a
               href="#"
