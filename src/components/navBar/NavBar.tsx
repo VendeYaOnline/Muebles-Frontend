@@ -1,9 +1,15 @@
-import { Menu, Search, ShoppingCart, X } from "lucide-react";
+"use client";
+
+import { Menu, ShoppingCart, X } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import ActiveLink from "../active-link/ActiveLink";
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+  console.log("pathname", pathname);
   return (
     <div>
       <nav className="bg-white shadow-md">
@@ -15,18 +21,37 @@ const NavBar = () => {
               </div>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
-              <a href="#" className="text-gray-500 hover:text-gray-900">
+              <ActiveLink
+                href="/"
+                activeClassName="text-indigo-600"
+                className="text-gray-500"
+              >
                 Inicio
-              </a>
-              <a href="#" className="text-gray-500 hover:text-gray-900">
+              </ActiveLink>
+
+              <ActiveLink
+                href="/products"
+                activeClassName="text-indigo-600"
+                className="text-gray-500"
+              >
                 Productos
-              </a>
-              <a href="#" className="text-gray-500 hover:text-gray-900">
+              </ActiveLink>
+
+              <ActiveLink
+                href="/offers"
+                activeClassName="text-indigo-600"
+                className="text-gray-500"
+              >
                 Ofertas
-              </a>
-              <a href="#" className="text-gray-500 hover:text-gray-900">
+              </ActiveLink>
+
+              <ActiveLink
+                href="/contact"
+                activeClassName="text-indigo-600"
+                className="text-gray-500"
+              >
                 Contacto
-              </a>
+              </ActiveLink>
             </div>
             <div className="hidden sm:flex sm:items-center sm:space-x-4">
               <Button variant="ghost" size="icon">
