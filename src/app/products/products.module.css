@@ -1,0 +1,9 @@
+.container{
+    background-color: orange;
+    display: flex;
+    width: 100%;
+    margin: auto;
+    margin-top: 100px;
+    padding: 20px;
+    gap: 20px;
+}
