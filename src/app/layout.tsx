@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Provider from "./provider";
 import "./globals.css";
-import { NavBar } from "@/components";
+import { Footer, NavBar } from "@/components";
 
 const fontLight = localFont({
   src: "./fonts/Poppins-Light.ttf",
@@ -33,9 +33,10 @@ export default function RootLayout({
       <Provider>
         <body
           className={`${fontLight.variable} ${fontRegular.variable} ${fontSemiBold.variable} antialiased`}
-          >
-          <NavBar/>
+        >
+          <NavBar />
           {children}
+          <Footer />
         </body>
       </Provider>
     </html>

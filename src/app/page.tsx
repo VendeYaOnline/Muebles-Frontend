@@ -4,7 +4,6 @@ import {
   CategoriesGrid,
   Category,
   FeaturedProducts,
-  Footer,
   Services,
 } from "@/components";
 
@@ -16,7 +15,6 @@ export default function TiendaElegante() {
       <Category />
       <CategoriesGrid />
       <FeaturedProducts />
-      <Footer />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import Footer from "./footer/Footer";
 import ActiveLink from "./active-link/ActiveLink";
 import CategoriesGrid from "./categories-grid/CategoriesGrid";
 import Services from "./services/Services";
+import Pagination from "./pagination/Pagination";
 
 export {
   NavBar,
@@ -16,4 +17,5 @@ export {
   ActiveLink,
   CategoriesGrid,
   Services,
+  Pagination,
 };
