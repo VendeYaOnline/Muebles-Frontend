@@ -48,3 +48,269 @@ li {
     background-color: #f2f2f2;
   }
 }
+
+body {
+  font-family: var(--font-regular);
+}
+
+h1,
+h2,
+li {
+  font-family: var(--font-semibold);
+}
+
+li {
+  transition: 500ms ease;
+}
+
+li:hover {
+  color: #6439ff;
+}
+.warning-view {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .warning-view {
+    position: fixed;
+    background-color: white;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 40px;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .warning-view {
+    padding: 20px;
+  }
+}
+
+.burble {
+  background-color: #6256ca;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  color: white;
+  padding: 5px 10px;
+  font-size: small;
+  border: 1px solid gainsboro;
+}
+
+.burble-table {
+  background-color: #6256ca;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  color: white;
+  padding: 5px 10px;
+  font-size: 10px;
+  border: 1px solid gainsboro;
+}
+
+.container-attributes {
+  width: 150px;
+  max-width: 250px;
+  display: flex;
+  gap: 10px;
+  overflow: auto;
+  padding: 20px 10px;
+}
+
+.container-table {
+  overflow: auto;
+}
+
+.custom-datepicker-popup {
+  background-color: #fff; /* Fondo blanco */
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.custom-datepicker-popup .react-datepicker__day--selected {
+  background-color: #6439ff; /* Día seleccionado */
+  color: white;
+}
+
+.react-datepicker__month-container {
+  font-family: var(--font-regular);
+}
+
+/* SRCOLLL */
+
+.container-table::-webkit-scrollbar {
+  height: 10px;
+}
+
+.container-table::-webkit-scrollbar-track {
+  background-color: white; /* Color del fondo del scroll */
+  border-radius: 10px;
+}
+
+.container-table::-webkit-scrollbar-thumb {
+  background-color: #c5c5c9;
+  border-radius: 10px;
+  border: 3px solid #f0f0f0;
+}
+
+/* SRCOLLL */
+.container-attributes::-webkit-scrollbar {
+  height: 10px;
+}
+
+.container-attributes::-webkit-scrollbar-track {
+  background-color: white; /* Color del fondo del scroll */
+  border-radius: 10px;
+}
+
+.container-attributes::-webkit-scrollbar-thumb {
+  background-color: #c5c5c9;
+  border-radius: 10px;
+  border: 3px solid #f0f0f0;
+}
+
+.loader-mini {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #441eda;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  animation: spin 1s linear infinite;
+}
+
+.loader {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #441eda;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+.loader-2 {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #441eda;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+.loader-3 {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #441eda;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.skeleton-loader-image-product {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  border-radius: 4px;
+  animation: skeleton-loading-2 1.5s infinite;
+}
+
+.skeleton-loader-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  border-radius: 4px;
+  animation: skeleton-loading-2 1.5s infinite;
+}
+
+.skeleton-loader-image-table {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  border-radius: 4px;
+  animation: skeleton-loading-2 1.5s infinite;
+}
+
+@keyframes skeleton-loading-2 {
+  0% {
+    background-color: #f2f2f2;
+  }
+  50% {
+    background-color: #e6e6e6;
+  }
+  100% {
+    background-color: #f2f2f2;
+  }
+}
+
+/* Ocultar el input original */
+.custom-checkbox input {
+  display: none;
+}
+
+/* Estilo del contenedor */
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Estilo del "checkbox" personalizado */
+.custom-checkbox .checkmark {
+  width: 20px; /* Tamaño del cuadrado */
+  height: 20px; /* Igual que width */
+  background-color: #fff;
+  border: 2px solid #6439ff;
+  border-radius: 4px; /* Ajustar a 50% si lo quieres redondo */
+  margin-right: 10px;
+  position: relative;
+  transition: background-color 0.3s, border-color 0.3s;
+  display: inline-block;
+}
+
+/* Mostrar marca de verificación cuando está seleccionado */
+.custom-checkbox input:checked + .checkmark {
+  background-color: #6439ff;
+  border-color: #6439ff;
+}
+
+/* Estilo para el símbolo de check */
+.custom-checkbox .checkmark::after {
+  content: "";
+  width: 6px; /* Ajusta el ancho del check */
+  height: 9px; /* Ajusta la altura del check */
+  border: solid white;
+  border-width: 0 2px 2px 0; /* Forma del check */
+  position: absolute;
+  top: 3px; /* Centra verticalmente */
+  left: 5px; /* Centra horizontalmente */
+  transform: rotate(45deg); /* Rotar el check */
+  opacity: 0; /* Ocultarlo inicialmente */
+  transition: opacity 0.2s;
+}
+
+/* Mostrar el símbolo de check cuando está seleccionado */
+.custom-checkbox input:checked + .checkmark::after {
+  opacity: 1;
+}
