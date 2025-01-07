@@ -1,7 +1,6 @@
 import { useQueryFeatured } from "@/api/queries";
 import Image from "next/image";
-import { Button } from "../ui/button";
-import { Package, ShoppingCart } from "lucide-react";
+import { Package } from "lucide-react";
 
 const FeaturedProducts = () => {
   const { data, isLoading } = useQueryFeatured(1, "");

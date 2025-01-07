@@ -9,7 +9,6 @@ import ActiveLink from "../active-link/ActiveLink";
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-  console.log("pathname", pathname);
   return (
     <div>
       <nav className="bg-white shadow-md">

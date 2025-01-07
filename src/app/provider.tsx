@@ -1,6 +1,5 @@
 "use client";
 
-import { NavBar } from "@/components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactElement } from "react";
 const queryClient = new QueryClient();
