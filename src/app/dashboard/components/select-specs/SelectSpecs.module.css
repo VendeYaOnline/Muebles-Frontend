@@ -1,0 +1,21 @@
+.container-specs {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.addSpecs-active {
+  background-color: #6256ca;
+  color: white;
+  font-size: small;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.addSpecs-disabled {
+  background-color: #7350f381;
+  color: white;
+  font-size: small;
+  border-radius: 5px;
+  padding: 5px 10px;
+}

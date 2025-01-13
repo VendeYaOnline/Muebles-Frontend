@@ -1,0 +1,22 @@
+.select-color {
+  background-color: white;
+  width: 100px;
+  height: 44px;
+  cursor: pointer;
+}
+
+.add-color {
+  background-color: #6256caa9;
+  color: white;
+  font-size: small;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.add-color-active {
+  background-color: #6256ca;
+  color: white;
+  font-size: small;
+  border-radius: 5px;
+  padding: 5px 10px;
+}

@@ -1,0 +1,43 @@
+.container-modal {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(43, 41, 41, 0.541);
+  backdrop-filter: blur(10px);
+  z-index: 20;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+.form-modal {
+  width: 500px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  animation: fadeUp 500ms ease;
+}
+
+.icon-delete-image {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  z-index: 100;
+  color: #6c30f7;
+  cursor: pointer;
+}
+
+@media (max-width: 524px) {
+  .form-modal {
+    width: auto;
+    margin: 20px;
+  }
+}

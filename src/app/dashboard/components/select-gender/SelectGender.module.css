@@ -1,0 +1,77 @@
+.container-select {
+  position: relative;
+  width: 100%;
+}
+
+.select-active {
+  background-color: white;
+  border: 1px solid #6c30f7;
+  outline: none;
+  padding: 7px;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.select-disabled {
+  background-color: white;
+  border: 1px solid #7350f381;
+  outline: none;
+  padding: 7px;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.list {
+  width: 100%;
+  position: absolute;
+  max-height: 140px;
+  overflow: auto;
+  border: 1px solid #c1c1c281;
+  background-color: white;
+  margin-top: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  z-index: 100;
+  -webkit-box-shadow: 0px 4px 33px -17px rgba(141, 142, 143, 1);
+  -moz-box-shadow: 0px 4px 33px -17px rgba(141, 142, 143, 1);
+  box-shadow: 0px 4px 33px -17px rgba(141, 142, 143, 1);
+}
+
+.list span {
+  padding: 5px;
+  padding-left: 15px;
+  cursor: pointer;
+  margin: 0px 5px;
+  border-radius: 5px;
+}
+
+.list span:hover {
+  background-color: rgb(241, 242, 245);
+  color: rgb(51, 50, 50);
+}
+
+.active {
+  background-color: rgb(241, 242, 245);
+  color: rgb(51, 50, 50);
+}
+
+.list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.list::-webkit-scrollbar-track {
+  background-color: white; /* Color del fondo del scroll */
+  border-radius: 10px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: #c5c5c9;
+  border-radius: 10px;
+  border: 3px solid #f0f0f0;
+}

@@ -112,7 +112,7 @@ function Products() {
 
         {/* Product Grid */}
         {isFetching ? (
-          <div className="w-full h-[950px] flex justify-center items-center bg-white">
+          <div className="w-full h-[600px] flex justify-center items-center bg-white">
             <div className={classes.loader} />
           </div>
         ) : (

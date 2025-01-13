@@ -1,69 +1,76 @@
+"use client"
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
   return (
-    <footer className="bg-gray-800 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="text-lg font-semibold mb-4">
-              Muebles y Electrodomésticos del Meta
-            </h3>
-            <p className="text-gray-400">
-              Transformando hogares con estilo desde 2023.
-            </p>
-          </div>
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Enlaces rápidos</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Inicio
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Productos
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Ofertas
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Contacto
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Atención al cliente</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Preguntas frecuentes
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Envíos y devoluciones
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Términos y condiciones
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Política de privacidad
-                </a>
-              </li>
-            </ul>
-          </div>
-          {/*           <div>
+    pathname !== "/17312678/admin" && (
+      <footer className="bg-gray-800 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold mb-4">
+                Muebles y Electrodomésticos del Meta
+              </h3>
+              <p className="text-gray-400">
+                Transformando hogares con estilo desde 2023.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Enlaces rápidos</h4>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Inicio
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Productos
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Ofertas
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Contacto
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">
+                Atención al cliente
+              </h4>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Preguntas frecuentes
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Envíos y devoluciones
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Términos y condiciones
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Política de privacidad
+                  </a>
+                </li>
+              </ul>
+            </div>
+            {/*           <div>
             <h4 className="text-lg font-semibold mb-4">Síguenos</h4>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white">
@@ -109,21 +116,22 @@ const Footer = () => {
               </a>
             </div>
           </div> */}
+          </div>
+          <div className="mt-8 border-t border-gray-700 pt-8 text-center">
+            <p className="text-gray-400">
+              &copy; 2023 Muebles y Electrodomésticos del Meta. Todos los
+              derechos reservados.
+            </p>
+            <span className="text-xs">
+              Desarrollado por{" "}
+              <Link href="https://vendeyaonline.com/" target="_blank">
+                <strong>VendeYaOnline</strong>
+              </Link>
+            </span>
+          </div>
         </div>
-        <div className="mt-8 border-t border-gray-700 pt-8 text-center">
-          <p className="text-gray-400">
-            &copy; 2023 Muebles y Electrodomésticos del Meta. Todos los derechos
-            reservados.
-          </p>
-          <span className="text-xs">
-            Desarrollado por{" "}
-            <Link href="https://vendeyaonline.com/" target="_blank">
-              <strong>VendeYaOnline</strong>
-            </Link>
-          </span>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    )
   );
 };
 

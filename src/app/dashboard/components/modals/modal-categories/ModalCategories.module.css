@@ -1,0 +1,98 @@
+.container-modal {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(43, 41, 41, 0.541);
+  backdrop-filter: blur(10px);
+  z-index: 20;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+
+.form-modal {
+  width: 500px;
+  max-height: 600px;
+  overflow: auto;
+  margin-bottom: 30px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  animation: fadeUp 500ms ease;
+}
+
+.form-modal::-webkit-scrollbar {
+  width: 10px;
+}
+
+.form-modal::-webkit-scrollbar-track {
+  background-color: white; /* Color del fondo del scroll */
+  border-radius: 10px;
+}
+
+.form-modal::-webkit-scrollbar-thumb {
+  background-color: #c5c5c9;
+  border-radius: 10px;
+  border: 3px solid #f0f0f0;
+}
+
+@keyframes fadeUp {
+  0% {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.form-modal > h1 {
+  font-size: 20px;
+}
+
+.input {
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid rgba(182, 181, 181, 0.486);
+  padding: 10px;
+  width: 100%;
+  transition: 500ms ease;
+}
+
+.input:focus {
+  border: 1px solid #6c30f7;
+}
+
+.addSpecs-active {
+  background-color: #6256ca;
+  height: 100%;
+  color: white;
+  font-size: small;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.addSpecs-disabled {
+  background-color: #7350f381;
+  height: 100%;
+  color: white;
+  font-size: small;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+@media (max-width: 524px) {
+  .form-modal {
+    width: auto;
+    margin: 20px;
+  }
+}
