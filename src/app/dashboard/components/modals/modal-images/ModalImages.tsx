@@ -201,7 +201,8 @@ const ModalImages = ({
               <div
                 className={classes["card-option"]}
                 onClick={() => {
-                  setOptionImage(1), onClose();
+                  setOptionImage(1);
+                  onClose();
                 }}
               >
                 Computadora

@@ -5,7 +5,6 @@ import { FormEvent, MutableRefObject, useEffect, useState } from "react";
 import { Users } from "@/app/dashboard/interfaces";
 
 import {
-  useMutationUpdatedAttribute,
   useMutationUpdatedUser,
   useMutationUser,
 } from "@/app/dashboard/api/mutations";

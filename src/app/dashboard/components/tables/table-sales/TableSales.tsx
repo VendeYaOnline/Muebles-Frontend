@@ -105,7 +105,8 @@ const TableSales = ({
         active={activeModalStatus}
         idElement={idElement.current}
         onClose={() => {
-          (idElement.current = 0), setActiveModalStatus(false);
+          idElement.current = 0;
+          setActiveModalStatus(false);
         }}
         refetch={refetch}
       />
@@ -145,8 +146,8 @@ const TableSales = ({
                     size={16}
                     color="gray"
                     onClick={() => {
-                      setQuery((prev) => ({ ...prev, date: null })),
-                        (isRemoveDate.current = true);
+                      setQuery((prev) => ({ ...prev, date: null }));
+                      isRemoveDate.current = true;
                     }}
                   />
                 )}
@@ -270,8 +271,7 @@ const TableSales = ({
           <div className="border-t border-gray-200 px-6 py-4">
             {isFetching && <TableSkeleton columns={10} />}
             <p className="text-sm text-gray-500">
-              Mostrando {data?.sales.length || 0} de {data?.total || 0}{" "}
-              ventas
+              Mostrando {data?.sales.length || 0} de {data?.total || 0} ventas
             </p>
           </div>
         </div>

@@ -3,7 +3,6 @@ import Button from "../../components/button/Button";
 import classes from "./Gallery.module.css";
 import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import Image from "next/image";
 import IconDelete from "../../assets/icon-delete.png";
 
 import { useMutationImages } from "@/app/dashboard/api/mutations";

@@ -164,7 +164,7 @@ export interface ProductProduct {
   specs: string;
   reference: string;
   discount: number;
-  images: any[];
+  images: string[];
 }
 
 export type TpeValue =

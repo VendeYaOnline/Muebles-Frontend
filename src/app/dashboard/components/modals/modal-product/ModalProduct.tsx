@@ -30,7 +30,6 @@ import SelectAttribute from "../../select-attribute/SelectAttribute";
 import {
   AttributeValues,
   ProductTable,
-  Specs,
   TpeValue,
   ValuesAttributes,
 } from "@/app/dashboard/interfaces";
@@ -551,7 +550,8 @@ const ModalProduct = ({
                 <div
                   className="relative"
                   onClick={() => {
-                    setActiveModal(true), (typeImage.current = "main_image");
+                    setActiveModal(true);
+                    typeImage.current = "main_image";
                   }}
                 >
                   <span className="text-red-600 absolute right-2 top-1">*</span>
@@ -667,8 +667,8 @@ const ModalProduct = ({
               data={listAttributes}
               value={selectedAttribute}
               setValue={(value) => {
-                setSelectedAttribute(value),
-                  setValue({ valueObject: "", valueString: "" });
+                setSelectedAttribute(value);
+                setValue({ valueObject: "", valueString: "" });
               }}
               placeholder="Selecciona un atributo"
             />

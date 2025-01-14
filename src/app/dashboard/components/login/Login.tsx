@@ -25,10 +25,16 @@ const Login = () => {
 
       await verifyToken();
       setUser(JSON.parse(user));
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.message === "Network Error") {
+        toast.error("No se pudo conectar. Verifica tu conexión a internet.");
+      } else if (error?.code === "ECONNABORTED") {
+        toast.error(
+          "La conexión está tardando demasiado. Inténtalo nuevamente."
+        );
+      }
       localStorage.removeItem("token-vendeyaonline");
       localStorage.removeItem("user-vendeyaonline");
-      setUser(undefined);
     } finally {
       setIsloading(false);
     }
@@ -57,12 +63,18 @@ const Login = () => {
       } else if (error?.message === "Network Error") {
         toast.error("No se pudo conectar. Verifica tu conexión a internet.");
       } else if (error?.code === "ECONNABORTED") {
-        toast.error("La conexión está tardando demasiado. Inténtalo nuevamente.");
+        toast.error(
+          "La conexión está tardando demasiado. Inténtalo nuevamente."
+        );
       } else if (error?.response?.status) {
-        toast.error(`Error ${error.response.status}: ${error.response.statusText || "Error desconocido"}`);
+        toast.error(
+          `Error ${error.response.status}: ${
+            error.response.statusText || "Error desconocido"
+          }`
+        );
       } else {
         toast.error("Error al iniciar sesión");
-      }      
+      }
     }
   };
 

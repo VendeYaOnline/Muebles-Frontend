@@ -10,7 +10,6 @@ import {
   useMutationUpdatedCategory,
 } from "@/app/dashboard/api/mutations";
 import toast from "react-hot-toast";
-import { useQueryCategories } from "@/app/dashboard/api/queries";
 interface Props {
   refetch: VoidFunction;
   selectedItem: MutableRefObject<

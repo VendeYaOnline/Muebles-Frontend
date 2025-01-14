@@ -37,7 +37,8 @@ const Users = () => {
         selectedItem={selectedItem}
         search={search}
         onClose={() => {
-          setActiveModal(false), (selectedItem.current = undefined);
+          setActiveModal(false);
+          selectedItem.current = undefined;
         }}
       />
       <TableUsers

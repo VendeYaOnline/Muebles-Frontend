@@ -38,7 +38,8 @@ const ProductsStar = () => {
         active={activeModal}
         refetch={refetch}
         onClose={() => {
-          setActiveModal(false), (selectedItem.current = undefined);
+          setActiveModal(false);
+          selectedItem.current = undefined;
         }}
       />
       <TableProductsStar

@@ -36,7 +36,8 @@ const Categories = () => {
         active={activeModal}
         selectedItem={selectedItem}
         onClose={() => {
-          setActiveModal(false), (selectedItem.current = undefined);
+          setActiveModal(false);
+          selectedItem.current = undefined;
         }}
       />
       <TableCategories

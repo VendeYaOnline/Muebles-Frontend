@@ -52,7 +52,8 @@ export default function DropdownMenu({
                   : "text-xs w-full px-4 py-1 text-left text-gray-700 flex items-center gap-2 transition-colors"
               }
               onClick={() => {
-                setIsOpen(false), addDynamicProperty(id, item.text);
+                setIsOpen(false);
+                addDynamicProperty(id, item.text);
               }}
             >
               <span>{item.text}</span>

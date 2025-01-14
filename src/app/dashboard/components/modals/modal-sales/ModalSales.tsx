@@ -90,7 +90,7 @@ const ModalSales = ({
       });
       onClose();
       toast.success("Venta creada");
-    } catch (error) {
+    } catch {
       toast.error("Error al crear la venta");
     }
   };

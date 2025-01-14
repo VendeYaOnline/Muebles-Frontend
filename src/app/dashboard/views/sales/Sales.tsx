@@ -33,7 +33,8 @@ const Sales = () => {
         active={activeModal}
         selectedItem={selectedItem}
         onClose={() => {
-          setActiveModal(false), (selectedItem.current = undefined);
+          setActiveModal(false);
+          selectedItem.current = undefined;
         }}
       />
       <TableSales

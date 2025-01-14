@@ -4,11 +4,8 @@ import classes from "./ModalChangeStatus.module.css";
 import { CircleX } from "lucide-react";
 import toast from "react-hot-toast";
 import Button from "../../button/Button";
-import {
-  useMutationDeleteSale,
-  useMutationUpdatedSale,
-} from "@/app/dashboard/api/mutations";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useMutationUpdatedSale } from "@/app/dashboard/api/mutations";
+import { useState } from "react";
 import SelectId from "../../select-id/SelectId";
 
 interface Props {
