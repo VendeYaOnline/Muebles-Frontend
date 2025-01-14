@@ -224,14 +224,12 @@ const Gallery = () => {
                     userLogin?.role !== "viewer" && onOpen(image.Key)
                   }
                 />
-                <Image
+                <img
                   className="rounded-[5px] bg-gray-300"
                   src={image.Url}
                   width={100}
                   height={100}
                   style={{
-                    width: 100,
-                    height: "100%",
                     objectFit: "cover",
                     zIndex: 100,
                   }}

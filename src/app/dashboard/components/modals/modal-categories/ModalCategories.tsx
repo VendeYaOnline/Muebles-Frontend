@@ -46,8 +46,28 @@ const ModalCategories = ({ selectedItem, active, onClose, refetch }: Props) => {
         setValue("");
         onClose();
         toast.success("Categoría actualizada");
-      } catch (error) {
-        toast.error("Error al actualizar la categoría");
+      } catch (error: any) {
+        if (error?.response?.data?.code === "23505") {
+          toast.error("Ya existe una categoría con ese nombre");
+        } else if (error?.response?.data?.code === 403) {
+          toast.error("Acción denegada");
+        } else if (error?.message === "Network Error") {
+          toast.error(
+            "No se pudo conectar al servidor. Verifica tu conexión a internet."
+          );
+        } else if (error?.code === "ECONNABORTED") {
+          toast.error(
+            "La conexión está tardando demasiado. Inténtalo nuevamente."
+          );
+        } else if (error?.response?.status) {
+          toast.error(
+            `Error ${error.response.status}: ${
+              error.response.statusText || "Error desconocido"
+            }`
+          );
+        } else {
+          toast.error("Error al actualizar el categoría");
+        }
       }
     } else {
       try {
@@ -56,8 +76,28 @@ const ModalCategories = ({ selectedItem, active, onClose, refetch }: Props) => {
         setValue("");
         onClose();
         toast.success("Categoría creada");
-      } catch (error) {
-        toast.error("Error al crear la categoría");
+      } catch (error: any) {
+        if (error?.response?.data?.code === "23505") {
+          toast.error("Ya existe una categoría con ese nombre");
+        } else if (error?.response?.data?.code === 403) {
+          toast.error("Acción denegada");
+        } else if (error?.message === "Network Error") {
+          toast.error(
+            "No se pudo conectar al servidor. Verifica tu conexión a internet."
+          );
+        } else if (error?.code === "ECONNABORTED") {
+          toast.error(
+            "La conexión está tardando demasiado. Inténtalo nuevamente."
+          );
+        } else if (error?.response?.status) {
+          toast.error(
+            `Error ${error.response.status}: ${
+              error.response.statusText || "Error desconocido"
+            }`
+          );
+        } else {
+          toast.error("Error al crear la categoría");
+        }
       }
     }
   };

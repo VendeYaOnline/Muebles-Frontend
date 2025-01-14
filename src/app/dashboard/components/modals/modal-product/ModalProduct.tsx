@@ -580,13 +580,13 @@ const ModalProduct = ({
                   <Input
                     type="string"
                     value={valuesForm.title}
-                    maxLength={30}
+                    maxLength={40}
                     onChange={(e) => {
                       setValuesForm({ ...valuesForm, title: e.target.value });
                     }}
                   />
                   <span className="text-xs text-slate-600">
-                    {valuesForm.title.length + "/" + 30}
+                    {valuesForm.title.length + "/" + 40}
                   </span>
                 </div>
 
@@ -710,7 +710,7 @@ const ModalProduct = ({
               }
             />
             <span className="text-xs text-slate-600">
-              {valuesForm.description.length + "/" + 566}
+              {valuesForm.description.length + "/" + 570}
             </span>
           </div>
 

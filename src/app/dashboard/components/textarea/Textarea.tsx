@@ -12,7 +12,7 @@ const Textarea = ({ value, onChange }: Props) => {
       value={value}
       onChange={onChange}
       className={classes.textarea}
-      maxLength={566}
+      maxLength={570}
     />
   );
 };

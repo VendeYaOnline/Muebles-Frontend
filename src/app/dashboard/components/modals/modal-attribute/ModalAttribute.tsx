@@ -144,7 +144,6 @@ const ModalAttribute = ({
         } else {
           toast.error("Error al crear el atributo");
         }
-        
       }
     }
   };

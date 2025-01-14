@@ -17,13 +17,12 @@ export interface ProductsResponse {
   price: string;
   attributes: string;
   description: string;
-  discount_price:string
-  specs:string[]
+  discount_price: string;
+  specs: string[];
   feature: string;
-  reference:string
+  reference: string;
   discount: number;
   images: string[];
-
 }
 
 export interface ProductFind {
@@ -40,4 +39,8 @@ export interface ProductFeatured {
   grandTotal: number;
   page: number;
   totalPages: number;
+}
+
+export interface Categories {
+  categories: { id: number; name: string }[];
 }
