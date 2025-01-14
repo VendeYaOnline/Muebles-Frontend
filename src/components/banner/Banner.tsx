@@ -19,7 +19,7 @@ const Banner = () => {
               Descubre nuestra colección de muebles y electrodomésticos de alta
               calidad para crear el espacio perfecto que siempre has soñado.
             </p>
-            <Button className="mt-8 flex items-center justify-center border border-transparent text-base font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+            <Button className="mt-8 flex items-center justify-center border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 md:py-4 md:text-lg md:px-10">
               Ver catálogo
             </Button>
           </div>
