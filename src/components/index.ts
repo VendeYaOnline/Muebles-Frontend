@@ -7,12 +7,14 @@ import ActiveLink from "./active-link/ActiveLink";
 import CategoriesGrid from "./categories-grid/CategoriesGrid";
 import Services from "./services/Services";
 import Pagination from "./pagination/Pagination";
+import ProductCarousel from "./offers/Offers";
 
 export {
   NavBar,
   Banner,
   Category,
   FeaturedProducts,
+  ProductCarousel,
   Footer,
   ActiveLink,
   CategoriesGrid,

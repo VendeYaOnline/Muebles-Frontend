@@ -3,7 +3,7 @@ import {
   Banner,
   CategoriesGrid,
   Category,
-  FeaturedProducts,
+  ProductCarousel,
   Services,
 } from "@/components";
 
@@ -14,7 +14,7 @@ export default function TiendaElegante() {
       <Services />
       <Category />
       <CategoriesGrid />
-      <FeaturedProducts />
+      <ProductCarousel />
     </div>
   );
 }

@@ -7,7 +7,7 @@ import Image4 from "/public/tecnologia.webp";
 
 export default function CategoriesGrid() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 mb-16 md:text-left lg:text-left xl:text-left text-center">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 md:text-left lg:text-left xl:text-left text-center">
       <h1 className="sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl text-2xl font-bold text-primary mb-2">
         Nuestra referencias
       </h1>

@@ -8,7 +8,7 @@ const FeaturedProducts = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-16">
       {data && data.grandTotal > 0 && (
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-          Productos destacados
+          Ofertas para estrenar tu hogar
         </h2>
       )}
 
