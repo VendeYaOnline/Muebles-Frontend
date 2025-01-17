@@ -86,6 +86,14 @@ export interface AttributeFind {
   totalPages: number;
 }
 
+export interface Carousel {
+  carousels: { id: number; name: string; products: Products[] }[];
+  total: number;
+  grandTotal: number;
+  page: number;
+  totalPages: number;
+}
+
 export interface SaleFind {
   sales: SaleTable[];
   total: number;
@@ -199,8 +207,8 @@ export interface Product {
 }
 
 export interface ProductTable {
-  attributes: string;
   id: number;
+  attributes: string;
   image_product: string;
   title: string;
   price: string;

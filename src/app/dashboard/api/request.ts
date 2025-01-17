@@ -2,6 +2,7 @@ import {
   AttributeData,
   AttributeFind,
   AttributeUpdated,
+  Carousel,
   CategoriesFind,
   FeaturedProductRequest,
   ImagesFind,
@@ -43,6 +44,23 @@ export const getProducts = async (page: number, search: string = "") => {
   const result = (
     await axiosConfig.get<ProductRequest>(
       `/get-products?page=${page}&search=${search}`
+    )
+  ).data;
+
+  return result;
+};
+
+export const getProductsByCategory = async (
+  page: number,
+  search: string = "",
+  categories: { id: number; name: string }[]
+) => {
+  const categoryParams = categories
+    .map((category) => `categoryId=${category.id}`)
+    .join("&");
+  const result = (
+    await axiosConfig.get<ProductRequest>(
+      `/get-products-category?page=${page}&search=${search}&${categoryParams}`
     )
   ).data;
 
@@ -205,4 +223,36 @@ export const deleteCategory = async (idElement: number) => {
 
 export const updatedCategory = async (data: { id: number; name: string }) => {
   return axiosConfig.put(`/updated-category/${data.id}`, { name: data.name });
+};
+
+export const createCarousel = async (data: {
+  name: string;
+  idsProducts: number[];
+}) => {
+  return axiosConfig.post("/create-carousel", data);
+};
+
+export const updatedCarousel = async (data: {
+  id: number;
+  name: string;
+  idsProducts: number[];
+}) => {
+  return axiosConfig.put(`/updated-carousel/${data.id}`, data);
+};
+
+export const getCarousel = async (page: number, search: string = "") => {
+  const result = (
+    await axiosConfig.get<Carousel>(
+      `/get-carousels?page=${page}&search=${search}`
+    )
+  ).data;
+
+  return result;
+};
+
+export const deleteCarousel = async (idElement: number) => {
+  const result = (await axiosConfig.delete(`/delete-carousel/${idElement}`))
+    .data;
+
+  return result;
 };

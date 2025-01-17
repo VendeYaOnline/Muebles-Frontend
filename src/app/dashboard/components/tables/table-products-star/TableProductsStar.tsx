@@ -1,4 +1,4 @@
-import { Trash2 } from "lucide-react";
+import { BadgePercent, Trash2 } from "lucide-react";
 import {
   Dispatch,
   SetStateAction,
@@ -25,9 +25,8 @@ const headers = [
   "Título",
   "Stock",
   "Precio",
-  "Precio descuento",
+  "Precio",
   "Descuento",
-  "Descripción",
   "Referencia",
   "Atributos",
   "Imagenes",
@@ -160,6 +159,7 @@ const TableProductsStar = ({
                         <th key={index} className="px-6 py-3 text-left">
                           <div className="flex items-center gap-2 font-medium text-gray-500">
                             {header}
+                            {index === 4 && <BadgePercent size={15} />}
                             {/*   <ArrowUpDown className="h-4 w-4" /> */}
                           </div>
                         </th>
@@ -233,14 +233,6 @@ const TableProductsStar = ({
                           <td className="px-6 py-4">
                             <span className="text-gray-600">
                               {product.discount + "%"}
-                            </span>
-                          </td>
-
-                          <td className="px-6 py-4">
-                            <span className="text-gray-600">
-                              {product.description.length < 60
-                                ? product.description
-                                : product.description.slice(0, 60) + " ..."}
                             </span>
                           </td>
 

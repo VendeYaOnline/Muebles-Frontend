@@ -20,6 +20,9 @@ import {
   createCategory,
   deleteCategory,
   updatedCategory,
+  createCarousel,
+  updatedCarousel,
+  deleteCarousel,
 } from "./request";
 
 // * ATRIBUTOS
@@ -114,4 +117,16 @@ export const useMutationDeleteCategory = () => {
 
 export const useMutationUpdatedCategory = () => {
   return useMutation({ mutationFn: updatedCategory });
+};
+
+export const useMutationCarousel = () => {
+  return useMutation({ mutationFn: createCarousel });
+};
+
+export const useMutationUpdatedCarousel = () => {
+  return useMutation({ mutationFn: updatedCarousel });
+};
+
+export const useMutationDeleteCarousel = () => {
+  return useMutation({ mutationFn: deleteCarousel });
 };

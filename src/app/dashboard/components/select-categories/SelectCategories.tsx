@@ -13,6 +13,7 @@ import {
 import { useQueryCategories } from "../../api/queries";
 
 interface Props {
+  label?: string;
   categories: { id: number; name: string }[];
   setCategories: Dispatch<
     SetStateAction<
@@ -24,7 +25,7 @@ interface Props {
   >;
 }
 
-const SelectCategories = ({ categories, setCategories }: Props) => {
+const SelectCategories = ({ label, categories, setCategories }: Props) => {
   const [activeSelect, setActiveSelect] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const { data, isFetching } = useQueryCategories(currentPage, "");
@@ -83,48 +84,43 @@ const SelectCategories = ({ categories, setCategories }: Props) => {
 
   return (
     <div className={classes["container-select"]} id="select-category">
-      {isFetching ? (
-        <div className="mt-4 mb-[17px]">
-          <div className="loader-mini" />
-        </div>
-      ) : (
-        data &&
-        data.totalPages > 1 && (
-          <nav className="flex items-center gap-1 mt-2">
-            <button
-              className="p-1 rounded-md text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none"
-              onClick={handlePrevPage}
-              disabled={currentPage === 1}
-            >
-              <ArrowLeft size={13} />
-            </button>
+      {data && data.totalPages > 1 && (
+        <nav className="flex items-center gap-1 mt-2">
+          <button
+            className="p-1 rounded-md text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none"
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            <ArrowLeft size={13} />
+          </button>
 
-            {Array.from({ length: data?.totalPages || 0 }, (_, index) => (
-              <button
-                key={index}
-                className={`h-5 w-5 p-1 my-2 rounded-md justify-center items-center text-[10px] ${
-                  currentPage === index + 1
-                    ? "text-white bg-indigo-600"
-                    : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
-                }`}
-                onClick={() => setCurrentPage(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-
+          {Array.from({ length: data?.totalPages || 0 }, (_, index) => (
             <button
-              className="p-1 rounded-md text-sm font-sm text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none"
-              onClick={handleNextPage}
-              disabled={currentPage === data.totalPages}
+              key={index}
+              className={`h-5 w-5 p-1 my-2 rounded-md justify-center items-center text-[10px] ${
+                currentPage === index + 1
+                  ? "text-white bg-indigo-600"
+                  : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
+              }`}
+              onClick={() => setCurrentPage(index + 1)}
             >
-              <ArrowRight size={13} />
+              {index + 1}
             </button>
-          </nav>
-        )
+          ))}
+
+          <button
+            className="p-1 rounded-md text-sm font-sm text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none"
+            onClick={handleNextPage}
+            disabled={currentPage === data.totalPages}
+          >
+            <ArrowRight size={13} />
+          </button>
+        </nav>
       )}
 
-      <label className="my-1 block">Categorias</label>
+      <label className="my-1 block text-slate-600">
+        {label || "Categorias"}
+      </label>
       <div
         className={
           activeSelect ? classes["select-active"] : classes["select-disabled"]
@@ -132,7 +128,13 @@ const SelectCategories = ({ categories, setCategories }: Props) => {
         onClick={onChange}
       >
         <span className="text-slate-400 ml-1 flex select-none justify-between items-center">
-          Selecionar categorias
+          {isFetching ? (
+            <div className="m-[4.5px]">
+              <div className="loader-mini" />
+            </div>
+          ) : (
+            "Selecionar categorias"
+          )}
           {activeSelect ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
         </span>
       </div>

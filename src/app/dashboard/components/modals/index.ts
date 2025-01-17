@@ -12,8 +12,11 @@ import ModalDetailsSale from "./modal-details-sale/ModalDetailsSale";
 import ModalChangeStatus from "./modal-change-status/ModalChangeStatus";
 import ModalCategories from "./modal-categories/ModalCategories";
 import ModalDeleteCategory from "./modal-delete-category/ModalDeleteCategory";
+import ModalCarousel from "./modal-carousel/ModalCarousel";
+import ModalDeleteCarousel from "./modal-delete-carousel/ModalDeleteCarousel";
 export {
   ModalDeleteAttribute,
+  ModalDeleteCarousel,
   ModalCategories,
   ModalProduct,
   ModalAttribute,
@@ -25,6 +28,7 @@ export {
   ModalChangeStatus,
   ModalDeleteSale,
   ModalDetailsSale,
+  ModalCarousel,
   ModalUsers,
   ModalSales,
 };

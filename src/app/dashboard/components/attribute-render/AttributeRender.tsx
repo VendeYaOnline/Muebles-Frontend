@@ -113,7 +113,7 @@ const AttributeRender = ({ valuesAttributes, setValuesAttributes }: Props) => {
   return (
     <div className="flex flex-wrap gap-2">
       {Object.entries(valuesAttributes).flatMap(([key, values]) =>
-        values.map((item: { name: string; color: string; } & string) =>
+        values.map((item: any) =>
           attributesMapping[key as keyof typeof attributesMapping]
             ? attributesMapping[key as keyof typeof attributesMapping](item)
             : null

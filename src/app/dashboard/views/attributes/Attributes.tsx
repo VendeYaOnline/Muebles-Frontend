@@ -25,7 +25,7 @@ const Attributes = () => {
         >
           {data && data?.grandTotal >= 30
             ? "Límite alcanzado"
-            : "Crear atributo"}{" "}
+            : "Crear atributo"}
           <PencilRuler size={18} />
         </Button>
       </div>

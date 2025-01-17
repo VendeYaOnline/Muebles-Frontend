@@ -74,7 +74,7 @@ const ModalAttribute = ({
           attribute_type: type,
           value: resultValue(type) as AttributeValues,
         });
-
+        toast.success("Atributo actualizado");
         refetch();
         onClose();
         setNameAttribute("");
@@ -117,7 +117,7 @@ const ModalAttribute = ({
           attribute_type: type,
           value: resultValue(type),
         });
-
+        toast.success("Atributo creado");
         refetch();
         onClose();
         setNameAttribute("");
@@ -136,11 +136,19 @@ const ModalAttribute = ({
         } else if (error?.response?.data?.code === 403) {
           toast.error("Acción denegada");
         } else if (error?.message === "Network Error") {
-          toast.error("No se pudo conectar al servidor. Verifica tu conexión a internet.");
+          toast.error(
+            "No se pudo conectar al servidor. Verifica tu conexión a internet."
+          );
         } else if (error?.code === "ECONNABORTED") {
-          toast.error("La conexión está tardando demasiado. Inténtalo nuevamente.");
+          toast.error(
+            "La conexión está tardando demasiado. Inténtalo nuevamente."
+          );
         } else if (error?.response?.status) {
-          toast.error(`Error ${error.response.status}: ${error.response.statusText || "Error desconocido"}`);
+          toast.error(
+            `Error ${error.response.status}: ${
+              error.response.statusText || "Error desconocido"
+            }`
+          );
         } else {
           toast.error("Error al crear el atributo");
         }

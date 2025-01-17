@@ -8,9 +8,11 @@ import Gallery from "./gallery/Gallery";
 import Users from "./users/Users";
 import ProductsStar from "./products-star/ProductsStar";
 import Categories from "./categories/Categories";
+import Carousel from "./carousel/Carousel";
 export {
   Products,
   ProductsStar,
+  Carousel,
   Categories,
   Sales,
   Contact,

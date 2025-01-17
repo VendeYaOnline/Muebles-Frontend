@@ -778,7 +778,7 @@ const ModalProduct = ({
                 className="relative"
                 onClick={() => {
                   setActiveModal(true);
-                  typeImage.current = "secondary_images";
+                    (typeImage.current = "secondary_images");
                 }}
               >
                 <div className={classes["capa-2"]}>

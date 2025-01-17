@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import {
   getAttributes,
+  getCarousel,
   getCategories,
   getFeaturedProducts,
   getImages,
   getProducts,
+  getProductsByCategory,
   getSales,
   getUsers,
 } from "./request";
@@ -36,6 +38,21 @@ export const useQueryProductsSearch = (currentPage: number, search: string) => {
   return useQuery({
     queryKey: ["products-search", validPage],
     queryFn: () => getProducts(validPage, search),
+    refetchOnWindowFocus: false,
+    //staleTime: 1000 * 60 * 5,
+    enabled: currentPage > 0,
+  });
+};
+
+export const useQueryProductsSearchByCategory = (
+  currentPage: number,
+  search: string,
+  categories: { id: number; name: string }[]
+) => {
+  const validPage = currentPage > 0 ? currentPage : 1;
+  return useQuery({
+    queryKey: ["products-search-categories", validPage],
+    queryFn: () => getProductsByCategory(validPage, search, categories),
     refetchOnWindowFocus: false,
     //staleTime: 1000 * 60 * 5,
     enabled: currentPage > 0,
@@ -103,6 +120,17 @@ export const useQueryCategories = (currentPage: number, search: string) => {
   return useQuery({
     queryKey: ["categories", validPage],
     queryFn: () => getCategories(validPage, search),
+    refetchOnWindowFocus: false,
+    //staleTime: 1000 * 60 * 5,
+    enabled: currentPage > 0,
+  });
+};
+
+export const useQueryCarousel = (currentPage: number, search: string) => {
+  const validPage = currentPage > 0 ? currentPage : 1;
+  return useQuery({
+    queryKey: ["carousel", validPage],
+    queryFn: () => getCarousel(validPage, search),
     refetchOnWindowFocus: false,
     //staleTime: 1000 * 60 * 5,
     enabled: currentPage > 0,

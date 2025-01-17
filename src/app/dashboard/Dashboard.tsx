@@ -13,6 +13,7 @@ import {
   Contact,
   Banner,
   Attributes,
+  Carousel,
   Users,
   Gallery,
 } from "./views";
@@ -21,6 +22,7 @@ import { User } from "./hooks/useUser";
 enum Views {
   Sales = 1,
   ProductsStar,
+  Carousel,
   Categories,
   Products,
   Contact,
@@ -50,6 +52,8 @@ function DashBoard() {
         return <Sales />;
       case Views.ProductsStar:
         return <ProductsStar />;
+      case Views.Carousel:
+        return <Carousel />;
       case Views.Categories:
         return <Categories />;
       case Views.Products:
