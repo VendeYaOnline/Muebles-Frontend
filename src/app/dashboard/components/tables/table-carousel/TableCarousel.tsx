@@ -132,7 +132,7 @@ const TableCarousel = ({
                   value={search}
                   onChange={(e) => handleChange(e.target.value)}
                 />
-                {data && data?.total + "/" + 50}
+                {data && data?.total + "/" + 5}
               </div>
             </div>
           </div>
