@@ -1,3 +1,15 @@
+export interface CarouselResponse {
+  carousels: Carousel[];
+}
+
+export interface Carousel {
+  id:       number;
+  name:     string;
+  products: ProductsResponse[];
+}
+
+
+
 export interface ValuesAttributes {
   Talla: string[];
   Peso: string[];

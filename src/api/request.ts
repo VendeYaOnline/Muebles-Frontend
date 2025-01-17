@@ -1,4 +1,6 @@
 import {
+  Carousel,
+  CarouselResponse,
   Categories,
   ProductFeatured,
   ProductFind,
@@ -16,6 +18,12 @@ export const getFeatured = async (page: number, search: string = "") => {
   ).data;
 
   return result;
+};
+
+export const getCarousels = async () => {
+  const result = (await axiosConfig.get<CarouselResponse>("/get-carousels-store")).data;
+
+  return result.carousels;
 };
 
 export const getProductsByCategory = async (
