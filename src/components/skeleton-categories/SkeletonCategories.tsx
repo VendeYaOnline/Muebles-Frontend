@@ -11,6 +11,9 @@ const SkeletonCategories = () => {
       <div className="skeleton-loader-categories" />
       <div className="skeleton-loader-categories" />
       <div className="skeleton-loader-categories" />
+      <div className="skeleton-loader-categories" />
+      <div className="skeleton-loader-categories" />
+      <div className="skeleton-loader-categories" />
     </section>
   );
 };

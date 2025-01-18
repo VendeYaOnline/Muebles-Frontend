@@ -18,7 +18,7 @@ export default function ProductCarousel() {
   const { data } = useQueryCarousels();
   return (
     data &&
-    data?.length &&
+    data?.length ?
     data.map((carousel) => (
       <div
         key={carousel.id}
@@ -105,5 +105,7 @@ export default function ProductCarousel() {
         </div>
       </div>
     ))
+    :
+    <div className="my-10"/>
   );
 }

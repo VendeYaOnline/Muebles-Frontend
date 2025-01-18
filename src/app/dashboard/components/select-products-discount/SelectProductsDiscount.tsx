@@ -10,6 +10,7 @@ import {
 import { Check, ChevronDown, ChevronUp, CircleX } from "lucide-react";
 import { ProductRequest, Products } from "../../interfaces";
 import classes from "../StylesSelect.module.css";
+import toast from "react-hot-toast";
 
 interface Props {
   value: Products[];
@@ -60,14 +61,18 @@ const SelectProductsDiscount = ({
   }, [data, selectedItem?.current, setProducts]);
 
   const onClose = (newValue: Products) => {
-    const findProduct = value?.find((i) => i.title === newValue.title);
-    const removeProduct = value?.filter((i) => i.title !== newValue.title);
-    if (findProduct) {
-      setActiveSelect(false);
-      setValue(removeProduct);
+    if (SelectProductsDiscount.length <= 8) {
+      const findProduct = value?.find((i) => i.title === newValue.title);
+      const removeProduct = value?.filter((i) => i.title !== newValue.title);
+      if (findProduct) {
+        setActiveSelect(false);
+        setValue(removeProduct);
+      } else {
+        setActiveSelect(false);
+        setValue((prev) => [...prev, newValue]);
+      }
     } else {
-      setActiveSelect(false);
-      setValue((prev) => [...prev, newValue]);
+      toast.error("Máximo superado");
     }
   };
 

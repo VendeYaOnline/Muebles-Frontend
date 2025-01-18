@@ -211,7 +211,11 @@ const ModalCarousel = ({
           </div>
           <div className="flex flex-col gap-1">
             <label className="text-slate-600">Nombre de carrusel</label>
-            <Input value={name} onChange={(e) => setName(e.target.value)} />
+            <Input
+              maxLength={50}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
 
           <div className="flex flex-col gap-1">
