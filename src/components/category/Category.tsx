@@ -1,7 +1,14 @@
+import { useCategory } from "@/hooks";
 import { featured } from "@/utils";
 import Image from "next/image";
 
 const Category = () => {
+  const { setCategories } = useCategory();
+
+  const navigationCategory = (category: string) => {
+    setCategories([category]);
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
       <h2 className="text-2xl font-semibold text-gray-800 md:text-left lg:text-left xl:text-left text-center mb-6">
@@ -11,6 +18,7 @@ const Category = () => {
         {featured.map((category, index) => (
           <div
             key={index}
+            onClick={() => navigationCategory(category.name)}
             className="relative rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer"
           >
             <Image
@@ -19,7 +27,7 @@ const Category = () => {
               className="w-full h-48 object-cover"
             />
             <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-              <h3 className="text-white text-xl font-semibold">
+              <h3 className="text-white text-xl font-semibold select-none">
                 {category.name}
               </h3>
             </div>

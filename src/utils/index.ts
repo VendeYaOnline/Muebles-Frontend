@@ -1,7 +1,7 @@
 import Muebles from "/public/muebles.jpg";
 import Camas from "/public/camas.webp";
 import Comedores from "/public/comedores.jpg";
-import Electrodomesticos from "/public/electrodomesticos.jpg";
+import Televisores from "/public/televisores.jpeg";
 
 export const featured = [
   {
@@ -9,8 +9,8 @@ export const featured = [
     img: Muebles,
   },
   {
-    name: "Electrodomésticos",
-    img: Electrodomesticos,
+    name: "Televisores",
+    img: Televisores,
   },
   {
     name: "Camas",

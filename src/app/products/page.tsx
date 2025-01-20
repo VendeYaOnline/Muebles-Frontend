@@ -163,12 +163,13 @@ function Products() {
                       <Image
                         src={product.image_product}
                         alt={product.title}
-                        layout="fill" // Hace que la imagen ocupe todo el contenedor
-                        objectFit="contain" // Ajusta cómo encaja la imagen
-                        placeholder="blur" // Activa el efecto de "blur" al cargar
-                        blurDataURL="data:image/svg+xml;base64,<BASE_64_STRING>" // Imagen de baja resolución opcional
-                        quality={75} // Ajusta la calidad de la imagen optimizada
-                        priority={product.id === 1} // Si hay una imagen más importante, usa priority
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        fill // Reemplaza layout="fill" (usa el nuevo atributo fill)
+                        className="object-contain" // Usa Tailwind para manejar object-fit
+                        placeholder="blur" // Activa el placeholder
+                        blurDataURL="data:image/svg+xml;base64,<BASE_64_STRING>" // Opcional
+                        quality={75} // Ajusta la calidad
+                        priority={product.id === 1} // Carga imágenes prioritarias
                       />
                     </div>
 
