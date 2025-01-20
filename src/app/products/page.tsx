@@ -18,6 +18,7 @@ import {
 import classes from "./products.module.css";
 import { Pagination } from "@/components";
 import SkeletonCategories from "@/components/skeleton-categories/SkeletonCategories";
+import Image from "next/image";
 
 function Products() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -156,29 +157,28 @@ function Products() {
                 {data.products.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white rounded-lg shadow-md overflow-hidden"
+                    className="bg-white rounded-lg shadow-md overflow-hidden relative"
                   >
-                    <div className="skeleton-loader-image-product">
-                      <div className="relative h-44 overflow-hidden">
-                        <img
-                          src={product.image_product}
-                          alt={product.title}
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                          }}
-                        />
-                      </div>
-
-                      {product.discount > 0 && (
-                        <div className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 m-2 rounded-md">
-                          {product.discount}% OFF
-                        </div>
-                      )}
+                    <div className="relative h-44">
+                      <Image
+                        src={product.image_product}
+                        alt={product.title}
+                        layout="fill" // Hace que la imagen ocupe todo el contenedor
+                        objectFit="contain" // Ajusta cómo encaja la imagen
+                        placeholder="blur" // Activa el efecto de "blur" al cargar
+                        blurDataURL="data:image/svg+xml;base64,<BASE_64_STRING>" // Imagen de baja resolución opcional
+                        quality={75} // Ajusta la calidad de la imagen optimizada
+                        priority={product.id === 1} // Si hay una imagen más importante, usa priority
+                      />
                     </div>
+
+                    {product.discount > 0 && (
+                      <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 m-2 rounded-md">
+                        {product.discount}% OFF
+                      </div>
+                    )}
                     <div className="p-4">
-                      <h2 className="text-lg font-semibold mb-2 text-gray-800 h-14">
+                      <h2 className="text-lg font-semibold mb-2 text-gray-800 h-14 overflow-hidden text-ellipsis line-clamp-2">
                         {product.title}
                       </h2>
                       <div className="flex items-center mb-2">
@@ -203,8 +203,7 @@ function Products() {
                           )}
                         </div>
                       </div>
-
-                      <button className=" text-sm w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
+                      <button className="text-sm w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
                         Agregar al carrito
                       </button>
                     </div>
