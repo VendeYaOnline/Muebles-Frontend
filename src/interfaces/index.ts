@@ -3,12 +3,10 @@ export interface CarouselResponse {
 }
 
 export interface Carousel {
-  id:       number;
-  name:     string;
+  id: number;
+  name: string;
   products: ProductsResponse[];
 }
-
-
 
 export interface ValuesAttributes {
   Talla: string[];
@@ -20,6 +18,21 @@ export interface ValuesAttributes {
     name: string;
     color: string;
   }[];
+}
+
+export interface IProduct {
+  id: number;
+  image_product: string;
+  title: string;
+  price: string;
+  attributes: ValuesAttributes;
+  description: string;
+  discount_price: string;
+  specs: string[];
+  feature: string;
+  reference: string;
+  discount: number;
+  images: string[];
 }
 
 export interface ProductsResponse {

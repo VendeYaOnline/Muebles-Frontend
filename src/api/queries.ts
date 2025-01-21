@@ -4,6 +4,7 @@ import {
   getCategories,
   getProductsByCategory,
   getCarousels,
+  getProductById,
 } from "./request";
 
 export const useQueryFeatured = (currentPage: number, search: string) => {
@@ -46,6 +47,17 @@ export const useQueryCategoriesStore = () => {
   return useQuery({
     queryKey: ["categories"],
     queryFn: () => getCategories(),
+    staleTime: 1000 * 60 * 5, // Evita que los datos se vuelvan "stale" inmediatamente
+    retry: 1, // Reintenta una vez en caso de fallo
+    refetchOnWindowFocus: false, // Evita refetch automático al cambiar de pestaña
+  });
+};
+
+export const useQueryProduct = (id?: number) => {
+  return useQuery({
+    enabled: id ? true : false,
+    queryKey: ["product", id],
+    queryFn: () => getProductById(id),
     staleTime: 1000 * 60 * 5, // Evita que los datos se vuelvan "stale" inmediatamente
     retry: 1, // Reintenta una vez en caso de fallo
     refetchOnWindowFocus: false, // Evita refetch automático al cambiar de pestaña

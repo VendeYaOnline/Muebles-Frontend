@@ -8,6 +8,7 @@ import CategoriesGrid from "./categories-grid/CategoriesGrid";
 import Services from "./services/Services";
 import Pagination from "./pagination/Pagination";
 import ProductCarousel from "./offers/Offers";
+import Cant from "./cant/Cant";
 
 export {
   NavBar,
@@ -20,4 +21,5 @@ export {
   CategoriesGrid,
   Services,
   Pagination,
+  Cant,
 };

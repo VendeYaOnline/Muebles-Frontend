@@ -2,9 +2,10 @@ import {
   Carousel,
   CarouselResponse,
   Categories,
+  IProduct,
   ProductFeatured,
   ProductFind,
-  ValuesAttributes,
+  ProductsResponse,
 } from "@/interfaces";
 import { axiosConfig } from "./config";
 
@@ -46,7 +47,7 @@ export const getProductsByCategory = async (
     ...result,
     products: result.products.map((i) => ({
       ...i,
-      attributes: JSON.parse(i.attributes) as ValuesAttributes,
+      attributes: JSON.parse(i.attributes),
     })),
   };
 };
@@ -55,4 +56,15 @@ export const getCategories = async () => {
   const result = (await axiosConfig.get<Categories>("/get-categories-store"))
     .data;
   return result;
+};
+
+export const getProductById = async (id?: number) => {
+  const result = (
+    await axiosConfig.get<{product:ProductsResponse}>(`/get-product-store/${id}`)
+  ).data;
+  const product: IProduct = {
+    ...result.product,
+    attributes: JSON.parse(result.product.attributes),
+  };
+  return product;
 };

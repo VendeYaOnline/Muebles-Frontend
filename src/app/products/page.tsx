@@ -19,12 +19,14 @@ import classes from "./products.module.css";
 import { Pagination } from "@/components";
 import SkeletonCategories from "@/components/skeleton-categories/SkeletonCategories";
 import Image from "next/image";
-import { useCategory } from "@/hooks";
+import { useCategory, useProduct } from "@/hooks";
+import Link from "next/link";
 
 function Products() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
+  const { setProduct } = useProduct();
   const { categories, setCategories } = useCategory();
   const [categoryId, setCategoryId] = useState<number[]>([]);
   const { data: dataCategories, isLoading: isLoadingCategories } =
@@ -140,7 +142,7 @@ function Products() {
   );
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-8 px-4 mb-10">
       <div className="lg:hidden mb-6">
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
@@ -184,21 +186,28 @@ function Products() {
                 {data.products.map((product) => (
                   <div
                     key={product.id}
+                    onClick={() => setProduct(product)}
                     className="bg-white rounded-lg shadow-md overflow-hidden relative"
                   >
-                    <div className="relative h-44">
-                      <Image
-                        src={product.image_product}
-                        alt={product.title}
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        fill // Reemplaza layout="fill" (usa el nuevo atributo fill)
-                        className="object-contain" // Usa Tailwind para manejar object-fit
-                        placeholder="blur" // Activa el placeholder
-                        blurDataURL="data:image/svg+xml;base64,<BASE_64_STRING>" // Opcional
-                        quality={75} // Ajusta la calidad
-                        priority={product.id === 1} // Carga imágenes prioritarias
-                      />
-                    </div>
+                    <Link
+                      href={`/products/${product.title.toLowerCase()}-${
+                        product.id
+                      }`}
+                    >
+                      <div className="relative h-44">
+                        <Image
+                          src={product.image_product}
+                          alt={product.title}
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          fill // Reemplaza layout="fill" (usa el nuevo atributo fill)
+                          className="object-contain" // Usa Tailwind para manejar object-fit
+                          placeholder="blur" // Activa el placeholder
+                          blurDataURL="data:image/svg+xml;base64,<BASE_64_STRING>" // Opcional
+                          quality={75} // Ajusta la calidad
+                          priority={product.id === 1} // Carga imágenes prioritarias
+                        />
+                      </div>
+                    </Link>
 
                     {product.discount > 0 && (
                       <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 m-2 rounded-md">
