@@ -81,30 +81,41 @@ const NavBar = () => {
         {isMenuOpen && (
           <div className="sm:hidden absolute z-30 bg-white w-full border-t-2">
             <div className="pt-2 pb-3 space-y-1">
-              <a
-                href="#"
+              <ActiveLink
+                href="/"
+                onClick={() => setIsMenuOpen(false)}
+                activeClassName="text-indigo-600"
                 className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
               >
                 Inicio
-              </a>
-              <a
-                href="#"
+              </ActiveLink>
+
+              <ActiveLink
+                href="/products"
+                onClick={() => setIsMenuOpen(false)}
+                activeClassName="text-indigo-600"
                 className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
               >
                 Productos
-              </a>
-              <a
-                href="#"
+              </ActiveLink>
+
+              <ActiveLink
+                href="/offers"
+                onClick={() => setIsMenuOpen(false)}
+                activeClassName="text-indigo-600"
                 className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
               >
                 Ofertas
-              </a>
-              <a
-                href="#"
+              </ActiveLink>
+
+              <ActiveLink
+                href="/contact"
+                onClick={() => setIsMenuOpen(false)}
+                activeClassName="text-indigo-600"
                 className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50"
               >
                 Contacto
-              </a>
+              </ActiveLink>
             </div>
           </div>
         )}
