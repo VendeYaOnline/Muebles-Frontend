@@ -4,8 +4,14 @@ import Image1 from "/public/interiores.jpg";
 import Image2 from "/public/dormitorios.jpg";
 import Image3 from "/public/cocina.png";
 import Image4 from "/public/tecnologia.webp";
+import { useCategory } from "@/hooks";
 
 export default function CategoriesGrid() {
+  const { setCategories } = useCategory();
+  const navigationCategory = (category: string[]) => {
+    setCategories(category);
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 md:text-left lg:text-left xl:text-left text-center">
       <h1 className="sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl text-2xl font-bold text-primary mb-2">
@@ -18,6 +24,7 @@ export default function CategoriesGrid() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Link
           href="/products"
+          onClick={() => navigationCategory(["Comedores", "Salas"])}
           className="group relative overflow-hidden rounded-lg aspect-[4/3]"
         >
           <Image
@@ -34,6 +41,7 @@ export default function CategoriesGrid() {
 
         <Link
           href="/products"
+          onClick={() => navigationCategory(["Estufas", "Licuadoras"])}
           className="group relative overflow-hidden rounded-lg aspect-[4/3]"
         >
           <Image
@@ -50,6 +58,7 @@ export default function CategoriesGrid() {
 
         <Link
           href="/products"
+          onClick={() => navigationCategory(["Camas", "Base camas"])}
           className="group relative overflow-hidden rounded-lg aspect-[4/3]"
         >
           <Image
@@ -66,6 +75,7 @@ export default function CategoriesGrid() {
 
         <Link
           href="/products"
+          onClick={() => navigationCategory(["Portatiles", "Televisores"])}
           className="group relative overflow-hidden rounded-lg aspect-[4/3]"
         >
           <Image

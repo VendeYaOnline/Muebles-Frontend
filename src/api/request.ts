@@ -21,7 +21,9 @@ export const getFeatured = async (page: number, search: string = "") => {
 };
 
 export const getCarousels = async () => {
-  const result = (await axiosConfig.get<CarouselResponse>("/get-carousels-store")).data;
+  const result = (
+    await axiosConfig.get<CarouselResponse>("/get-carousels-store")
+  ).data;
 
   return result.carousels;
 };
@@ -29,13 +31,14 @@ export const getCarousels = async () => {
 export const getProductsByCategory = async (
   page: number,
   search: string = "",
-  categoryId: number
+  categoryId: number[]
 ) => {
+  const categoryParams = categoryId
+    .map((category) => `categoryId=${category}`)
+    .join("&");
   const result = (
     await axiosConfig.get<ProductFind>(
-      `/get-products-store?page=${page}&search=${search}&categoryId=${
-        categoryId !== 0 ? categoryId : ""
-      }`
+      `/get-products-store?page=${page}&search=${search}&${categoryParams}`
     )
   ).data;
 

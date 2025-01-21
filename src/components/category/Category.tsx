@@ -1,12 +1,17 @@
+"use client";
+
 import { useCategory } from "@/hooks";
 import { featured } from "@/utils";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Category = () => {
   const { setCategories } = useCategory();
+  const navigator = useRouter();
 
   const navigationCategory = (category: string) => {
     setCategories([category]);
+    navigator.push("/products");
   };
 
   return (

@@ -30,7 +30,7 @@ export const useQueryCarousels = () => {
 export const useQueryProductsByCategory = (
   currentPage: number,
   search: string,
-  categoryId: number
+  categoryId: number[]
 ) => {
   const validPage = currentPage > 0 ? currentPage : 1;
   return useQuery({

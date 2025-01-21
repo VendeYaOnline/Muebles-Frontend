@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   useQueryCategoriesStore,
   useQueryProductsByCategory,
@@ -19,12 +19,14 @@ import classes from "./products.module.css";
 import { Pagination } from "@/components";
 import SkeletonCategories from "@/components/skeleton-categories/SkeletonCategories";
 import Image from "next/image";
+import { useCategory } from "@/hooks";
 
 function Products() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [categoryId, setCategoryId] = useState<number>(0);
+  const { categories, setCategories } = useCategory();
+  const [categoryId, setCategoryId] = useState<number[]>([]);
   const { data: dataCategories, isLoading: isLoadingCategories } =
     useQueryCategoriesStore();
   const firstLoad = useRef(false);
@@ -34,6 +36,28 @@ function Products() {
     search,
     categoryId
   );
+  useEffect(() => {
+    if (categories.length && dataCategories?.categories.length) {
+      const category = dataCategories.categories
+        .filter((i) => categories.includes(i.name))
+        .map((b) => b.id);
+
+      if (category.length) {
+        setCategoryId(category);
+        setTimeout(() => {
+          refetch();
+        }, 500);
+      }
+    }
+  }, [categories, dataCategories]);
+
+  useEffect(() => {
+    return () => {
+      setCategories([]); // Limpia categorías al desmontar
+      setCategoryId([]); // Reinicia ID de categoría
+      refetch();
+    };
+  }, []);
 
   const handleNextPage = () => {
     if (currentPage < (data?.totalPages || 1)) {
@@ -61,8 +85,9 @@ function Products() {
   };
 
   const handleChangeCategory = (value: number) => {
-    if (categoryId === value) {
-      setCategoryId(0);
+    if (categoryId.includes(value)) {
+      const result = categoryId.filter((i) => i !== value);
+      setCategoryId(result);
       firstLoad.current = true;
 
       if (debounceRef.current) {
@@ -73,7 +98,7 @@ function Products() {
         refetch();
       }, 500);
     } else {
-      setCategoryId(value);
+      setCategoryId([value]);
       firstLoad.current = true;
 
       if (debounceRef.current) {
@@ -98,13 +123,15 @@ function Products() {
               onClick={() => handleChangeCategory(category.id)}
               variant="ghost"
               className={
-                category.id === categoryId
+                categoryId.includes(category.id)
                   ? "w-full justify-between text-teal-900 font-medium bg-gray-200"
                   : "w-full justify-start text-teal-900 font-medium hover:bg-gray-200"
               }
             >
               {category.name}
-              {category.id === categoryId && <Check color="gray" size={12} />}
+              {categoryId.includes(category.id) && (
+                <Check color="gray" size={12} />
+              )}
             </Button>
           ))}
         </nav>
