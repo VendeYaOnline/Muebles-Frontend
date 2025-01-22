@@ -2,9 +2,6 @@
 
 import Image from "next/image";
 import classes from "./product.module.css";
-import Imagen1 from "/public/cocina.png";
-import Imagen2 from "/public/cocina.png";
-import Imagen3 from "/public/cocina.png";
 import { Cant } from "@/components";
 import { useEffect, useState } from "react";
 import { useProduct } from "@/hooks";
@@ -37,8 +34,18 @@ const DetailProduct = () => {
   ) : product ? (
     <section className={classes["container-details"]}>
       <div className={classes["container-images"]}>
-        {product.images.map((image) => (
+        <Image
+          src={product.image_product}
+          width={100}
+          height={100}
+          alt="Producto"
+          className="rounded-xl cursor-pointer"
+          priority
+          onClick={() => setSelectedImage(product.image_product)}
+        />
+        {product.images.map((image, index) => (
           <Image
+            key={index}
             src={image}
             width={100}
             height={100}

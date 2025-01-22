@@ -5,15 +5,17 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import ActiveLink from "../active-link/ActiveLink";
+import { useProducts } from "@/hooks";
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { products } = useProducts();
   const pathname = usePathname();
   return (
     pathname !== "/17312678/admin" && (
       <div>
         <nav className="bg-white shadow-md">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex">
                 <div className="flex-shrink-0 flex items-center bg-indigo-600 w-[80px] h-[40px] rounded-full justify-center">
@@ -53,10 +55,13 @@ const NavBar = () => {
                   Contacto
                 </ActiveLink>
               </div>
-              <div className="hidden sm:flex sm:items-center sm:space-x-4">
+              <div className="hidden sm:flex sm:items-center sm:space-x-4 relative">
                 <Button variant="ghost" size="icon">
                   <ShoppingCart className="h-5 w-5" />
                   <span className="sr-only">Carrito</span>
+                  <div className="bg-indigo-500 h-5 w-5 rounded-full overflow-hidden text-xs text-white absolute left-5 bottom-4 flex justify-center items-center">
+                    {products.length}
+                  </div>
                 </Button>
               </div>
               <div className="flex items-center sm:hidden">

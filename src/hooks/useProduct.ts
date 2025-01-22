@@ -3,7 +3,7 @@ import { create } from "zustand";
 
 interface Product {
   product?: IProduct;
-  setProduct: (categories: IProduct) => void;
+  setProduct: (product: IProduct) => void;
 }
 
 export const useProduct = create<Product>((set) => ({

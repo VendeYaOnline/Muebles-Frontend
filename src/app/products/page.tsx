@@ -5,7 +5,14 @@ import {
   useQueryCategoriesStore,
   useQueryProductsByCategory,
 } from "@/api/queries";
-import { Search, Menu, Frown, Package, Check } from "lucide-react";
+import {
+  Search,
+  Menu,
+  Frown,
+  Package,
+  Check,
+  ShoppingCartIcon,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -19,7 +26,7 @@ import classes from "./products.module.css";
 import { Pagination } from "@/components";
 import SkeletonCategories from "@/components/skeleton-categories/SkeletonCategories";
 import Image from "next/image";
-import { useCategory, useProduct } from "@/hooks";
+import { useCategory, useProduct, useProducts } from "@/hooks";
 import Link from "next/link";
 
 function Products() {
@@ -28,6 +35,7 @@ function Products() {
   const [search, setSearch] = useState("");
   const { setProduct } = useProduct();
   const { categories, setCategories } = useCategory();
+  const { addProduct, products } = useProducts();
   const [categoryId, setCategoryId] = useState<number[]>([]);
   const { data: dataCategories, isLoading: isLoadingCategories } =
     useQueryCategoriesStore();
@@ -240,9 +248,20 @@ function Products() {
                           )}
                         </div>
                       </div>
-                      <button className="text-sm w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
-                        Agregar al carrito
-                      </button>
+
+                      {products.find((a) => a.product.id === product.id) ? (
+                        <button className="flex justify-between items-center text-sm w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
+                          Producto agregado
+                          <ShoppingCartIcon size={17} />
+                        </button>
+                      ) : (
+                        <button
+                          className="text-sm w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300"
+                          onClick={() => addProduct(product)}
+                        >
+                          Agregar al carrito
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}

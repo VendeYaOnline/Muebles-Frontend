@@ -1,3 +1,4 @@
 import { useCategory } from "./useCategory";
 import { useProduct } from "./useProduct";
-export { useCategory, useProduct };
+import { useProducts } from "./useProducts";
+export { useCategory, useProduct, useProducts };
