@@ -20,7 +20,6 @@ interface Props {
 
 const ModalDeleteAttribute = ({
   totalItems,
-  setCurrentPage,
   active,
   onClose,
   idElement,
@@ -45,7 +44,6 @@ const ModalDeleteAttribute = ({
     try {
       await mutateAsync(idElement);
       refetch();
-      setCurrentPage(calculatePageAfterDeletion(totalItems - 1, 5));
       toast.success("Atributo eliminado");
       onClose();
     } catch (error: any) {

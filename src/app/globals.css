@@ -208,7 +208,7 @@ li:hover {
   height: 40px;
   border-radius: 5px;
   background-color: #f2f2f2;
-  border-radius: 4px;
+  border-radius: 8px;
   animation: skeleton-loading-2 1.5s infinite;
 }
 

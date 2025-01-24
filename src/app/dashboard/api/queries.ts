@@ -68,8 +68,6 @@ export const useQueryImages = (
   return useQuery({
     queryKey: ["images", validPage],
     queryFn: () => getImages(validPage, search, limit),
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
     enabled: currentPage > 0,
   });
 };

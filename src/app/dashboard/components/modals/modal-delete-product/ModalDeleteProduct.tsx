@@ -19,7 +19,6 @@ interface Props {
 }
 
 const ModalDeleteProduct = ({
-  setCurrentPage,
   totalItems,
   active,
   onClose,
@@ -27,6 +26,7 @@ const ModalDeleteProduct = ({
   search,
 }: Props) => {
   const { mutateAsync, isPending } = useMutationDeleteProduct();
+  console.log("totalItems", totalItems);
   const { refetch } = useQueryProducts(
     calculatePageAfterDeletion(totalItems - 1, 10),
     search
@@ -45,7 +45,6 @@ const ModalDeleteProduct = ({
     try {
       await mutateAsync(idElement);
       refetch();
-      setCurrentPage(calculatePageAfterDeletion(totalItems - 1, 5));
       toast.success("Producto eliminado");
       onClose();
     } catch (error: any) {
