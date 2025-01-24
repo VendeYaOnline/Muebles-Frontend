@@ -361,9 +361,7 @@ const ModalProduct = ({
           );
         } else if (error?.response?.status) {
           toast.error(
-            `Error ${error.response.status}: ${
-              error.response.statusText || "Error desconocido"
-            }`
+            "La conexión está tardando demasiado. Inténtalo nuevamente."
           );
         } else {
           toast.error("Error inesperado al crear el producto");
@@ -778,7 +776,7 @@ const ModalProduct = ({
                 className="relative"
                 onClick={() => {
                   setActiveModal(true);
-                    (typeImage.current = "secondary_images");
+                  typeImage.current = "secondary_images";
                 }}
               >
                 <div className={classes["capa-2"]}>
