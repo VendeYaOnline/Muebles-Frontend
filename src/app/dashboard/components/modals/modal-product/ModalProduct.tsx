@@ -360,9 +360,7 @@ const ModalProduct = ({
             "La conexión está tardando demasiado. Inténtalo nuevamente."
           );
         } else if (error?.response?.status) {
-          toast.error(
-            "La conexión está tardando demasiado. Inténtalo nuevamente."
-          );
+          toast.error("Error al crear el producto");
         } else {
           toast.error("Error inesperado al crear el producto");
         }
