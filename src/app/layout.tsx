@@ -36,7 +36,7 @@ export default function RootLayout({
           className={`${fontLight.variable} ${fontRegular.variable} ${fontSemiBold.variable} antialiased`}
         >
           <NavBar />
-          <MenuProducts />
+        {/*   <MenuProducts /> */}
           {children}
           <Footer />
           <Toaster />
