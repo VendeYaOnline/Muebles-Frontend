@@ -8,6 +8,9 @@ import { useProduct } from "@/hooks";
 import { Card } from "@/components/ui/card";
 import { useQueryProduct } from "@/api/queries";
 import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { ArrowLeftFromLine } from "lucide-react";
+import Link from "next/link";
 
 const DetailProduct = () => {
   const [value, setValue] = useState(1);
@@ -32,62 +35,70 @@ const DetailProduct = () => {
       <div className="loader-3" />
     </Card>
   ) : product ? (
-    <section className={classes["container-details"]}>
-      <div className={classes["container-images"]}>
-        <Image
-          src={product.image_product}
-          width={100}
-          height={100}
-          alt="Producto"
-          className="rounded-xl cursor-pointer"
-          priority
-          onClick={() => setSelectedImage(product.image_product)}
-        />
-        {product.images.map((image, index) => (
+    <div className={classes["container-menu"]}>
+      <Link href="/products">
+        <button className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-md py-2 px-5">
+          <ArrowLeftFromLine size={17} />
+        </button>
+      </Link>
+
+      <section className={classes["container-details"]}>
+        <div className={classes["container-images"]}>
           <Image
-            key={index}
-            src={image}
+            src={product.image_product}
             width={100}
             height={100}
             alt="Producto"
             className="rounded-xl cursor-pointer"
             priority
-            onClick={() => setSelectedImage(image)}
+            onClick={() => setSelectedImage(product.image_product)}
           />
-        ))}
-      </div>
-      <Image
-        src={selectedImage}
-        width={650}
-        height={400}
-        alt="image-product"
-        priority
-        className={classes["image-product"]}
-      />
+          {product.images.map((image, index) => (
+            <Image
+              key={index}
+              src={image}
+              width={70}
+              height={70}
+              alt="Producto"
+              className="rounded-xl cursor-pointer"
+              priority
+              onClick={() => setSelectedImage(image)}
+            />
+          ))}
+        </div>
+        <Image
+          src={selectedImage}
+          width={650}
+          height={400}
+          alt="image-product"
+          priority
+          className={classes["image-product"]}
+        />
 
-      <div className={classes["container-info"]}>
-        <h1>{product.title}</h1>
-        <span>{product.reference}</span>
-        <h2 className="text-xl">{product.price}</h2>
+        <div className={classes["container-info"]}>
+          <h1>{product.title}</h1>
+          <span>{product.reference}</span>
+          <h2 className="text-xl">{product.price}</h2>
 
-        {product.attributes.Color.length > 0 && (
-          <>
-            <h3>Colores</h3>
-            <div className={classes["container-colors"]}>
-              <div className={classes.color} />
-              <div className={classes.color} />
-              <div className={classes.color} />
-            </div>
-          </>
-        )}
+          {product.attributes.Color.length > 0 && (
+            <>
+              <h3>Colores</h3>
+              <div className={classes["container-colors"]}>
+                <div className={classes.color} />
+                <div className={classes.color} />
+                <div className={classes.color} />
+              </div>
+            </>
+          )}
 
-        <p className="mt-5">{product.description}</p>
-        <Cant value={value} setValue={setValue} />
-        <button className="text-md w-full bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
-          Agregar al carrito
-        </button>
-      </div>
-    </section>
+          <p className="mt-5">{product.description}</p>
+          <Cant value={value} setValue={setValue} />
+          <button className="mt-5 text-md w-full bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
+            Agregar al carrito
+          </button>
+        </div>
+      </section>
+    </div>
   ) : (
     <Card className="text-center p-5 w-[60%] h-[500px] flex justify-center items-center m-auto mt-[170px] mb-[170px]">
       <h1 className="text-xl sm:text-3xl">
