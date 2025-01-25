@@ -2,20 +2,20 @@
 
 import Image from "next/image";
 import classes from "./product.module.css";
-import { Cant } from "@/components";
 import { useEffect, useState } from "react";
-import { useProduct } from "@/hooks";
+import { useProduct, useProducts } from "@/hooks";
 import { Card } from "@/components/ui/card";
 import { useQueryProduct } from "@/api/queries";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { ArrowLeftFromLine } from "lucide-react";
+import { ArrowLeftFromLine, ShoppingCartIcon } from "lucide-react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 const DetailProduct = () => {
-  const [value, setValue] = useState(1);
   const pathname = usePathname();
   const { product, setProduct } = useProduct();
+  const [selectColor, setSelectColor] = useState("");
+  const { addProduct, products } = useProducts();
   const { data, isLoading } = useQueryProduct(
     product ? undefined : Number(pathname.split("-").pop())
   );
@@ -29,6 +29,14 @@ const DetailProduct = () => {
       setSelectedImage(data.image_product);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (product) {
+      setSelectColor(
+        product.attributes.Color.length ? product.attributes.Color[0].color : ""
+      );
+    }
+  }, [product]);
 
   return isLoading ? (
     <Card className="text-center p-5 w-[60%] h-[500px] flex justify-center items-center m-auto mt-[170px] mb-[170px]">
@@ -84,18 +92,42 @@ const DetailProduct = () => {
             <>
               <h3>Colores</h3>
               <div className={classes["container-colors"]}>
-                <div className={classes.color} />
-                <div className={classes.color} />
-                <div className={classes.color} />
+                {product.attributes.Color.map(({ color }, index) => (
+                  <div
+                    key={index}
+                    className={classes.color}
+                    onClick={() => setSelectColor(color)}
+                    style={{
+                      backgroundColor: color,
+                      borderWidth: color === selectColor ? 2 : 0,
+                    }}
+                  />
+                ))}
               </div>
             </>
           )}
 
           <p className="mt-5">{product.description}</p>
-          <Cant value={value} setValue={setValue} />
-          <button className="mt-5 text-md w-full bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
-            Agregar al carrito
-          </button>
+          {/* <Cant value={value} setValue={setValue} /> */}
+
+          {products.find(
+            (a) => a.product.id === product.id && a.variant === selectColor
+          ) ? (
+            <button className="flex items-center justify-between mt-5 text-md w-full bg-indigo-400 text-white py-3 px-4 rounded-md transition duration-300">
+              Producto agregado
+              <ShoppingCartIcon size={17} />
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                addProduct(product, selectColor);
+                toast.success("Producto agregado");
+              }}
+              className="mt-5 text-md w-full bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 transition duration-300"
+            >
+              Agregar al carrito
+            </button>
+          )}
         </div>
       </section>
     </div>

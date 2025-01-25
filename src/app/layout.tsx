@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Provider from "./provider";
 import "./globals.css";
-import { Footer, NavBar } from "@/components";
+import { Footer, MenuProducts, NavBar } from "@/components";
 import { Toaster } from "react-hot-toast";
 
 const fontLight = localFont({
@@ -36,6 +36,7 @@ export default function RootLayout({
           className={`${fontLight.variable} ${fontRegular.variable} ${fontSemiBold.variable} antialiased`}
         >
           <NavBar />
+          <MenuProducts />
           {children}
           <Footer />
           <Toaster />

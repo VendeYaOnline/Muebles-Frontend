@@ -21,3 +21,16 @@ export const featured = [
     img: Comedores,
   },
 ];
+
+export const calculateTotal = (price: string, amount: number) => {
+  // Extraer el valor numérico del string y eliminar caracteres no numéricos como $ y .
+  const precioNumerico = parseFloat(price.replace(/[^\d]/g, ""));
+
+  // Multiplicar el precio por la cantidad
+  const total = precioNumerico * amount;
+
+  // Convertir de vuelta al formato original
+  const totalFormateado = `$ ${total.toLocaleString("es-CO")}`;
+
+  return totalFormateado;
+};

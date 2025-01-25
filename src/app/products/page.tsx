@@ -28,13 +28,16 @@ import SkeletonCategories from "@/components/skeleton-categories/SkeletonCategor
 import Image from "next/image";
 import { useCategory, useProduct, useProducts } from "@/hooks";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import { IProduct } from "@/interfaces";
+import { ValuesAttributes } from "../dashboard/interfaces";
 
 function Products() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   const { setProduct } = useProduct();
-  const { categories, setCategories } = useCategory();
+  const { categories } = useCategory();
   const { addProduct, products } = useProducts();
   const [categoryId, setCategoryId] = useState<number[]>([]);
   const { data: dataCategories, isLoading: isLoadingCategories } =
@@ -61,14 +64,6 @@ function Products() {
     }
   }, [categories, dataCategories]);
 
-  useEffect(() => {
-    return () => {
-      setCategories([]); // Limpia categorías al desmontar
-      setCategoryId([]); // Reinicia ID de categoría
-      refetch();
-    };
-  }, []);
-
   const handleNextPage = () => {
     if (currentPage < (data?.totalPages || 1)) {
       setCurrentPage(currentPage + 1);
@@ -79,6 +74,14 @@ function Products() {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
+  };
+
+  const addCart = (product: IProduct) => {
+    addProduct(
+      product,
+      product.attributes.Color.length ? product.attributes.Color[0].color : ""
+    );
+    toast.success("Producto agregado");
   };
 
   const handleChangeSearch = (value: string) => {
@@ -148,9 +151,9 @@ function Products() {
       )}
     </div>
   );
-
+  console.log("ss", data?.products[0].attributes as ValuesAttributes);
   return (
-    <div className="container mx-auto py-8 px-4 mb-10">
+    <div className="container mx-auto py-8 px-4 mb-10 mt-20">
       <div className="lg:hidden mb-6">
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
@@ -250,14 +253,14 @@ function Products() {
                       </div>
 
                       {products.find((a) => a.product.id === product.id) ? (
-                        <button className="flex justify-between items-center text-sm w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
+                        <button className="flex justify-between items-center text-sm w-full bg-indigo-400 text-white py-2 px-4 rounded-md transition duration-300">
                           Producto agregado
                           <ShoppingCartIcon size={17} />
                         </button>
                       ) : (
                         <button
                           className="text-sm w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300"
-                          onClick={() => addProduct(product)}
+                          onClick={() => addCart(product)}
                         >
                           Agregar al carrito
                         </button>

@@ -14,7 +14,7 @@ const NavBar = () => {
   return (
     pathname !== "/17312678/admin" && (
       <div>
-        <nav className="bg-white shadow-md">
+        <nav className="bg-white shadow-md fixed top-0 w-full z-20">
           <div className="mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex">

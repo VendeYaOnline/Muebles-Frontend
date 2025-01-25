@@ -50,7 +50,7 @@
 .color {
   width: 22px;
   height: 22px;
-  border: 2px solid rgb(214, 212, 212);
+  border-color: rgb(182, 180, 180);
   border-radius: 100%;
   cursor: pointer;
   background-color: blue;

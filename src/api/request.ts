@@ -60,7 +60,9 @@ export const getCategories = async () => {
 
 export const getProductById = async (id?: number) => {
   const result = (
-    await axiosConfig.get<{product:ProductsResponse}>(`/get-product-store/${id}`)
+    await axiosConfig.get<{ product: ProductsResponse }>(
+      `/get-product-store/${id}`
+    )
   ).data;
   const product: IProduct = {
     ...result.product,
