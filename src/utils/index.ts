@@ -2,6 +2,7 @@ import Muebles from "/public/muebles.jpg";
 import Camas from "/public/camas.webp";
 import Comedores from "/public/comedores.jpg";
 import Televisores from "/public/televisores.jpeg";
+import { IProduct } from "@/interfaces";
 
 export const featured = [
   {
@@ -33,4 +34,24 @@ export const calculateTotal = (price: string, amount: number) => {
   const totalFormateado = `$ ${total.toLocaleString("es-CO")}`;
 
   return totalFormateado;
+};
+
+interface ProductWithQuantity {
+  quantity: number;
+  product: IProduct;
+  variant: string; // Propiedad para identificar la variante, como "color".
+}
+
+export const totalSum = (products: ProductWithQuantity[]) => {
+  let total = 0;
+
+  products.forEach(({ product, quantity }) => {
+    // Extraer el valor numérico del string y eliminar caracteres no numéricos como $ y .
+    const precioNumerico = parseFloat(product.price.replace(/[^\d]/g, ""));
+
+    // Multiplicar el precio por la cantidad
+    total += precioNumerico * quantity;
+  });
+
+  return `$ ${total.toLocaleString("es-CO")}`;
 };

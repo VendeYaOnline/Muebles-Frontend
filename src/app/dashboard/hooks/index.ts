@@ -1,2 +1,3 @@
 import { useUser } from "./useUser";
-export { useUser };
+import { useCart } from "./useCart";
+export { useUser, useCart };

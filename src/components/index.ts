@@ -9,7 +9,7 @@ import Services from "./services/Services";
 import Pagination from "./pagination/Pagination";
 import ProductCarousel from "./offers/Offers";
 import Cant from "./cant/Cant";
-import MenuProducts from "./menu-products/MenuProducts";
+import Cart from "./cart/Cart";
 
 export {
   NavBar,
@@ -17,7 +17,7 @@ export {
   Category,
   FeaturedProducts,
   ProductCarousel,
-  MenuProducts,
+  Cart,
   Footer,
   ActiveLink,
   CategoriesGrid,

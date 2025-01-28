@@ -2,15 +2,28 @@
 
 import { Menu, ShoppingCart, X } from "lucide-react";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import ActiveLink from "../active-link/ActiveLink";
 import { useProducts } from "@/hooks";
+import { useCart } from "@/app/dashboard/hooks";
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { products } = useProducts();
   const pathname = usePathname();
+  const { active, setActive } = useCart();
+
+  const sumTotal = () =>
+    useMemo(() => {
+      let cant = 0;
+      products.forEach((product) => {
+        cant += product.quantity;
+      });
+
+      return cant;
+    }, [products]);
+
   return (
     pathname !== "/17312678/admin" && (
       <div>
@@ -56,15 +69,32 @@ const NavBar = () => {
                 </ActiveLink>
               </div>
               <div className="hidden sm:flex sm:items-center sm:space-x-4 relative">
-                <Button variant="ghost" size="icon">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setActive(!active)}
+                >
                   <ShoppingCart className="h-5 w-5" />
                   <span className="sr-only">Carrito</span>
                   <div className="bg-indigo-500 h-5 w-5 rounded-full overflow-hidden text-xs text-white absolute left-5 bottom-4 flex justify-center items-center">
-                    {products.length}
+                    {sumTotal()}
                   </div>
                 </Button>
               </div>
               <div className="flex items-center sm:hidden">
+                <div className="relative">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setActive(!active)}
+                  >
+                    <ShoppingCart className="h-5 w-5" />
+                    <span className="sr-only">Carrito</span>
+                    <div className="bg-indigo-500 h-5 w-5 rounded-full overflow-hidden text-xs text-white absolute left-5 bottom-4 flex justify-center items-center">
+                      {sumTotal()}
+                    </div>
+                  </Button>
+                </div>
                 <Button
                   variant="ghost"
                   size="icon"
@@ -84,7 +114,7 @@ const NavBar = () => {
 
         {/* Menú móvil */}
         {isMenuOpen && (
-          <div className="sm:hidden absolute z-30 bg-white w-full border-t-2">
+          <div className="sm:hidden absolute z-30 bg-white w-full border-b border-t-0 border-gray-300">
             <div className="pt-2 pb-3 space-y-1">
               <ActiveLink
                 href="/"

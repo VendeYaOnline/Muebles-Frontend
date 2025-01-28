@@ -203,6 +203,14 @@ li:hover {
   animation: skeleton-loading-2 1.5s infinite;
 }
 
+.skeleton-loader-image-product-details {
+  border-radius: 12px;
+  background-color: #f2f2f2;
+  border-radius: 12px;
+  animation: skeleton-loading-2 1.5s infinite;
+}
+
+
 .skeleton-loader-image-product {
   border-radius: 5px;
   background-color: #f2f2f2;
