@@ -73,7 +73,7 @@ const Cart = () => {
                               Color:
                             </span>
                             <div
-                              className={classes.color}
+                              className="color"
                               style={{ backgroundColor: variant }}
                             />
                           </div>
@@ -97,8 +97,8 @@ const Cart = () => {
           <div className="absolute bottom-20 bg-white w-full">
             <h1 className="text-xl mb-2">SUBTOTAL: {total}</h1>
             <Link href="/checkout">
-              <button className="p-2 text-lg w-[86%] box-content bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300">
-                Pagar
+              <button className="p-4 text-md w-[86%] box-content bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300">
+                Ir al carrito y pagar
               </button>
             </Link>
           </div>

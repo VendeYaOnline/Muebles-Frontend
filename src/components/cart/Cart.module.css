@@ -35,12 +35,6 @@
   border: 3px solid #f0f0f0;
 }
 
-.color {
-  width: 15px;
-  height: 15px;
-  border-radius: 100%;
-}
-
 @media (max-height: 1000px) {
   .container-scrooll {
     max-height: 70%;

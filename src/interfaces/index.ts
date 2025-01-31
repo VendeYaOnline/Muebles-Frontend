@@ -33,6 +33,12 @@ export interface IProduct {
   reference: string;
   discount: number;
   images: string[];
+  Categories: [
+    {
+      id: number;
+      name: string;
+    }
+  ];
 }
 
 export interface ProductsResponse {
