@@ -92,7 +92,6 @@ export const deleteProduct = async (idElement: number) => {
 //* IMAGES
 
 export const uploadImages = async (data: FormData) => {
-  console.log("data", data.get("images"));
   return axiosConfig.post("/upload-images", data, {
     headers: {
       "Content-Type": "multipart/form-data",

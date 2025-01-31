@@ -164,7 +164,6 @@ const ModalAttribute = ({
 
   useEffect(() => {
     if (selectedItem.current) {
-      console.log("selectedItem.current", selectedItem.current);
       setNameAttribute(selectedItem.current.attribute_name);
       setType(selectedItem.current.attribute_type);
       setValueAttribute({

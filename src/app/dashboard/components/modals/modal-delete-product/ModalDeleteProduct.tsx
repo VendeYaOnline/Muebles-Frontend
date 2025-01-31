@@ -26,7 +26,6 @@ const ModalDeleteProduct = ({
   search,
 }: Props) => {
   const { mutateAsync, isPending } = useMutationDeleteProduct();
-  console.log("totalItems", totalItems);
   const { refetch } = useQueryProducts(
     calculatePageAfterDeletion(totalItems - 1, 10),
     search

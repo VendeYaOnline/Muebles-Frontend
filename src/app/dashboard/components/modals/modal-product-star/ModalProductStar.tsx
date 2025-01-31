@@ -36,7 +36,6 @@ const ModalProductStar = ({
     try {
       e.preventDefault();
       if (selectedProduct) {
-        console.log("selectedProduct.id", selectedProduct.id);
         await mutateAsync(selectedProduct.id);
         refetchFeatured();
         onClose();
@@ -45,19 +44,29 @@ const ModalProductStar = ({
         toast.success("Producto destacado creado");
       }
     } catch (error: any) {
-      if (error?.response?.data?.message === "This product is already featured") {
+      if (
+        error?.response?.data?.message === "This product is already featured"
+      ) {
         toast.error("Este producto ya está destacado");
       } else if (error?.response?.data?.code === 403) {
         toast.error("Acción denegada");
       } else if (error?.message === "Network Error") {
-        toast.error("No se pudo conectar al servidor. Verifica tu conexión a internet.");
+        toast.error(
+          "No se pudo conectar al servidor. Verifica tu conexión a internet."
+        );
       } else if (error?.code === "ECONNABORTED") {
-        toast.error("La conexión está tardando demasiado. Inténtalo nuevamente.");
+        toast.error(
+          "La conexión está tardando demasiado. Inténtalo nuevamente."
+        );
       } else if (error?.response?.status) {
-        toast.error(`Error ${error.response.status}: ${error.response.statusText || "Error desconocido"}`);
+        toast.error(
+          `Error ${error.response.status}: ${
+            error.response.statusText || "Error desconocido"
+          }`
+        );
       } else {
         toast.error("Error inesperado al crear el producto destacado");
-      }      
+      }
     }
   };
 
