@@ -2,20 +2,22 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { initMercadoPago } from "@mercadopago/sdk-react";
 import Image from "next/image";
 import { useProducts } from "@/hooks";
-import { Trash2 } from "lucide-react";
-import { useEffect } from "react";
+import { Minus, Plus, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "../dashboard/hooks";
 import { totalSum } from "@/utils";
+import { createPreference } from "@/api/request";
 
 const Checkout = () => {
-  const { products } = useProducts();
+  const { products, addProduct, removeProduct, deleteProduct } = useProducts();
   const { setActive } = useCart();
   const navigator = useRouter();
   const total = totalSum(products);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!products.length) {
@@ -26,6 +28,25 @@ const Checkout = () => {
   useEffect(() => {
     setActive(false);
   }, []);
+
+  //* INICIA LA CONFIGURACIÓN DE MERCADO PAGO
+  initMercadoPago(process.env.NEXT_API_KEY || "", {
+    locale: "es-CO",
+  });
+
+  const handlePayment = async () => {
+    setLoading(true);
+    try {
+      const { init_point } = await createPreference(products);
+      if (init_point) {
+        window.location.href = init_point;
+      }
+    } catch (error) {
+      console.log("Error al procesar el pago", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     products.length > 0 && (
@@ -43,10 +64,10 @@ const Checkout = () => {
                         src={product.image_product}
                         alt={product.title}
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        fill // Reemplaza layout="fill" (usa el nuevo atributo fill)
-                        placeholder="blur" // Activa el placeholder
-                        blurDataURL="data:image/svg+xml;base64,<BASE_64_STRING>" // Opcional
-                        quality={75} // Ajusta la calidad
+                        fill
+                        placeholder="blur"
+                        blurDataURL="data:image/svg+xml;base64,<BASE_64_STRING>"
+                        quality={75}
                         className="object-cover rounded-md"
                       />
                     </div>
@@ -58,24 +79,41 @@ const Checkout = () => {
                             Categoria: {product.Categories[0].name}
                           </p>
 
-                          <div className="text-sm text-muted-foreground flex items-center gap-2">
-                            Color:
-                            <div
-                              className="color"
-                              style={{ backgroundColor: variant }}
-                            />
-                          </div>
-
-                          <p className="text-sm text-muted-foreground">
-                            Cantidad: {quantity}
-                          </p>
+                          {variant !== "" && (
+                            <div className="text-sm text-muted-foreground flex items-center gap-2">
+                              Color:
+                              <div
+                                className="color"
+                                style={{ backgroundColor: variant }}
+                              />
+                            </div>
+                          )}
                         </div>
                         <div className="flex items-center gap-4">
                           <span className="font-semibold">{product.price}</span>
-                          <Button variant="ghost" size="icon">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => deleteProduct(product.id, variant)}
+                          >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => removeProduct(product.id, variant)}
+                          className="rounded-full w-5 h-5 border border-gray-700 flex justify-center items-center"
+                        >
+                          <Minus size={13} />
+                        </button>
+                        <span>{quantity}</span>
+                        <button
+                          onClick={() => addProduct(product, variant)}
+                          className="rounded-full w-5 h-5 border border-gray-700 flex justify-center items-center"
+                        >
+                          <Plus size={13} />
+                        </button>
                       </div>
                     </div>
                   </CardContent>
@@ -114,8 +152,12 @@ const Checkout = () => {
                     </div>
                   </div>
                   <div className="space-y-4 pt-4">
-                    <Button className="w-full text-white bg-black hover:bg-gray-800">
-                      Pagar ahora
+                    <Button
+                      className="w-full text-white bg-indigo-600 hover:bg-indigo-700"
+                      onClick={handlePayment}
+                      disabled={loading}
+                    >
+                      {loading ? <div className="loader" /> : "Pagar ahora"}
                     </Button>
                   </div>
                 </div>
