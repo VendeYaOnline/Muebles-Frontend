@@ -30,7 +30,6 @@ import { useCategory, useProduct, useProducts } from "@/hooks";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { IProduct } from "@/interfaces";
-import { ValuesAttributes } from "../dashboard/interfaces";
 
 function Products() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

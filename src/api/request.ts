@@ -8,7 +8,6 @@ import {
   ProductsResponse,
 } from "@/interfaces";
 import { axiosConfig } from "./config";
-import { Product } from "@/app/dashboard/interfaces";
 
 // * PRODUCTOS
 
@@ -65,12 +64,13 @@ export const getProductById = async (id?: number) => {
       `/get-product-store/${id}`
     )
   ).data;
-  const product: any = {
+  const product: IProduct = {
     ...result.product,
     attributes: JSON.parse(result.product.attributes),
   };
   return product;
 };
+
 
 export const createPreference = async (products: any[]) => {
   return (

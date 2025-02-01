@@ -54,6 +54,12 @@ export interface ProductsResponse {
   reference: string;
   discount: number;
   images: string[];
+  Categories: [
+    {
+      id: number;
+      name: string;
+    }
+  ];
 }
 
 export interface ProductFind {
