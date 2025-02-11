@@ -1,29 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 
-interface DatosCompra {
-  first_name: string;
-  last_name: string;
-  phone: string;
-  department: string;
-  city: string;
-  address: string;
-  additional_info: string;
-  email: string;
-  id_number: string;
-}
 
-const SuccessPurchase = ({
-  first_name,
-  last_name,
-  phone,
-  department,
-  city,
-  address,
-  additional_info,
-  email,
-  id_number,
-}: DatosCompra) => {
+
+const SuccessPurchase = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-white">
       <Card className="w-full max-w-2xl">
@@ -35,7 +15,7 @@ const SuccessPurchase = ({
             ¡Compra Realizada con Éxito!
           </CardTitle>
         </CardHeader>
-        <CardContent>
+       {/*  <CardContent>
           <div className="grid gap-6">
             <div>
               <h3 className="text-lg font-semibold mb-2">
@@ -81,7 +61,7 @@ const SuccessPurchase = ({
 
             <h1>NÚMERO DE LA ORDEN: 2342344</h1>
           </div>
-        </CardContent>
+        </CardContent> */}
       </Card>
     </div>
   );
