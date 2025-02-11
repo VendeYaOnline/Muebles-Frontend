@@ -51,8 +51,10 @@ const Checkout = () => {
     setActive(false);
   }, []);
 
+  console.log("NEXT_API_KEY", process.env.NEXT_API_KEY);
+
   //* INICIA LA CONFIGURACIÓN DE MERCADO PAGO
-  initMercadoPago("TEST-c8fd76db-e208-4755-af2e-79210fbaa513", {
+  initMercadoPago(process.env.NEXT_API_KEY || "", {
     locale: "es-CO",
   });
   const handlePayment = async () => {
