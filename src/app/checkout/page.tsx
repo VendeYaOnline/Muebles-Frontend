@@ -52,7 +52,7 @@ const Checkout = () => {
   }, []);
 
   //* INICIA LA CONFIGURACIÓN DE MERCADO PAGO
-  initMercadoPago(process.env.NEXT_API_KEY || "", {
+  initMercadoPago("TEST-c8fd76db-e208-4755-af2e-79210fbaa513", {
     locale: "es-CO",
   });
   const handlePayment = async () => {

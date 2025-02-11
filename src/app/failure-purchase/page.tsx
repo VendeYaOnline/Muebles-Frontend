@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 
-export default function FailurePurchase() {
+const FailurePurchase = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-white">
       <Card className="w-full max-w-2xl">
@@ -23,4 +23,6 @@ export default function FailurePurchase() {
       </Card>
     </div>
   );
-}
+};
+
+export default FailurePurchase;

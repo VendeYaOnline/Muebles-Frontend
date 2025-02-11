@@ -13,7 +13,7 @@ interface DatosCompra {
   id_number: string;
 }
 
-export default function SuccessPurchase({
+const SuccessPurchase = ({
   first_name,
   last_name,
   phone,
@@ -23,7 +23,7 @@ export default function SuccessPurchase({
   additional_info,
   email,
   id_number,
-}: DatosCompra) {
+}: DatosCompra) => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-white">
       <Card className="w-full max-w-2xl">
@@ -85,4 +85,6 @@ export default function SuccessPurchase({
       </Card>
     </div>
   );
-}
+};
+
+export default SuccessPurchase;
