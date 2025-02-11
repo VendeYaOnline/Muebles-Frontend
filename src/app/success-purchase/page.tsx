@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { CheckCircle, AlertCircle } from "lucide-react";
 import axios from "axios";
 
-const SuccessPurchase = () => {
+const SuccessPurchaseContent = () => {
   const searchParams = useSearchParams();
   const [paymentId, setPaymentId] = useState<string | null>(null);
   const [data, setData] = useState<any>(null);
@@ -14,7 +14,6 @@ const SuccessPurchase = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  // Extraer el paymentId dentro de useEffect para evitar el error de prerenderizado
   useEffect(() => {
     const id = searchParams.get("payment_id");
     if (id) {
@@ -151,6 +150,14 @@ const SuccessPurchase = () => {
         </CardContent>
       </Card>
     </div>
+  );
+};
+
+const SuccessPurchase = () => {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <SuccessPurchaseContent />
+    </Suspense>
   );
 };
 
