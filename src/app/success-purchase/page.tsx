@@ -8,18 +8,25 @@ import axios from "axios";
 
 const SuccessPurchase = () => {
   const searchParams = useSearchParams();
-  const paymentId = searchParams.get("payment_id");
+  const [paymentId, setPaymentId] = useState<string | null>(null);
   const [data, setData] = useState<any>(null);
   const [orderId, setOrderId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  // Extraer el paymentId dentro de useEffect para evitar el error de prerenderizado
   useEffect(() => {
-    if (!paymentId) {
+    const id = searchParams.get("payment_id");
+    if (id) {
+      setPaymentId(id);
+    } else {
       setError(true);
       setLoading(false);
-      return;
     }
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (!paymentId) return;
 
     const fetchData = async () => {
       try {
@@ -99,19 +106,19 @@ const SuccessPurchase = () => {
               </h3>
               <div className="grid gap-2">
                 <p>
-                  <span className="font-medium">Nombre:</span> {data.first_name}{" "}
-                  {data.last_name}
+                  <span className="font-medium">Nombre:</span>{" "}
+                  {data?.first_name} {data?.last_name}
                 </p>
                 <p>
-                  <span className="font-medium">Teléfono:</span> {data.phone}
+                  <span className="font-medium">Teléfono:</span> {data?.phone}
                 </p>
                 <p>
                   <span className="font-medium">Correo electrónico:</span>{" "}
-                  {data.email}
+                  {data?.email}
                 </p>
                 <p>
                   <span className="font-medium">Número de identificación:</span>{" "}
-                  {data.id_number}
+                  {data?.id_number}
                 </p>
               </div>
             </div>
@@ -120,17 +127,18 @@ const SuccessPurchase = () => {
               <div className="grid gap-2">
                 <p>
                   <span className="font-medium">Departamento:</span>{" "}
-                  {data.department}
+                  {data?.department}
                 </p>
                 <p>
-                  <span className="font-medium">Ciudad:</span> {data.city}
+                  <span className="font-medium">Ciudad:</span> {data?.city}
                 </p>
                 <p>
-                  <span className="font-medium">Dirección:</span> {data.address}
+                  <span className="font-medium">Dirección:</span>{" "}
+                  {data?.address}
                 </p>
                 <p>
                   <span className="font-medium">Información adicional:</span>{" "}
-                  {data.additional_info}
+                  {data?.additional_info}
                 </p>
               </div>
             </div>
