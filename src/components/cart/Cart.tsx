@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Minus, PackageOpen, Plus, Trash, X } from "lucide-react";
 import { useProducts } from "@/hooks";
-import { totalSum } from "@/utils";
+import { calculateTotal, totalSum } from "@/utils";
 import { useCart } from "@/app/dashboard/hooks";
 import classes from "./Cart.module.css";
 
@@ -69,9 +69,9 @@ const Cart = () => {
                         </div>
                         {variant !== "" && (
                           <div className="flex items-center gap-2">
-                            <span className="text-sm text-gray-600">
+                            <label className="text-sm text-gray-600">
                               Color:
-                            </span>
+                            </label>
                             <div
                               className="color"
                               style={{ backgroundColor: variant }}
@@ -81,13 +81,25 @@ const Cart = () => {
                       </div>
                     </div>
 
-                    <div className="flex flex-col text-sm">
-                      <span className="font-bold">Subtotal</span>
-                      <span>{product.price}</span>
-                      {/*             <span>{calculateTotal(product.price, quantity)}</span> */}
-                    </div>
-                  </div>
+                    {product.discount_price ? (
+                      <div className="flex flex-col text-sm">
+                        <label className="font-bold">Precio</label>
 
+                        <div className="flex items-center gap-2">
+                          <span>{product.discount_price}</span>
+                          <span className="line-through">{product.price}</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col text-sm">
+                        <label className="font-bold">Precio</label>
+                        <span>{product.price}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <h2>Total: {calculateTotal(product.discount_price ?  product.discount_price : product.price, quantity)}</h2>
+                  </div>
                   <hr />
                 </div>
               ))}
@@ -97,7 +109,7 @@ const Cart = () => {
           <div className="absolute bottom-20 bg-white w-full">
             <h1 className="text-xl mb-2">SUBTOTAL: {total}</h1>
             <Link href="/checkout">
-              <button className="p-4 text-md w-[86%] box-content bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300">
+              <button className="p-3 text-md w-[86%] box-content bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300">
                 Ir al carrito y pagar
               </button>
             </Link>

@@ -47,7 +47,11 @@ export const totalSum = (products: ProductWithQuantity[]) => {
 
   products.forEach(({ product, quantity }) => {
     // Extraer el valor numérico del string y eliminar caracteres no numéricos como $ y .
-    const precioNumerico = parseFloat(product.price.replace(/[^\d]/g, ""));
+    const precioNumerico = parseFloat(
+      product.discount_price
+        ? product.discount_price.replace(/[^\d]/g, "")
+        : product.price.replace(/[^\d]/g, "")
+    );
 
     // Multiplicar el precio por la cantidad
     total += precioNumerico * quantity;

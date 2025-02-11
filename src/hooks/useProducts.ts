@@ -4,11 +4,13 @@ import { create } from "zustand";
 interface ProductWithQuantity {
   quantity: number;
   product: IProduct;
-  variant: string; // Propiedad para identificar la variante, como "color".
+  variant: string;
 }
 
 interface ProductStore {
   products: ProductWithQuantity[];
+  totalQuantity: number;
+  totalDiscount: number;
   addProduct: (product: IProduct, variant: string) => void;
   removeProduct: (productId: number, variant: string) => void;
   deleteProduct: (productId: number, variant: string) => void;
@@ -16,6 +18,8 @@ interface ProductStore {
 
 export const useProducts = create<ProductStore>((set) => ({
   products: [],
+  totalQuantity: 0,
+  totalDiscount: 0,
 
   addProduct: (product, variant) =>
     set((state) => {
@@ -23,18 +27,23 @@ export const useProducts = create<ProductStore>((set) => ({
         (p) => p.product.id === product.id && p.variant === variant
       );
 
-      if (existingProductIndex !== -1) {
-        // Si la combinación de producto y variante ya está en el carrito, aumenta su cantidad.
-        const updatedProducts = [...state.products];
-        updatedProducts[existingProductIndex].quantity += 1;
+      let updatedProducts;
 
-        return { products: updatedProducts };
+      if (existingProductIndex !== -1) {
+        updatedProducts = [...state.products];
+        updatedProducts[existingProductIndex].quantity += 1;
       } else {
-        // Si la combinación no está, agrégala con cantidad 1.
-        return {
-          products: [...state.products, { quantity: 1, product, variant }],
-        };
+        updatedProducts = [
+          ...state.products,
+          { quantity: 1, product, variant },
+        ];
       }
+
+      return {
+        products: updatedProducts,
+        totalQuantity: updatedProducts.reduce((sum, p) => sum + p.quantity, 0),
+        totalDiscount: calculateTotalDiscount(updatedProducts),
+      };
     }),
 
   removeProduct: (productId, variant) =>
@@ -48,23 +57,51 @@ export const useProducts = create<ProductStore>((set) => ({
         const productToRemove = updatedProducts[existingProductIndex];
 
         if (productToRemove.quantity > 1) {
-          // Reduce la cantidad si es mayor que 1.
           updatedProducts[existingProductIndex].quantity -= 1;
         } else {
-          // Si la cantidad es 1, remueve el producto de la lista.
           updatedProducts.splice(existingProductIndex, 1);
         }
 
-        return { products: updatedProducts };
+        return {
+          products: updatedProducts,
+          totalQuantity: updatedProducts.reduce(
+            (sum, p) => sum + p.quantity,
+            0
+          ),
+          totalDiscount: calculateTotalDiscount(updatedProducts),
+        };
       }
 
-      return state; // No hacer nada si no se encuentra.
+      return state;
     }),
 
   deleteProduct: (productId, variant) =>
-    set((state) => ({
-      products: state.products.filter(
+    set((state) => {
+      const updatedProducts = state.products.filter(
         (p) => !(p.product.id === productId && p.variant === variant)
-      ),
-    })),
+      );
+
+      return {
+        products: updatedProducts,
+        totalQuantity: updatedProducts.reduce((sum, p) => sum + p.quantity, 0),
+        totalDiscount: calculateTotalDiscount(updatedProducts),
+      };
+    }),
 }));
+
+// Función para convertir precios de formato "$ 9.200.000" a número 9200000
+const parsePrice = (price: string): number => {
+  return Number(price.replace(/[^0-9]/g, "")) || 0;
+};
+
+// Función para calcular el total de ahorro solo en productos con descuento
+const calculateTotalDiscount = (products: ProductWithQuantity[]): number => {
+  return products.reduce((sum, p) => {
+    const originalPrice = parsePrice(p.product.price);
+    const discountPrice = parsePrice(p.product.discount_price);
+    const discountAmount = originalPrice - discountPrice;
+
+    // Solo sumar si hay descuento
+    return p.product.discount > 0 ? sum + p.quantity * discountAmount : sum;
+  }, 0);
+};
