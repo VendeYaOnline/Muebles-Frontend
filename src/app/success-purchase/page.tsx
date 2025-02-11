@@ -33,7 +33,7 @@ const SuccessPurchaseContent = () => {
           `https://api.mercadopago.com/v1/payments/${paymentId}`,
           {
             headers: {
-              Authorization: `Bearer ${process.env.NEXT_ACCESS_TOKEN}`,
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
             },
           }
         );
