@@ -145,9 +145,20 @@ const Checkout = () => {
                             )}
                           </div>
                           <div className="flex items-center gap-4">
-                            <span className="font-semibold">
-                              {product.price}
-                            </span>
+                            {product.discount_price ? (
+                              <>
+                                <span className="font-semibold line-through">
+                                  {product.price}
+                                </span>
+                                <span className="font-semibold">
+                                  {product.discount_price}
+                                </span>
+                              </>
+                            ) : (
+                              <span className="font-semibold">
+                                {product.price}
+                              </span>
+                            )}
                             <Button
                               variant="ghost"
                               size="icon"
