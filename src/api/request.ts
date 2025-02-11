@@ -71,11 +71,46 @@ export const getProductById = async (id?: number) => {
   return product;
 };
 
-
 export const createPreference = async (products: any[]) => {
   return (
     await axiosConfig.post<{ init_point: string }>("/create-preference", {
       products,
     })
   ).data;
+};
+
+export const getDataSave = async (
+  email: string,
+  products: {
+    quantity: number;
+    product: {
+      image_product: string;
+      title: string;
+      price: string;
+      discount_price: string;
+      discount: number;
+      images: string[];
+      purchase_total: string;
+      quantity: number;
+    };
+    variant: string;
+  }[]
+) => {
+  const totalQuantity = products.reduce((sum, item) => sum + item.quantity, 0);
+  await fetch(
+    "https://guardar-compras-temporales-production.up.railway.app/api/save-data",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        filename: email,
+        data: {
+          products: products.map((a) => a.product),
+          quantity: totalQuantity,
+        },
+      }),
+    }
+  );
 };

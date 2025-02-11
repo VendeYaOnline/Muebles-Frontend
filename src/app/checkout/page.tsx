@@ -10,7 +10,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "../dashboard/hooks";
 import { totalSum } from "@/utils";
-import { createPreference } from "@/api/request";
+import { createPreference, getDataSave } from "@/api/request";
+import { convertCurrencyToNumber } from "../dashboard/functions";
 
 const Checkout = () => {
   const { products, addProduct, removeProduct, deleteProduct } = useProducts();
@@ -30,14 +31,36 @@ const Checkout = () => {
   }, []);
 
   //* INICIA LA CONFIGURACIÓN DE MERCADO PAGO
-  initMercadoPago(process.env.NEXT_API_KEY || "", {
+  initMercadoPago("TEST-2de2c7ea-ac8c-4a97-b6e5-555583074839", {
     locale: "es-CO",
   });
-
   const handlePayment = async () => {
     setLoading(true);
     try {
       const { init_point } = await createPreference(products);
+      await getDataSave(
+        "colinparrado@gmail.com",
+        products.map((item) => ({
+          ...item,
+          product: {
+            image_product: item.product.image_product,
+            title: item.product.title,
+            price: item.product.price,
+            discount_price: item.product.discount_price,
+            discount: item.product.discount,
+            images: item.product.images,
+            quantity: item.quantity,
+            purchase_total:
+              item.product.discount !== 0
+                ? convertCurrencyToNumber(item.product.discount_price) *
+                    Number(item.quantity) +
+                  ""
+                : convertCurrencyToNumber(item.product.price) *
+                    Number(item.quantity) +
+                  "",
+          },
+        }))
+      );
       if (init_point) {
         window.location.href = init_point;
       }
@@ -75,9 +98,11 @@ const Checkout = () => {
                       <div className="flex items-start justify-between">
                         <div>
                           <h3 className="font-semibold">{product.title}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            Categoria: {product.Categories[0].name}
-                          </p>
+                          {product.Categories.length > 0 && (
+                            <p className="text-sm text-muted-foreground">
+                              Categoria: {product.Categories[0].name}
+                            </p>
+                          )}
 
                           {variant !== "" && (
                             <div className="text-sm text-muted-foreground flex items-center gap-2">

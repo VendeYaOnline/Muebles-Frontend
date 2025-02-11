@@ -1,19 +1,27 @@
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useQuerySales } from "@/app/dashboard/api/queries";
 import { Eye, PenLine, Trash2, X } from "lucide-react";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 import TableSkeleton from "../../skeleton/Skeleton";
 import { User } from "@/app/dashboard/hooks/useUser";
 import DatePicker from "react-datepicker";
 import SelectId from "../../select-id/SelectId";
+import IconCreditCard from "./imgs/credit_card.png";
+import IconDebitCard from "./imgs/debit_card.png";
+import IconaAcountMoney from "./imgs/account_money.png";
+import IconBankTransfer from "./imgs/bank_transfer.png";
+import IconTicket from "./imgs/ticket.png";
+import IconCash from "./imgs/cash.png";
+import IconOther from "./imgs/other.png";
 import {
   ModalChangeStatus,
   ModalDeleteSale,
   ModalDetailsSale,
 } from "../../modals";
 import { SaleTable } from "@/app/dashboard/interfaces";
+import Image from "next/image";
 
-const headers = ["Fecha", "Ciudad", "Teléfono", "Estado"];
+const headers = ["Fecha", "Ciudad", "Teléfono", "Estado", "Método de pago"];
 interface Props {
   query: {
     date: Date | null;
@@ -83,6 +91,25 @@ const TableSales = ({
       ...prev,
       status: value,
     }));
+  };
+
+  const paymentMethod = (type: string) => {
+    switch (type) {
+      case "ticket":
+        return "Efecty";
+      case "bank_transfer":
+        return "PSE";
+      case "account_money":
+        return "Cuenta de mercado pago";
+      case "debit_card":
+        return "Tarjeta de débito";
+      case "credit_card":
+        return "Tarjeta de crédito";
+      case "cash":
+        return "Efectivo";
+      default:
+        return "Otro medio de pago";
+    }
   };
 
   // ** Optimización del useEffect para refetch con cambios en los filtros
@@ -196,9 +223,18 @@ const TableSales = ({
                         </td>
 
                         <td className="px-6 py-4">
-                          {sale.status === "Gestionando pedido" && (
+                          {sale.status === "Pago pendiente" && (
                             <span
                               className="bg-red-100 text-red-800
+ text-sm p-1 px-2 rounded-lg block w-[127.5px] text-center"
+                            >
+                              {sale.status}
+                            </span>
+                          )}
+
+                          {sale.status === "Gestionando pedido" && (
+                            <span
+                              className="bg-orange-100 text-orange-800
  text-sm p-1 px-2 rounded-lg block w-40"
                             >
                               {sale.status}
@@ -218,6 +254,52 @@ const TableSales = ({
                             >
                               {sale.status}
                             </span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 flex items-center gap-3">
+                          {paymentMethod(sale.payment_method)}
+                          {sale.payment_method === "credit_card" && (
+                            <Image
+                              src={IconCreditCard}
+                              width={25}
+                              alt="credit_card"
+                            />
+                          )}
+
+                          {sale.payment_method === "debit_card" && (
+                            <Image
+                              src={IconDebitCard}
+                              width={25}
+                              alt="debit_card"
+                            />
+                          )}
+
+                          {sale.payment_method === "bank_transfer" && (
+                            <Image
+                              src={IconBankTransfer}
+                              width={25}
+                              alt="bank_transfer"
+                            />
+                          )}
+
+                          {sale.payment_method === "ticket" && (
+                            <Image src={IconTicket} width={45} alt="ticket" />
+                          )}
+
+                          {sale.payment_method === "account_money" && (
+                            <Image
+                              src={IconaAcountMoney}
+                              width={25}
+                              alt="account_money"
+                            />
+                          )}
+
+                          {sale.payment_method === "cash" && (
+                            <Image src={IconCash} width={20} alt="cash" />
+                          )}
+
+                          {sale.payment_method === "other" && (
+                            <Image src={IconOther} width={23} alt="other" />
                           )}
                         </td>
 

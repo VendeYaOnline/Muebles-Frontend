@@ -242,6 +242,7 @@ export interface Sale {
   products: ProductSale[];
   quantity: string;
   status: string;
+  payment_method: string;
   purchase_date: Date | null;
 }
 
@@ -262,4 +263,5 @@ export interface SaleTable {
   quantity: string;
   status: string;
   purchase_date: string;
+  payment_method: string;
 }

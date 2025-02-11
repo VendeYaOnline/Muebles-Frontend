@@ -5,6 +5,7 @@ import { ArrowLeft, Eye, X } from "lucide-react";
 import { SaleTable } from "@/app/dashboard/interfaces";
 import { useState } from "react";
 import { convertPrice } from "@/app/dashboard/functions";
+import Image from "next/image";
 
 interface Props {
   sale?: SaleTable;
@@ -25,14 +26,35 @@ const ModalDetailsSale = ({ sale, onClose }: Props) => {
 
   const getStatusStyles = (status: string): string => {
     switch (status) {
+      case "Pago pendiente":
+        return "bg-red-100 text-red-800";
       case "En tránsito":
         return "bg-yellow-100 text-yellow-800";
       case "Gestionando pedido":
-        return "bg-red-100 text-red-800";
+        return "bg-orange-100 text-orange-800";
       case "Pedido entregado":
         return "bg-green-100 text-green-800";
       default:
         return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  const paymentMethod = (type: string) => {
+    switch (type) {
+      case "ticket":
+        return "Efecty";
+      case "bank_transfer":
+        return "PSE";
+      case "account_money":
+        return "Cuenta de mercado pago";
+      case "debit_card":
+        return "Tarjeta de débito";
+      case "credit_card":
+        return "Tarjeta de crédito";
+      case "cash":
+        return "Efectivo";
+      default:
+        return "Otro medio de pago";
     }
   };
 
@@ -75,7 +97,18 @@ const ModalDetailsSale = ({ sale, onClose }: Props) => {
                 <div className="block text-sm">
                   {sale.products.map((product, index) => (
                     <div key={index} className="flex flex-col">
-                      <img src={product.image_product} width={30} />
+                      <div
+                        className="skeleton-loader-image-product"
+                        style={{ width: 30 }}
+                      >
+                        <Image
+                          src={product.image_product}
+                          width={30}
+                          height={30}
+                          alt="imagen del producto"
+                          className="rounded-[5px]"
+                        />
+                      </div>
                       <span>
                         <strong>Producto: </strong>
 
@@ -223,6 +256,15 @@ const ModalDetailsSale = ({ sale, onClose }: Props) => {
                       </label>
                       <p className="text-gray-900 font-mono">
                         {sale.order_number}
+                      </p>
+                    </div>
+
+                    <div>
+                      <label className="text-sm text-gray-500">
+                        Método de pago
+                      </label>
+                      <p className="text-gray-900">
+                        {paymentMethod(sale.payment_method)}
                       </p>
                     </div>
 

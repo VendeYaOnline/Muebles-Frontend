@@ -8,7 +8,6 @@ import { FormEvent, MutableRefObject, useRef, useState } from "react";
 import { useMutationSales } from "@/app/dashboard/api/mutations";
 import { ProductSale, ProductTable, Sale } from "@/app/dashboard/interfaces";
 import DatePicker, { registerLocale } from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { colombia } from "@/app/dashboard/utils";
 import SelectId from "../../select-id/SelectId";
 import { es } from "date-fns/locale";
@@ -16,6 +15,7 @@ import SelectSearchProducts from "../../select-search-products/SelectSearchProdu
 import toast from "react-hot-toast";
 import { useQuerySales } from "@/app/dashboard/api/queries";
 import { convertCurrencyToNumber } from "@/app/dashboard/functions";
+import "react-datepicker/dist/react-datepicker.css";
 registerLocale("es", es);
 interface Props {
   currentPage: number;
@@ -55,8 +55,29 @@ const ModalSales = ({
     quantity: "",
     status: "",
     id_number: "",
+    payment_method: "",
     purchase_date: new Date(),
   });
+
+  const paymentMethod = (type: string) => {
+    switch (type) {
+      case "Efecty":
+        return "ticket";
+      case "PSE":
+        return "bank_transfer";
+      case "Mercado pago":
+        return "account_money";
+      case "Tarjeta de débito":
+        return "debit_card";
+      case "Tarjeta de crédito":
+        return "credit_card";
+      case "Efectivo":
+        return "cash";
+      default:
+        return "other";
+    }
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -65,6 +86,7 @@ const ModalSales = ({
       );
       const updatedValuesForm = {
         ...valuesForm,
+        payment_method: paymentMethod(valuesForm.payment_method),
         quantity: quantity.current + "",
         products: productsWithoutId,
       };
@@ -86,6 +108,7 @@ const ModalSales = ({
         quantity: "",
         status: "",
         id_number: "",
+        payment_method: "",
         purchase_date: new Date(),
       });
       onClose();
@@ -139,6 +162,7 @@ const ModalSales = ({
                   quantity: "",
                   status: "",
                   id_number: "",
+                  payment_method: "",
                   purchase_date: new Date(),
                 });
               }}
@@ -146,7 +170,7 @@ const ModalSales = ({
             <h1 className="mb-2 font-bold text-xl">Crear venta</h1>
           </div>
 
-          <div className="flex justify-between relative">
+          <div className="flex justify-between relative gap-5">
             <div className="flex flex-col">
               <label className="mb-1">Fecha</label>
               <DatePicker
@@ -177,7 +201,7 @@ const ModalSales = ({
             </div>
           </div>
 
-          <div className="flex justify-between relative">
+          <div className="flex justify-between relative gap-5">
             <div className="flex flex-col gap-1">
               <label>Nombres</label>
               <Input
@@ -200,7 +224,7 @@ const ModalSales = ({
               />
             </div>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between gap-5">
             <div className="flex flex-col gap-1 w-[216px]">
               <label>Departamento</label>
               <SelectId
@@ -236,7 +260,7 @@ const ModalSales = ({
             </div>
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex justify-between gap-5">
             <div className="flex flex-col gap-1">
               <label>Dirección</label>
               <Input
@@ -263,7 +287,7 @@ const ModalSales = ({
             </div>
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex justify-between gap-5">
             <div className="flex flex-col gap-1">
               <label>Email</label>
               <Input
@@ -369,10 +393,10 @@ const ModalSales = ({
             <div className="text-red-500 text-xs">{errorMessage}</div>
           )}
 
-          <div className="flex gap-2 w-full flex-wrap">
+          <div className="flex gap-5 w-full flex-wrap">
             {valuesForm.products.map((product, index) => (
               <div key={index} className="burble">
-                {product.title}
+                {product.title} X {product.quantity}
                 <CircleX
                   size={15}
                   color="white"
@@ -397,28 +421,59 @@ const ModalSales = ({
             />
           </div>
 
-          <div className="flex flex-col gap-1">
-            <div className="flex gap-2">
-              <label>Estado</label>
-              <span className="text-red-600">*</span>
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-1 w-full">
+              <div className="flex gap-2">
+                <label>Estado</label>
+                <span className="text-red-600">*</span>
+              </div>
+              <SelectId
+                id="status"
+                value={valuesForm.status}
+                setValue={(e) => setValuesForm({ ...valuesForm, status: e })}
+                data={[
+                  { id: 1, name: "Pago pendiente" },
+                  { id: 2, name: "En tránsito" },
+                  { id: 3, name: "Pedido entregado" },
+                  { id: 4, name: "Pedido entregado" },
+                ]}
+                placeholder="Seleciona un estado"
+              />
             </div>
-            <SelectId
-              id="status"
-              value={valuesForm.status}
-              setValue={(e) => setValuesForm({ ...valuesForm, status: e })}
-              data={[
-                { id: 1, name: "Gestionando pedido" },
-                { id: 2, name: "En tránsito" },
-                { id: 3, name: "Pedido entregado" },
-              ]}
-              placeholder="Seleciona un estado"
-            />
+
+            <div className="flex flex-col gap-1 w-full">
+              <div className="flex gap-2">
+                <label>Método de pago</label>
+                <span className="text-red-600">*</span>
+              </div>
+              <SelectId
+                id="payment_method"
+                value={valuesForm.payment_method}
+                setValue={(e) =>
+                  setValuesForm({ ...valuesForm, payment_method: e })
+                }
+                data={[
+                  { id: 1, name: "Efectivo" },
+                  { id: 2, name: "Tarjeta de crédito" },
+                  { id: 3, name: "Tarjeta de débito" },
+                  { id: 4, name: "Efecty" },
+                  { id: 5, name: "PSE" },
+                  { id: 6, name: "Mercado pago" },
+                  { id: 7, name: "Otro" },
+                ]}
+                placeholder="Seleciona un método"
+              />
+            </div>
           </div>
 
           <Button
             disabled={
               isPending ||
-              !(valuesForm.products.length && valuesForm.status !== "")
+              !(
+                valuesForm.products.length &&
+                valuesForm.status !== "" &&
+                valuesForm.payment_method !== ""
+              )
             }
             wFull
           >

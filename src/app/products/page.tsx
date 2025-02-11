@@ -127,7 +127,7 @@ function Products() {
     <div className="space-y-6 bg-white">
       {isLoadingCategories && <SkeletonCategories />}
 
-      {dataCategories?.categories && dataCategories.categories.length && (
+      {dataCategories?.categories && dataCategories.categories.length > 0 && (
         <nav className="space-y-2 mt-3">
           {dataCategories.categories.map((category) => (
             <Button
@@ -175,7 +175,7 @@ function Products() {
               className="absolute left-3 top-[10px] h-4 w-4 text-muted-foreground"
             />
             <Input
-              placeholder="Search"
+              placeholder="Buscar"
               className="pl-9"
               onChange={(e) => handleChangeSearch(e.target.value)}
             />
