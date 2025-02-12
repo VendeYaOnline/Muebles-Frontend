@@ -51,8 +51,6 @@ const Checkout = () => {
     setActive(false);
   }, []);
 
-  console.log("NEXT_API_KEY", process.env.NEXT_PUBLIC_API_KEY);
-
   //* INICIA LA CONFIGURACIÓN DE MERCADO PAGO
   initMercadoPago(process.env.NEXT_PUBLIC_API_KEY || "", {
     locale: "es-CO",
