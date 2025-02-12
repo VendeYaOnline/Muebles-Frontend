@@ -38,6 +38,7 @@ import ModalImages from "../modal-images/ModalImages";
 import SelectSpecs from "../../select-specs/SelectSpecs";
 import AttributeRender from "../../attribute-render/AttributeRender";
 import SelectCategories from "../../select-categories/SelectCategories";
+import { Tooltip } from "../../tooltip/Tooltip";
 
 interface Props {
   currentPage: number;
@@ -107,6 +108,10 @@ const ModalProduct = ({
     }
   }, [optionImage]);
 
+  const convertStringToNumber = (price: string) => {
+    return parseInt(price.replace(/[^\d]/g, ""), 10);
+  };
+
   useEffect(() => {
     if (data && data?.attributes?.length) {
       const values = data.attributes
@@ -171,7 +176,7 @@ const ModalProduct = ({
       validAttribute() &&
       imagePreview &&
       valuesForm.title &&
-      valuesForm.price &&
+      convertStringToNumber(valuesForm.price) >= 2000 &&
       valuesForm.discount &&
       valuesForm.description
     ) {
@@ -180,6 +185,7 @@ const ModalProduct = ({
       return true;
     }
   };
+
   const cleanField = useCallback(() => {
     setValuesForm({
       title: "",
@@ -587,9 +593,12 @@ const ModalProduct = ({
                 </div>
 
                 <div className="flex gap-3">
-                  <div className="flex flex-col gap-1">
+                  <div className="flex flex-col gap-2">
                     <label htmlFor="title">
                       Precio <span className="text-red-600">*</span>
+                      <div className="inline-block ml-1">
+                        <Tooltip text="El precio mínimo del producto debe ser de $2,000 pesos." />
+                      </div>
                     </label>
                     <Input
                       maxLength={13}
