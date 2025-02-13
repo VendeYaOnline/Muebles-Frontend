@@ -715,7 +715,7 @@ const ModalProduct = ({
               }
             />
             <span className="text-xs text-slate-600">
-              {valuesForm.description.length + "/" + 570}
+              {valuesForm.description.length + "/" + 800}
             </span>
           </div>
 
