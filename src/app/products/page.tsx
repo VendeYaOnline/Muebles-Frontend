@@ -138,8 +138,8 @@ function Products() {
               variant="ghost"
               className={
                 categoryId.includes(category.id)
-                  ? "w-full justify-between text-teal-900 font-medium bg-gray-200"
-                  : "w-full justify-start text-teal-900 font-medium hover:bg-gray-200"
+                  ? "w-[90%] justify-between text-teal-900 font-medium bg-gray-200"
+                  : "w-[90%] justify-start text-teal-900 font-medium hover:bg-gray-200"
               }
             >
               {category.name}
