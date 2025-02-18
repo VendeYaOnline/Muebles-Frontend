@@ -6,6 +6,11 @@ body {
   font-family: var(--font-regular);
 }
 
+.menu-triguer{
+  font-family: var(--font-regular);
+  font-size: medium;
+}
+
 .color {
   width: 15px;
   height: 15px;

@@ -23,7 +23,7 @@ const Category = () => {
         {featured.map((category, index) => (
           <div
             key={index}
-            onClick={() => navigationCategory(category.name)}
+            onClick={() => navigationCategory(category.name.toUpperCase())}
             className="relative rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer"
           >
             <Image

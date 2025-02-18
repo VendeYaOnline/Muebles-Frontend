@@ -126,11 +126,11 @@ function Products() {
   };
 
   const Sidebar = () => (
-    <div className="space-y-6 bg-white">
+    <div className="space-y-6 bg-white ">
       {isLoadingCategories && <SkeletonCategories />}
 
       {dataCategories?.categories && dataCategories.categories.length > 0 && (
-        <nav className="space-y-2 mt-3">
+        <nav className={`space-y-2 mt-3 ${classes["container-categories"]}`}>
           {dataCategories.categories.map((category) => (
             <Button
               key={category.id}
