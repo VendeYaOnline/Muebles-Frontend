@@ -38,7 +38,9 @@ export const getProductsByCategory = async (
     .join("&");
   const result = (
     await axiosConfig.get<ProductFind>(
-      `/get-products-store?page=${page}&search=${search}&${categoryParams}`
+      `/get-products-store?page=${
+        categoryId.length ? 1 : page
+      }&search=${search}&${categoryParams}`
     )
   ).data;
 

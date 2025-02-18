@@ -53,14 +53,6 @@ const NavBar = () => {
                 </ActiveLink>
 
                 <ActiveLink
-                  href="/offers"
-                  activeClassName="text-indigo-600"
-                  className="text-gray-500"
-                >
-                  Ofertas
-                </ActiveLink>
-
-                <ActiveLink
                   href="/contact"
                   activeClassName="text-indigo-600"
                   className="text-gray-500"

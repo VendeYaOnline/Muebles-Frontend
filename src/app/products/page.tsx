@@ -48,6 +48,7 @@ function Products() {
     search,
     categoryId
   );
+
   useEffect(() => {
     if (categories.length && dataCategories?.categories.length) {
       const category = dataCategories.categories
@@ -97,6 +98,7 @@ function Products() {
   };
 
   const handleChangeCategory = (value: number) => {
+    setCurrentPage(1);
     if (categoryId.includes(value)) {
       const result = categoryId.filter((i) => i !== value);
       setCategoryId(result);
