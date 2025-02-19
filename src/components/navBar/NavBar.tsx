@@ -22,7 +22,6 @@ import {
 import { useCart } from "@/app/dashboard/hooks";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/router";
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,7 +48,7 @@ const NavBar = () => {
             <div className="flex justify-between items-center h-16">
               <div className="flex">
                 <Link href="/">
-                  <Image src={Logo} alt="logo" width={80} height={40} />
+                  <Image src={Logo} alt="logo" width={50} height={50} />
                 </Link>
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
