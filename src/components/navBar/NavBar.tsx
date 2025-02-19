@@ -48,7 +48,13 @@ const NavBar = () => {
             <div className="flex justify-between items-center h-16">
               <div className="flex">
                 <Link href="/">
-                  <Image src={Logo} alt="logo" width={50} height={50} />
+                  <Image
+                    src={Logo}
+                    alt="logo"
+                    width={40}
+                    height={40}
+                    style={{ width: 40, height: 40 }}
+                  />
                 </Link>
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">

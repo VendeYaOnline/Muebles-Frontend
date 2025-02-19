@@ -39,7 +39,9 @@ export default function CategoriesGrid() {
             src={Image1}
             alt="Interiores"
             className="object-cover transition-transform group-hover:scale-105"
-            fill
+            width={500}
+            height={500}
+            style={{ width: "100%", height: "100%" }}
           />
           <div className="absolute inset-0 bg-black/30" />
           <h2 className="absolute bottom-6 left-6 sm:text-lg lg:text-2xl xl:text-4xl font-bold text-white">
@@ -66,7 +68,9 @@ export default function CategoriesGrid() {
             src={Image3}
             alt="Cocina"
             className="object-cover transition-transform group-hover:scale-105"
-            fill
+            width={500}
+            height={500}
+            style={{ width: "100%", height: "100%" }}
           />
           <div className="absolute inset-0 bg-black/30" />
           <h2 className="absolute bottom-6 left-6 sm:text-lg lg:text-2xl xl:text-4xl font-bold text-white">
@@ -94,7 +98,9 @@ export default function CategoriesGrid() {
             src={Image2}
             alt="Dormitorios"
             className="object-cover transition-transform group-hover:scale-105"
-            fill
+            width={500}
+            height={500}
+            style={{ width: "100%", height: "100%" }}
           />
           <div className="absolute inset-0 bg-black/30" />
           <h2 className="absolute bottom-6 left-6 sm:text-lg lg:text-2xl xl:text-4xl font-bold text-white">
@@ -120,7 +126,9 @@ export default function CategoriesGrid() {
             src={Image4}
             alt="electrodomésticos"
             className="object-cover transition-transform group-hover:scale-105"
-            fill
+            width={500}
+            height={500}
+            style={{ width: "100%", height: "100%" }}
           />
           <div className="absolute inset-0 bg-black/30" />
           <h2 className="absolute bottom-6 left-6 sm:text-lg lg:text-2xl xl:text-4xl font-bold text-white">
