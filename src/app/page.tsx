@@ -18,7 +18,7 @@ export default function TiendaElegante() {
       <CategoriesGrid />
       <ProductCarousel />
       <a
-        href="https://wa.me/+573219311525?text=Hola,%20estaba%20visitando%20la%20página%20de%20muebles%20y%20electrodomésticos%20del%20meta%20y%20me%20gustaría%20recibir%20ayuda."
+        href="https://wa.me/+573204586138?text=Hola,%20estaba%20visitando%20la%20página%20de%20muebles%20y%20electrodomésticos%20del%20meta%20y%20me%20gustaría%20recibir%20ayuda."
         target="_blank"
       >
         <div className="bg-green-400 hover:bg-green-500 duration-300 rounded-full h-14 w-14 fixed bottom-5 right-5 flex justify-center items-center">

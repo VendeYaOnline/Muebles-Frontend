@@ -96,7 +96,7 @@ const FAQ = () => {
             <AccordionContent className="text-gray-600 pt-2">
               Sí, el catálogo es el mismo. Sin embargo, para recibir información
               sobre la disponibilidad de productos en nuestras tiendas puedes
-              comunicarte a nuestra línea de servicio al cliente (601) 4073033.
+              comunicarte a nuestra línea de servicio al cliente 3204586138.
             </AccordionContent>
           </AccordionItem>
         </Accordion>
