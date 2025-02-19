@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image1 from "/public/interiores.jpg";
 import Image2 from "/public/dormitorios.jpg";
 import Image3 from "/public/cocina.png";
-import Image4 from "/public/tecnologia.webp";
+import Image4 from "/public/electrodomesticos.jpg";
 import { useCategory } from "@/hooks";
 
 export default function CategoriesGrid() {
@@ -24,7 +24,15 @@ export default function CategoriesGrid() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Link
           href="/products"
-          onClick={() => navigationCategory(["Comedores", "Salas"])}
+          onClick={() =>
+            navigationCategory([
+              "COMEDORES",
+              "JUEGOS DE SALA",
+              "MESA DE CENTRO",
+              "JUEGOS DE COMEDOR",
+              "SOFÁ CAMAS",
+            ])
+          }
           className="group relative overflow-hidden rounded-lg aspect-[4/3]"
         >
           <Image
@@ -41,7 +49,17 @@ export default function CategoriesGrid() {
 
         <Link
           href="/products"
-          onClick={() => navigationCategory(["Estufas", "Licuadoras"])}
+          onClick={() =>
+            navigationCategory([
+              "ESTUFAS",
+              "LICUADORAS",
+              "VAJILLAS",
+              "JUEGO DE OLLAS",
+              "LICUADORAS",
+              "SARTENES",
+              "CUBIERTOS",
+            ])
+          }
           className="group relative overflow-hidden rounded-lg aspect-[4/3]"
         >
           <Image
@@ -58,7 +76,18 @@ export default function CategoriesGrid() {
 
         <Link
           href="/products"
-          onClick={() => navigationCategory(["Camas", "Base camas"])}
+          onClick={() =>
+            navigationCategory([
+              "ARMARIOS",
+              "BASE CAMAS",
+              "COLCHONES",
+              "SILLAS DE ESCRITORIO",
+              "CLOSETS",
+              "SOFÁS",
+              "SILLAS",
+              "MESA DE CENTRO",
+            ])
+          }
           className="group relative overflow-hidden rounded-lg aspect-[4/3]"
         >
           <Image
@@ -75,18 +104,27 @@ export default function CategoriesGrid() {
 
         <Link
           href="/products"
-          onClick={() => navigationCategory(["Portatiles", "Televisores"])}
+          onClick={() =>
+            navigationCategory([
+              "PORTATILES",
+              "TELEVISORES",
+              "NEVERAS",
+              "LAVADORAS",
+              "EQUIPOS DE SONIDO",
+              "PLANCHAS",
+            ])
+          }
           className="group relative overflow-hidden rounded-lg aspect-[4/3]"
         >
           <Image
             src={Image4}
-            alt="Tecnología"
+            alt="electrodomésticos"
             className="object-cover transition-transform group-hover:scale-105"
             fill
           />
           <div className="absolute inset-0 bg-black/30" />
           <h2 className="absolute bottom-6 left-6 sm:text-lg lg:text-2xl xl:text-4xl font-bold text-white">
-            Tecnología
+            Electrodomésticos
           </h2>
         </Link>
       </div>

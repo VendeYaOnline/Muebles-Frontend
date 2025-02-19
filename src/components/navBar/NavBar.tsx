@@ -55,20 +55,28 @@ const NavBar = () => {
               <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
                 <NavigationMenu>
                   <NavigationMenuList>
+                    <NavigationMenuItem className="menu-triguer">
+                      <Link href="/" className="mr-5">
+                        Inicio
+                      </Link>
+                    </NavigationMenuItem>
                     <NavigationMenuItem>
                       <NavigationMenuTrigger className="menu-triguer">
                         Salas
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <div className="flex p-4 gap-8 md:w-[400px] lg:w-[500px] bg-white">
-                          <Image
-                            src={ImageSalas}
-                            alt="salas"
-                            width={100}
-                            height={250}
-                            style={{ width: "auto", height: "auto" }}
-                            className="rounded-md"
-                          />
+                          <div className="skeleton-loader-images-nabvar">
+                            <Image
+                              src={ImageSalas}
+                              alt="salas"
+                              width={100}
+                              height={250}
+                              style={{ width: "auto", height: "auto" }}
+                              className="rounded-md"
+                              priority
+                            />
+                          </div>
 
                           <ul className="grid lg:grid-cols-2 colum gap-x-8">
                             <Link
@@ -135,14 +143,17 @@ const NavBar = () => {
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <div className="flex p-4 gap-8 md:w-[400px] lg:w-[500px] bg-white">
-                          <Image
-                            src={ImageCocina}
-                            alt="salas"
-                            width={100}
-                            height={250}
-                            style={{ width: "auto", height: "auto" }}
-                            className="rounded-md"
-                          />
+                          <div className="skeleton-loader-images-nabvar">
+                            <Image
+                              src={ImageCocina}
+                              alt="salas"
+                              width={100}
+                              height={250}
+                              style={{ width: "auto", height: "auto" }}
+                              className="rounded-md"
+                              priority
+                            />
+                          </div>
 
                           <ul className="grid lg:grid-cols-2 colum gap-x-8">
                             <Link
@@ -211,14 +222,17 @@ const NavBar = () => {
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <div className="flex p-4 gap-8 md:w-[400px] lg:w-[500px] bg-white">
-                          <Image
-                            src={ImageComedores}
-                            alt="salas"
-                            width={100}
-                            height={250}
-                            style={{ width: "auto", height: "auto" }}
-                            className="rounded-md"
-                          />
+                          <div className="skeleton-loader-images-nabvar">
+                            <Image
+                              src={ImageComedores}
+                              alt="salas"
+                              width={100}
+                              height={250}
+                              style={{ width: "auto", height: "auto" }}
+                              className="rounded-md"
+                              priority
+                            />
+                          </div>
 
                           <ul className="grid lg:grid-cols-1">
                             <Link
@@ -261,14 +275,17 @@ const NavBar = () => {
 
                       <NavigationMenuContent>
                         <div className="flex p-4 gap-8 md:w-[400px] lg:w-[500px] bg-white">
-                          <Image
-                            src={ImageElectro}
-                            alt="salas"
-                            width={100}
-                            height={250}
-                            style={{ width: "auto", height: "auto" }}
-                            className="rounded-md"
-                          />
+                          <div className="skeleton-loader-images-nabvar">
+                            <Image
+                              src={ImageElectro}
+                              alt="salas"
+                              width={100}
+                              height={250}
+                              style={{ width: "auto", height: "auto" }}
+                              className="rounded-md"
+                              priority
+                            />
+                          </div>
 
                           <ul className="grid lg:grid-cols-2">
                             <Link

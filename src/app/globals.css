@@ -6,7 +6,7 @@ body {
   font-family: var(--font-regular);
 }
 
-.menu-triguer{
+.menu-triguer {
   font-family: var(--font-regular);
   font-size: medium;
 }
@@ -206,9 +206,14 @@ li:hover {
   }
 }
 
+.skeleton-loader-images-nabvar {
+  border-radius: 6px;
+  background-color: #f2f2f2;
+  animation: skeleton-loading-2 1.5s infinite;
+}
+
 .skeleton-loader-categories {
   padding: 15px;
-  border-radius: 5px;
   background-color: #f2f2f2;
   border-radius: 4px;
   animation: skeleton-loading-2 1.5s infinite;
