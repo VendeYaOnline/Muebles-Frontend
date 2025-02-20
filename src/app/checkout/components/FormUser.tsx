@@ -1,6 +1,9 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { SubmitHandler, useForm, useWatch } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,160 +13,204 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useUser } from "@/hooks";
 
 interface Props {
-  formData: {
-    first_name: string;
-    last_name: string;
-    phone: string;
-    department: string;
-    city: string;
-    address: string;
-    additional_info: string;
-    email: string;
-    id_number: string;
-  };
-  setFormData: Dispatch<
-    SetStateAction<{
-      first_name: string;
-      last_name: string;
-      phone: string;
-      department: string;
-      city: string;
-      address: string;
-      additional_info: string;
-      email: string;
-      id_number: string;
-    }>
-  >;
+  setCurrentStep: Dispatch<SetStateAction<number>>;
 }
 
-const FormUser = ({ formData, setFormData }: Props) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+interface FormData {
+  first_name: string;
+  last_name: string;
+  phone: string;
+  department: string;
+  city: string;
+  address: string;
+  additional_info: string;
+  email: string;
+  id_number: string;
+}
+
+// Esquema de validación con Yup
+const schema = yup.object().shape({
+  first_name: yup
+    .string()
+    .required("El nombre es obligatorio")
+    .max(20, "Máximo 20 caracteres"),
+  last_name: yup
+    .string()
+    .required("El apellido es obligatorio")
+    .max(20, "Máximo 20 caracteres"),
+  phone: yup
+    .string()
+    .required("El teléfono es obligatorio")
+    .matches(/^\d{10}$/, "Debe ser un número de 10 dígitos"),
+  department: yup
+    .string()
+    .required("El departamento es obligatorio")
+    .max(20, "Máximo 20 caracteres"),
+  city: yup
+    .string()
+    .required("La ciudad es obligatoria")
+    .max(20, "Máximo 20 caracteres"),
+  address: yup
+    .string()
+    .required("La dirección es obligatoria")
+    .max(20, "Máximo 20 caracteres"),
+  additional_info: yup.string().max(20, "Máximo 20 caracteres").default(""),
+  email: yup
+    .string()
+    .email("Correo inválido")
+    .required("El correo es obligatorio"),
+  id_number: yup
+    .string()
+    .required("El número de identificación es obligatorio")
+    .matches(/^\d{8,12}$/, "Debe tener entre 8 y 12 dígitos"),
+});
+
+const FormUser = ({ setCurrentStep }: Props) => {
+  const [isFilled, setIsFilled] = useState(false);
+  const { user, setUser } = useUser();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: user,
+    resolver: yupResolver<FormData>(schema),
+  });
+  const formValues = useWatch({ control });
+
+  useEffect(() => {
+    if (Object.keys(formValues).length) {
+      setIsFilled(
+        Object.entries(formValues)
+          .filter(([key]) => key !== "additional_info") // Excluir additional_info
+          .every(([, value]) => value.trim() !== "")
+      );
+    }
+  }, [formValues]);
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    setUser(data);
+    setCurrentStep(2);
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle className="text-xl">Detalles del comprador</CardTitle>
-        <CardDescription>
-          Por favor, complete sus datos a continuación.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <Card className="w-full max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle className="text-xl">Detalles del comprador</CardTitle>
+          <CardDescription>
+            Por favor, complete sus datos a continuación.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="first_name">Nombre</Label>
               <Input
-                maxLength={20}
                 id="first_name"
-                name="first_name"
+                {...register("first_name")}
                 placeholder="Andres Felipe"
-                value={formData.first_name}
-                onChange={handleChange}
               />
+              <p className="text-red-500 text-sm">
+                {errors.first_name?.message}
+              </p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="last_name">Apellido</Label>
               <Input
-                maxLength={20}
                 id="last_name"
-                name="last_name"
+                {...register("last_name")}
                 placeholder="Parrado"
-                value={formData.last_name}
-                onChange={handleChange}
               />
+              <p className="text-red-500 text-sm">
+                {errors.last_name?.message}
+              </p>
             </div>
           </div>
           <div className="space-y-2">
             <Label htmlFor="phone">Teléfono</Label>
-            <Input
-              maxLength={10}
-              id="phone"
-              name="phone"
-              placeholder="3204173434"
-              value={formData.phone}
-              onChange={handleChange}
-            />
+            <Input id="phone" {...register("phone")} placeholder="3204173434" />
+            <p className="text-red-500 text-sm">{errors.phone?.message}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="department">Departamento</Label>
               <Input
-                maxLength={20}
                 id="department"
-                name="department"
+                {...register("department")}
                 placeholder="Cundinamarca"
-                value={formData.department}
-                onChange={handleChange}
               />
+              <p className="text-red-500 text-sm">
+                {errors.department?.message}
+              </p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="city">Ciudad</Label>
-              <Input
-                maxLength={20}
-                id="city"
-                name="city"
-                placeholder="Bogotá"
-                value={formData.city}
-                onChange={handleChange}
-              />
+              <Input id="city" {...register("city")} placeholder="Bogotá" />
+              <p className="text-red-500 text-sm">{errors.city?.message}</p>
             </div>
           </div>
           <div className="space-y-2">
             <Label htmlFor="address">Dirección</Label>
             <Input
-              maxLength={20}
               id="address"
-              name="address"
+              {...register("address")}
               placeholder="Cra 100A 3 141-10"
-              value={formData.address}
-              onChange={handleChange}
             />
+            <p className="text-red-500 text-sm">{errors.address?.message}</p>
           </div>
           <div className="space-y-2">
             <Label htmlFor="additional_info">Información Adicional</Label>
             <Input
-              maxLength={20}
               id="additional_info"
-              name="additional_info"
+              {...register("additional_info")}
               placeholder="Apartamento 804 Torre D"
-              value={formData.additional_info}
-              onChange={handleChange}
             />
+            <p className="text-red-500 text-sm">
+              {errors.additional_info?.message}
+            </p>
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Correo Electrónico</Label>
             <Input
               id="email"
-              name="email"
+              {...register("email")}
               type="email"
-              maxLength={30}
               placeholder="andresparrado@gmail.com"
-              value={formData.email}
-              onChange={handleChange}
             />
+            <p className="text-red-500 text-sm">{errors.email?.message}</p>
           </div>
           <div className="space-y-2">
             <Label htmlFor="id_number">Número de Identificación</Label>
             <Input
-              maxLength={12}
               id="id_number"
-              name="id_number"
+              {...register("id_number")}
               placeholder="1118203462"
-              value={formData.id_number}
-              onChange={handleChange}
             />
+            <p className="text-red-500 text-sm">{errors.id_number?.message}</p>
           </div>
-        </form>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+      <div className="flex gap-2 w-full justify-center mt-10">
+        <Button
+          disabled
+          className="text-white bg-indigo-600 hover:bg-indigo-700"
+        >
+          Anterior
+        </Button>
+        <Button
+          disabled={!isFilled}
+          className="text-white bg-indigo-600 hover:bg-indigo-700"
+        >
+          Siguiente
+        </Button>
+      </div>
+    </form>
   );
 };
 

@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { initMercadoPago } from "@mercadopago/sdk-react";
 import Image from "next/image";
-import { useProducts } from "@/hooks";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { useProducts, useUser } from "@/hooks";
+import { CreditCard, Landmark, Minus, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "../dashboard/hooks";
@@ -14,6 +14,8 @@ import { createPreference, getDataSave } from "@/api/request";
 import { convertCurrencyToNumber } from "../dashboard/functions";
 import Timeline from "@/components/Timeline";
 import FormUser from "./components/FormUser";
+import Link from "next/link";
+import toast from "react-hot-toast";
 
 const Checkout = () => {
   const {
@@ -29,17 +31,7 @@ const Checkout = () => {
   const total = totalSum(products);
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    phone: "",
-    department: "",
-    city: "",
-    address: "",
-    additional_info: "",
-    email: "",
-    id_number: "",
-  });
+  const { user } = useUser();
 
   useEffect(() => {
     if (!products.length) {
@@ -58,32 +50,36 @@ const Checkout = () => {
   const handlePayment = async () => {
     setLoading(true);
     try {
-      const { init_point } = await createPreference(products, formData);
-      await getDataSave(
-        formData.email,
-        products.map((item) => ({
-          ...item,
-          product: {
-            image_product: item.product.image_product,
-            title: item.product.title,
-            price: item.product.price,
-            discount_price: item.product.discount_price,
-            discount: item.product.discount,
-            images: item.product.images,
-            quantity: item.quantity,
-            purchase_total:
-              item.product.discount !== 0
-                ? convertCurrencyToNumber(item.product.discount_price) *
-                    Number(item.quantity) +
-                  ""
-                : convertCurrencyToNumber(item.product.price) *
-                    Number(item.quantity) +
-                  "",
-          },
-        }))
-      );
-      if (init_point) {
-        window.location.href = init_point;
+      if (user) {
+        const { init_point } = await createPreference(products, user);
+        await getDataSave(
+          user.email,
+          products.map((item) => ({
+            ...item,
+            product: {
+              image_product: item.product.image_product,
+              title: item.product.title,
+              price: item.product.price,
+              discount_price: item.product.discount_price,
+              discount: item.product.discount,
+              images: item.product.images,
+              quantity: item.quantity,
+              purchase_total:
+                item.product.discount !== 0
+                  ? convertCurrencyToNumber(item.product.discount_price) *
+                      Number(item.quantity) +
+                    ""
+                  : convertCurrencyToNumber(item.product.price) *
+                      Number(item.quantity) +
+                    "",
+            },
+          }))
+        );
+        if (init_point) {
+          window.location.href = init_point;
+        }
+      } else {
+        toast.error("Completa todos los campos");
       }
     } catch (error) {
       console.log("Error al procesar el pago", error);
@@ -101,7 +97,7 @@ const Checkout = () => {
         />
         {currentStep === 1 ? (
           <div className="mt-20">
-            <FormUser formData={formData} setFormData={setFormData} />
+            <FormUser setCurrentStep={setCurrentStep} />
           </div>
         ) : (
           <div className="grid gap-8 lg:grid-cols-2 mt-36">
@@ -229,8 +225,32 @@ const Checkout = () => {
                         onClick={handlePayment}
                         disabled={loading}
                       >
-                        {loading ? <div className="loader" /> : "Pagar ahora"}
+                        {loading ? (
+                          <div className="loader" />
+                        ) : (
+                          <div className="flex items-center gap-3">
+                            <span>
+                              Pagar por tarjetas de crédito, débito y efecty
+                            </span>
+                            <CreditCard size={20} />
+                          </div>
+                        )}
                       </Button>
+                      <Link href="/bank-transfer">
+                        <Button
+                          className="w-full text-white bg-indigo-600 hover:bg-indigo-700 mt-3"
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <div className="loader" />
+                          ) : (
+                            <div className="flex items-center gap-3">
+                              <span>Pagar por transferencia bancaria</span>
+                              <Landmark size={20} />
+                            </div>
+                          )}
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </CardContent>
@@ -239,25 +259,22 @@ const Checkout = () => {
           </div>
         )}
 
-        <div className="flex gap-2 w-full justify-center mt-10">
-          <Button
-            disabled={currentStep === 1}
-            onClick={() => setCurrentStep(1)}
-            className="text-white bg-indigo-600 hover:bg-indigo-700"
-          >
-            Anterior
-          </Button>
-          <Button
-            disabled={
-              !Object.values(formData).every((value) => value.trim() !== "") ||
-              currentStep === 2
-            }
-            onClick={() => setCurrentStep(2)}
-            className="text-white bg-indigo-600 hover:bg-indigo-700"
-          >
-            Siguiente
-          </Button>
-        </div>
+        {currentStep === 2 && (
+          <div className="flex gap-2 w-full justify-center mt-10 m-auto">
+            <Button
+              onClick={() => setCurrentStep(1)}
+              className="text-white bg-indigo-600 hover:bg-indigo-700"
+            >
+              Anterior
+            </Button>
+            <Button
+              disabled
+              className="text-white bg-indigo-600 hover:bg-indigo-700"
+            >
+              Siguiente
+            </Button>
+          </div>
+        )}
       </div>
     )
   );

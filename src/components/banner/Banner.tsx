@@ -8,7 +8,7 @@ const Banner = () => {
   return (
     <div className="relative bg-gray-900 overflow-hidden flex justify-center items-center flex-wrap">
       <div className="relative z-10 lg:max-w-2xl lg:w-full mt-20 sm:mt-20 md:mt-0 lg:mt-0 xl:mt-0 mb-10">
-        <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+        <div className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
           <div className={classes["container-text"]}>
             <h1 className="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
               <span className="block">Transforma tu hogar</span>
@@ -26,7 +26,7 @@ const Banner = () => {
               </Button>
             </Link>
           </div>
-        </main>
+        </div>
       </div>
       <Image
         src={ImageBaner}
