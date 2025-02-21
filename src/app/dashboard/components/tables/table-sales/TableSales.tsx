@@ -13,6 +13,8 @@ import IconBankTransfer from "./imgs/bank_transfer.png";
 import IconTicket from "./imgs/ticket.png";
 import IconCash from "./imgs/cash.png";
 import IconOther from "./imgs/other.png";
+import IconBbva from "./imgs/bbva.svg";
+import IconBancolombia from "./imgs/bancolombia.svg";
 import {
   ModalChangeStatus,
   ModalDeleteSale,
@@ -51,7 +53,6 @@ const TableSales = ({
   const isRemoveDate = useRef(false);
   const { data, refetch, isFetching } = useQuerySales(currentPage, query);
   const [activeModalStatus, setActiveModalStatus] = useState(false);
-
   // * Lógica para cambiar de página
   const handleNextPage = () => {
     if (currentPage < (data?.totalPages || 1)) {
@@ -99,6 +100,10 @@ const TableSales = ({
         return "Efecty";
       case "bank_transfer":
         return "PSE";
+      case "bank_transfer_bancolombia":
+        return "Transferencia Bancolombia";
+      case "bank_transfer_bbva":
+        return "Transferencia BBVA";
       case "account_money":
         return "Cuenta de mercado pago";
       case "debit_card":
@@ -279,6 +284,23 @@ const TableSales = ({
                               src={IconBankTransfer}
                               width={25}
                               alt="bank_transfer"
+                            />
+                          )}
+
+                          {sale.payment_method ===
+                            "bank_transfer_bancolombia" && (
+                            <Image
+                              src={IconBancolombia}
+                              width={25}
+                              alt="bank_transfer_bancolombia"
+                            />
+                          )}
+
+                          {sale.payment_method === "bank_transfer_bbva" && (
+                            <Image
+                              src={IconBbva}
+                              width={30}
+                              alt="bank_transfer_bbva"
                             />
                           )}
 

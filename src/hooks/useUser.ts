@@ -14,7 +14,7 @@ interface User {
 
 interface Props {
   user?: User;
-  setUser: (product: User) => void;
+  setUser: (product?: User) => void;
 }
 
 export const useUser = create<Props>((set) => ({

@@ -26,6 +26,7 @@
   gap: 10px;
   position: relative;
   animation: fadeUp 500ms ease;
+  overflow: auto;
 }
 
 .form-modal::-webkit-scrollbar {

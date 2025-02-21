@@ -24,7 +24,10 @@ const SelectSearchProducts = ({ value, setValue }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const firstLoad = useRef(false);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
-  const { data, refetch, isFetching } = useQueryProductsSearch(1, searchInput);
+  const { data, refetch, isFetching } = useQueryProductsSearch(
+    currentPage,
+    searchInput
+  );
 
   const onClose = (newValue: ProductSale) => {
     if (newValue.title === value?.title) {
@@ -85,12 +88,12 @@ const SelectSearchProducts = ({ value, setValue }: Props) => {
   return (
     <div className="flex flex-col gap-1">
       {data && data.totalPages > 1 && (
-        <nav className="flex items-center space-x-2">
+        <nav className="flex items-center space-x-2 absolute bottom-[62px] left-24">
           {Array.from({ length: data?.totalPages || 0 }, (_, index) => (
             <button
               key={index}
               type="button"
-              className={`w-5 h-5 rounded-md text-xs font-medium ${
+              className={`w-4 h-4 rounded-md text-xs ${
                 currentPage === index + 1
                   ? "text-white bg-indigo-600"
                   : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
@@ -193,7 +196,7 @@ const SelectSearchProducts = ({ value, setValue }: Props) => {
             )}
           </div>
         )}
-        <div className="mt-2 relative">
+        <div className="mt-1 relative mb-3">
           {isFetching && <div className="loader-mini absolute" />}
         </div>
       </div>

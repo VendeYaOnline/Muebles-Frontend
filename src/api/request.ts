@@ -5,6 +5,7 @@ import {
   ProductFeatured,
   ProductFind,
   ProductsResponse,
+  Sale,
 } from "@/interfaces";
 import { axiosConfig } from "./config";
 
@@ -94,10 +95,11 @@ export const createPreference = async (
   ).data;
 };
 
-export const getDataSave = async (
+export const saveData = async (
   email: string,
   products: {
     quantity: number;
+    variant: string;
     product: {
       image_product: string;
       title: string;
@@ -108,7 +110,6 @@ export const getDataSave = async (
       purchase_total: string;
       quantity: number;
     };
-    variant: string;
   }[]
 ) => {
   const totalQuantity = products.reduce((sum, item) => sum + item.quantity, 0);
@@ -128,4 +129,8 @@ export const getDataSave = async (
       }),
     }
   );
+};
+
+export const createSale = async (sale: Sale) => {
+  return await axiosConfig.post("/create-bank-transfer-sale", sale);
 };

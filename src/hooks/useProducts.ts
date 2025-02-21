@@ -14,6 +14,7 @@ interface ProductStore {
   addProduct: (product: IProduct, variant: string) => void;
   removeProduct: (productId: number, variant: string) => void;
   deleteProduct: (productId: number, variant: string) => void;
+  clearProducts: () => void;
 }
 
 export const useProducts = create<ProductStore>((set) => ({
@@ -87,6 +88,13 @@ export const useProducts = create<ProductStore>((set) => ({
         totalDiscount: calculateTotalDiscount(updatedProducts),
       };
     }),
+
+  clearProducts: () =>
+    set(() => ({
+      products: [],
+      totalQuantity: 0,
+      totalDiscount: 0,
+    })),
 }));
 
 // Función para convertir precios de formato "$ 9.200.000" a número 9200000

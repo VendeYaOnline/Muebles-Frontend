@@ -311,7 +311,7 @@ const ModalSales = ({
             </div>
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex justify-between relative">
             <div className="flex flex-col gap-1 w-[216px]">
               <div className="flex gap-2">
                 <label>Producto</label>

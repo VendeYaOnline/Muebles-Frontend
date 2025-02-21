@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "../dashboard/hooks";
 import { totalSum } from "@/utils";
-import { createPreference, getDataSave } from "@/api/request";
+import { createPreference, saveData } from "@/api/request";
 import { convertCurrencyToNumber } from "../dashboard/functions";
 import Timeline from "@/components/Timeline";
 import FormUser from "./components/FormUser";
@@ -43,6 +43,12 @@ const Checkout = () => {
     setActive(false);
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      setCurrentStep(2);
+    }
+  }, [user]);
+
   //* INICIA LA CONFIGURACIÓN DE MERCADO PAGO
   initMercadoPago(process.env.NEXT_PUBLIC_API_KEY || "", {
     locale: "es-CO",
@@ -52,7 +58,7 @@ const Checkout = () => {
     try {
       if (user) {
         const { init_point } = await createPreference(products, user);
-        await getDataSave(
+        await saveData(
           user.email,
           products.map((item) => ({
             ...item,

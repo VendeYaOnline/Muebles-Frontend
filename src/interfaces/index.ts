@@ -81,3 +81,31 @@ export interface ProductFeatured {
 export interface Categories {
   categories: { id: number; name: string }[];
 }
+
+export interface Sale {
+  first_name: string;
+  last_name: string;
+  phone: string;
+  department: string;
+  city: string;
+  address: string;
+  additional_info: string;
+  email: string;
+  id_number: string;
+  products: {
+    image_product: string;
+    title: string;
+    price: string;
+    discount_price: string;
+    discount: number;
+    images: string[];
+    quantity: number;
+    purchase_total: string;
+  }[];
+  quantity: string;
+  status: string;
+  purchase_date: Date;
+  order_number: string;
+  type_purchase: string;
+  payment_method: string;
+}
