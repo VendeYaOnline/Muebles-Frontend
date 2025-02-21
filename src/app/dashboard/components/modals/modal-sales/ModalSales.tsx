@@ -433,8 +433,8 @@ const ModalSales = ({
                 setValue={(e) => setValuesForm({ ...valuesForm, status: e })}
                 data={[
                   { id: 1, name: "Pago pendiente" },
-                  { id: 2, name: "En tránsito" },
-                  { id: 3, name: "Pedido entregado" },
+                  { id: 2, name: "Gestionando pedido" },
+                  { id: 3, name: "En tránsito" },
                   { id: 4, name: "Pedido entregado" },
                 ]}
                 placeholder="Seleciona un estado"

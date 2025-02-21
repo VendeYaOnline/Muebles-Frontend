@@ -154,9 +154,10 @@ const TableSales = ({
                     value={query.status}
                     setValue={(value) => handleStatus(value)}
                     data={[
-                      { id: 1, name: "Gestionando pedido" },
-                      { id: 2, name: "En tránsito" },
-                      { id: 3, name: "Pedido entregado" },
+                      { id: 1, name: "Pago pendiente" },
+                      { id: 2, name: "Gestionando pedido" },
+                      { id: 3, name: "En tránsito" },
+                      { id: 4, name: "Pedido entregado" },
                     ]}
                     placeholder="Buscar por estado"
                   />

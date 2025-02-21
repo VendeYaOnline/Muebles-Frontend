@@ -88,9 +88,10 @@ const BankTransfer = () => {
     if (user) {
       setLoading(true);
       try {
-        const totalQuantity = products.reduce((total, { quantity }) => {
-          return (total += quantity);
-        }, 0);
+        const totalQuantity = products.reduce(
+          (sum, item) => sum + item.quantity,
+          0
+        );
         await createSale({
           ...user,
           products: products.map((item) => ({
