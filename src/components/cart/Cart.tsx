@@ -98,7 +98,15 @@ const Cart = () => {
                     )}
                   </div>
                   <div>
-                    <h2>Total: {calculateTotal(product.discount_price ?  product.discount_price : product.price, quantity)}</h2>
+                    <h2>
+                      Total:{" "}
+                      {calculateTotal(
+                        product.discount_price
+                          ? product.discount_price
+                          : product.price,
+                        quantity
+                      )}
+                    </h2>
                   </div>
                   <hr />
                 </div>

@@ -247,14 +247,10 @@ const Checkout = () => {
                           className="w-full text-white bg-indigo-600 hover:bg-indigo-700 mt-3"
                           disabled={loading}
                         >
-                          {loading ? (
-                            <div className="loader" />
-                          ) : (
-                            <div className="flex items-center gap-3">
-                              <span>Pagar por transferencia bancaria</span>
-                              <Landmark size={20} />
-                            </div>
-                          )}
+                          <div className="flex items-center gap-3">
+                            <span>Pagar por transferencia bancaria</span>
+                            <Landmark size={20} />
+                          </div>
                         </Button>
                       </Link>
                     </div>
