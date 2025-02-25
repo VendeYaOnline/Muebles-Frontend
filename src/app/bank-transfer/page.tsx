@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { ArrowLeftFromLine } from "lucide-react";
-import { createSale } from "@/api/request";
+import { createSale, createTransfer } from "@/api/request";
 import { useProducts, useUser } from "@/hooks";
 import toast from "react-hot-toast";
 import { convertCurrencyToNumber } from "../dashboard/functions";
@@ -140,8 +140,19 @@ const BankTransfer = () => {
     []
   );
 
+  const getDate = () => {
+    const date = new Date();
+    const day = date.getDate();
+    const moth =
+      date.getMonth() + 1 < 10
+        ? "0" + (date.getMonth() + 1)
+        : date.getMonth() + 1;
+    const year = date.getFullYear();
+    return day + "/" + moth + "/" + year;
+  };
+
   const confirmPurchase = async () => {
-    if (user) {
+    if (user && selectedAccount) {
       setLoading(true);
       try {
         const numberOrder = generateRandomString();
@@ -176,6 +187,23 @@ const BankTransfer = () => {
           type_purchase: "online",
           payment_method:
             "bank_transfer_" + selectedAccount?.bank.toLowerCase(),
+        });
+        await createTransfer({
+          products: products.map(({ product, variant, quantity }) => ({
+            name: product.title + variant,
+            image: product.image_product,
+            price: product.discount_price || product.price,
+            quantity: quantity + "",
+          })),
+          bank: selectedAccount.bank,
+          account_number: selectedAccount.accountNumber,
+          account_type: selectedAccount.accountType,
+          id: selectedAccount.holderId,
+          to: user.email,
+          from: "muebleselectrodomesticos27@gmail.com",
+          client: user.first_name + " " + user.last_name,
+          total: totalSum(products),
+          date: getDate(),
         });
         toast.success("Pago pendiente");
         handleDialogClose();

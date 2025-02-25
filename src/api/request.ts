@@ -6,6 +6,7 @@ import {
   ProductFind,
   ProductsResponse,
   Sale,
+  Transaction,
 } from "@/interfaces";
 import { axiosConfig } from "./config";
 
@@ -133,4 +134,18 @@ export const saveData = async (
 
 export const createSale = async (sale: Sale) => {
   return await axiosConfig.post("/create-bank-transfer-sale", sale);
+};
+
+export const createTransfer = async (transaction: Transaction) => {
+  await fetch("https://app-email-production.up.railway.app/transfer-progress", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      color: "#6439ff",
+      ...transaction,
+      logo: "https://muebles-electrodomesticos-del-meta-tvy0g5xm53zbkhw.s3.us-east-2.amazonaws.com/logo.png",
+    }),
+  });
 };

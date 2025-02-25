@@ -109,3 +109,23 @@ export interface Sale {
   type_purchase: string;
   payment_method: string;
 }
+
+interface Product {
+  name: string;
+  image: string;
+  price: string;
+  quantity: string;
+}
+
+export interface Transaction {
+  products: Product[];
+  bank: string;
+  account_number: string;
+  account_type: string;
+  id: string;
+  to: string;
+  from: string;
+  client: string;
+  total: string;
+  date: string;
+}

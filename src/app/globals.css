@@ -43,9 +43,6 @@ li {
   transition: 500ms ease;
 }
 
-li:hover {
-  color: #6439ff;
-}
 .warning-view {
   display: none;
 }
