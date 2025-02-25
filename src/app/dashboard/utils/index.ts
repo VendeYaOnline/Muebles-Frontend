@@ -128,3 +128,32 @@ export const colombia = [
     cities: ["Puerto Carreño"],
   },
 ];
+
+export const totalSumSale = (
+  products: {
+    image_product: string;
+    quantity: number;
+    title: string;
+    price: string;
+    discount_price: string;
+    discount: number;
+    images: string[];
+    purchase_total: string;
+  }[]
+) => {
+  let total = 0;
+
+  products.forEach(({ discount_price, price, quantity }) => {
+    // Extraer el valor numérico del string y eliminar caracteres no numéricos como $ y .
+    const precioNumerico = parseFloat(
+      discount_price
+        ? discount_price.replace(/[^\d]/g, "")
+        : price.replace(/[^\d]/g, "")
+    );
+
+    // Multiplicar el precio por la cantidad
+    total += precioNumerico * quantity;
+  });
+
+  return `$ ${total.toLocaleString("es-CO")}`;
+};

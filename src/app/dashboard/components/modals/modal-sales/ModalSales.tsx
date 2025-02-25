@@ -8,7 +8,7 @@ import { FormEvent, MutableRefObject, useRef, useState } from "react";
 import { useMutationSales } from "@/app/dashboard/api/mutations";
 import { ProductSale, ProductTable, Sale } from "@/app/dashboard/interfaces";
 import DatePicker, { registerLocale } from "react-datepicker";
-import { colombia } from "@/app/dashboard/utils";
+import { colombia, totalSumSale } from "@/app/dashboard/utils";
 import SelectId from "../../select-id/SelectId";
 import { es } from "date-fns/locale";
 import SelectSearchProducts from "../../select-search-products/SelectSearchProducts";
@@ -86,6 +86,7 @@ const ModalSales = ({
       );
       const updatedValuesForm = {
         ...valuesForm,
+        total: totalSumSale(productsWithoutId),
         payment_method: paymentMethod(valuesForm.payment_method),
         quantity: quantity.current + "",
         products: productsWithoutId,
@@ -111,6 +112,7 @@ const ModalSales = ({
         payment_method: "",
         purchase_date: new Date(),
       });
+      quantity.current = 0;
       onClose();
       toast.success("Venta creada");
     } catch {

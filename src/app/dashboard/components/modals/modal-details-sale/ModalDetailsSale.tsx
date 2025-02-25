@@ -293,6 +293,15 @@ const ModalDetailsSale = ({ sale, onClose }: Props) => {
                         {sale.status}
                       </span>
                     </div>
+
+                    <div>
+                      <label className="text-sm text-gray-500">
+                        {sale.status === "Pago pendiente"
+                          ? "Total a pagar"
+                          : "Total pagado"}
+                      </label>
+                      <p className="text-gray-900">{sale.total}</p>
+                    </div>
                   </div>
                 </div>
               </div>

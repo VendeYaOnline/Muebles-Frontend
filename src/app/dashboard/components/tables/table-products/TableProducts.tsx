@@ -188,11 +188,12 @@ const TableProducts = ({
                         >
                           <td className="px-6 py-4">
                             <div className="skeleton-loader-image">
-                              <img
+                              <Image
                                 src={product.image_product}
                                 alt="Imagen del producto"
                                 width={80}
                                 height={80}
+                                priority
                                 style={{
                                   width: "100%",
                                   height: "100%",

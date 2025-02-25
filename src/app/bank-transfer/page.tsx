@@ -190,9 +190,10 @@ const BankTransfer = () => {
         });
         await createTransfer({
           products: products.map(({ product, variant, quantity }) => ({
-            name: product.title + variant,
+            name: product.title,
             image: product.image_product,
             price: product.discount_price || product.price,
+            variant,
             quantity: quantity + "",
           })),
           bank: selectedAccount.bank,

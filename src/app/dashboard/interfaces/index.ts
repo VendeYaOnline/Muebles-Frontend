@@ -264,4 +264,5 @@ export interface SaleTable {
   status: string;
   purchase_date: string;
   payment_method: string;
+  total: string;
 }

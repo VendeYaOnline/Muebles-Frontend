@@ -111,8 +111,8 @@ const Checkout = () => {
             <div>
               <h2 className="text-2xl font-semibold mb-6">Tus productos</h2>
               <div className="space-y-4 max-h-[480px] overflow-auto">
-                {products.map(({ product, quantity, variant }) => (
-                  <Card key={product.id} className="mr-2">
+                {products.map(({ product, quantity, variant }, index) => (
+                  <Card key={index} className="mr-2">
                     <CardContent className="flex items-center gap-4 p-4">
                       <div className="relative h-24 w-32 flex-shrink-0">
                         <Image

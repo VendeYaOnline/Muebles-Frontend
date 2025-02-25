@@ -23,7 +23,14 @@ import {
 import { SaleTable } from "@/app/dashboard/interfaces";
 import Image from "next/image";
 
-const headers = ["Fecha", "Ciudad", "Teléfono", "Estado", "Método de pago"];
+const headers = [
+  "Fecha",
+  "Ciudad",
+  "Teléfono",
+  "Estado",
+  "Número de orden",
+  "Método de pago",
+];
 interface Props {
   query: {
     date: Date | null;
@@ -262,6 +269,8 @@ const TableSales = ({
                             </span>
                           )}
                         </td>
+
+                        <td className="px-6 py-4">{sale.order_number}</td>
                         <td className="px-6 py-4 flex items-center gap-3">
                           {paymentMethod(sale.payment_method)}
                           {sale.payment_method === "credit_card" && (
@@ -342,14 +351,12 @@ const TableSales = ({
                                 className="cursor-pointer"
                                 onClick={() => setSale(sale)}
                               />
-                              {sale.type_purchase === "local" && (
-                                <PenLine
-                                  size={17}
-                                  color="#3D5300"
-                                  className="cursor-pointer"
-                                  onClick={() => onOpenStatus(sale.id)}
-                                />
-                              )}
+                              <PenLine
+                                size={17}
+                                color="#3D5300"
+                                className="cursor-pointer"
+                                onClick={() => onOpenStatus(sale.id)}
+                              />
                               {sale.type_purchase === "local" && (
                                 <Trash2
                                   size={17}
