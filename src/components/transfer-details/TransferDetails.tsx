@@ -14,9 +14,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Mail, CreditCard, Clock, CircleCheck } from "lucide-react";
+import { Mail, CreditCard, Clock, CircleCheck, Download } from "lucide-react";
 import ProductList from "./components/ProductList";
 import { ProductSale } from "@/app/dashboard/interfaces";
+import { Button } from "../ui/button";
 
 interface Props {
   details: {
@@ -47,19 +48,34 @@ interface Props {
 }
 
 const TransferDetails = ({ details }: Props) => {
-  /*   const handleDownload = () => {
-    const element = document.createElement("a");
-    const file = new Blob(
-      [`Detalles de la orden ${orderNumber}\n\nInstrucciones de pago:\n...`],
-      {
-        type: "text/plain",
-      }
-    );
-    element.href = URL.createObjectURL(file);
-    element.download = `orden-${orderNumber}.txt`;
-    document.body.appendChild(element);
-    element.click();
-  }; */
+  const handleDownload = () => {
+    const content = `
+      <html>
+        <head>
+          <title>Detalles de la Orden - ${details.numberOrder}</title>
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+          <style>
+            body {
+              font-family: 'Inter', sans-serif;
+            }
+          </style>
+        </head>
+        <body>
+          <h2>Detalles de la orden: ${details.numberOrder}</h2>
+          <p><strong>Banco:</strong> ${details.selectedAccount?.bank}</p>
+          <p><strong>Tipo de cuenta:</strong> ${details.selectedAccount?.accountType}</p>
+          <p><strong>Número de cuenta:</strong> ${details.selectedAccount?.accountNumber}</p>
+          <p><strong>Número de identificación del titular:</strong> ${details.selectedAccount?.holderId}</p>
+          <p><strong>Total:</strong> ${details.total}</p>
+        </body>
+      </html>
+    `;
+
+    const printWindow = window.open("", "", "width=600,height=400");
+    printWindow?.document.write(content);
+    printWindow?.document.close();
+    printWindow?.print();
+  };
 
   return (
     <div className="container mx-auto py-10">
@@ -115,9 +131,9 @@ const TransferDetails = ({ details }: Props) => {
               <strong>{details.numberOrder}</strong>
             </p>
 
-            {/*         <Button variant="outline" onClick={handleDownload}>
+            <Button variant="outline" onClick={handleDownload}>
               <Download className="mr-2 h-4 w-4" /> Descargar detalles
-            </Button> */}
+            </Button>
           </div>
 
           <div
