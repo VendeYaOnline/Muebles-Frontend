@@ -9,7 +9,7 @@ import { CreditCard, Landmark, Minus, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "../dashboard/hooks";
-import { totalSum } from "@/utils";
+import { getDate, totalSum } from "@/utils";
 import { createPreference, saveData } from "@/api/request";
 import { convertCurrencyToNumber } from "../dashboard/functions";
 import Timeline from "@/components/Timeline";
@@ -53,13 +53,17 @@ const Checkout = () => {
   initMercadoPago(process.env.NEXT_PUBLIC_API_KEY || "", {
     locale: "es-CO",
   });
+
   const handlePayment = async () => {
     setLoading(true);
     try {
       if (user) {
         const { init_point } = await createPreference(products, user);
+        const date = getDate();
         await saveData(
           user.email,
+          total,
+          date,
           products.map((item) => ({
             ...item,
             product: {
@@ -81,9 +85,9 @@ const Checkout = () => {
             },
           }))
         );
-        if (init_point) {
+         if (init_point) {
           window.location.href = init_point;
-        }
+        } 
       } else {
         toast.error("Completa todos los campos");
       }

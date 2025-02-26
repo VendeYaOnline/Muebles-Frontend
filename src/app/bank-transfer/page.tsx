@@ -27,7 +27,7 @@ import { useProducts, useUser } from "@/hooks";
 import toast from "react-hot-toast";
 import { convertCurrencyToNumber } from "../dashboard/functions";
 import TransferDetails from "@/components/transfer-details/TransferDetails";
-import { totalSum } from "@/utils";
+import { getDate, totalSum } from "@/utils";
 import { useRouter } from "next/navigation";
 
 type BankAccount = {
@@ -140,16 +140,7 @@ const BankTransfer = () => {
     []
   );
 
-  const getDate = () => {
-    const date = new Date();
-    const day = date.getDate();
-    const moth =
-      date.getMonth() + 1 < 10
-        ? "0" + (date.getMonth() + 1)
-        : date.getMonth() + 1;
-    const year = date.getFullYear();
-    return day + "/" + moth + "/" + year;
-  };
+
 
   const confirmPurchase = async () => {
     if (user && selectedAccount) {

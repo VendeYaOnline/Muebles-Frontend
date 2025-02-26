@@ -98,6 +98,8 @@ export const createPreference = async (
 
 export const saveData = async (
   email: string,
+  total: string,
+  date: string,
   products: {
     quantity: number;
     variant: string;
@@ -126,6 +128,8 @@ export const saveData = async (
         data: {
           products: products.map((a) => a.product),
           quantity: totalQuantity,
+          total: total,
+          date: date,
         },
       }),
     }

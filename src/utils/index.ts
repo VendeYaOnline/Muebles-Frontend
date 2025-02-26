@@ -88,3 +88,14 @@ export const totalSumSale = (
 
   return `$ ${total.toLocaleString("es-CO")}`;
 };
+
+export const getDate = () => {
+  const date = new Date();
+  const day = date.getDate();
+  const moth =
+    date.getMonth() + 1 < 10
+      ? "0" + (date.getMonth() + 1)
+      : date.getMonth() + 1;
+  const year = date.getFullYear();
+  return day + "/" + moth + "/" + year;
+};
