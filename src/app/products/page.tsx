@@ -152,7 +152,6 @@ function Products() {
       )}
     </div>
   );
-  console.log("sss", data?.products);
   return (
     <div className="container mx-auto py-8 px-4 mb-10 mt-20 min-h-screen">
       <div className="lg:hidden mb-6">
