@@ -15,7 +15,7 @@ const Cart = () => {
   return (
     <section
       className={classes["container-menu"]}
-      style={{ right: active ? "0px" : "-400px" }}
+      style={{ right: active ? "0px" : "-500px" }}
     >
       <div className="flex justify-between items-center">
         <h1 className="text-xl">Tu carrito</h1>

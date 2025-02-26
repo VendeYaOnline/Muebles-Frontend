@@ -46,3 +46,10 @@
     max-height: 60%;
   }
 }
+
+@media (max-width: 511px) {
+  .container-menu {
+    width: 100%;
+  }
+}
+

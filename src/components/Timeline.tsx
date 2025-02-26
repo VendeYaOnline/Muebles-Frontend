@@ -14,7 +14,7 @@ const Timeline = ({ steps, currentStep }: TimelineProps) => {
   }, [currentStep]);
 
   return (
-    <div className="flex justify-between items-center relative mb-10">
+    <div className="flex justify-between items-center relative mb-10 mx-10">
       {steps.map((step, index) => (
         <div
           key={step}

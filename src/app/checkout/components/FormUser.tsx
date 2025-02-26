@@ -110,7 +110,9 @@ const FormUser = ({ setCurrentStep }: Props) => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="first_name">Nombre</Label>
+              <Label htmlFor="first_name">
+                Nombre <span className="text-red-600">*</span>
+              </Label>
               <Input
                 id="first_name"
                 {...register("first_name")}
@@ -121,7 +123,9 @@ const FormUser = ({ setCurrentStep }: Props) => {
               </p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="last_name">Apellido</Label>
+              <Label htmlFor="last_name">
+                Apellido <span className="text-red-600">*</span>
+              </Label>
               <Input
                 id="last_name"
                 {...register("last_name")}
@@ -133,13 +137,17 @@ const FormUser = ({ setCurrentStep }: Props) => {
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="phone">Teléfono</Label>
+            <Label htmlFor="phone">
+              Teléfono móvil <span className="text-red-600">*</span>
+            </Label>
             <Input id="phone" {...register("phone")} placeholder="3204173434" />
             <p className="text-red-500 text-sm">{errors.phone?.message}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="department">Departamento</Label>
+              <Label htmlFor="department">
+                Departamento <span className="text-red-600">*</span>
+              </Label>
               <Input
                 id="department"
                 {...register("department")}
@@ -150,13 +158,17 @@ const FormUser = ({ setCurrentStep }: Props) => {
               </p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="city">Ciudad</Label>
+              <Label htmlFor="city">
+                Ciudad <span className="text-red-600">*</span>
+              </Label>
               <Input id="city" {...register("city")} placeholder="Bogotá" />
               <p className="text-red-500 text-sm">{errors.city?.message}</p>
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="address">Dirección</Label>
+            <Label htmlFor="address">
+              Dirección <span className="text-red-600">*</span>
+            </Label>
             <Input
               id="address"
               {...register("address")}
@@ -176,7 +188,9 @@ const FormUser = ({ setCurrentStep }: Props) => {
             </p>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Correo Electrónico</Label>
+            <Label htmlFor="email">
+              Correo Electrónico <span className="text-red-600">*</span>
+            </Label>
             <Input
               id="email"
               {...register("email")}
@@ -186,7 +200,9 @@ const FormUser = ({ setCurrentStep }: Props) => {
             <p className="text-red-500 text-sm">{errors.email?.message}</p>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="id_number">Número de Identificación</Label>
+            <Label htmlFor="id_number">
+              Número de Identificación <span className="text-red-600">*</span>
+            </Label>
             <Input
               id="id_number"
               {...register("id_number")}
