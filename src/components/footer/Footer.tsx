@@ -12,7 +12,7 @@ const Footer = () => {
   const pathname = usePathname();
   return (
     pathname !== "/17312678/admin" && (
-      <footer className="bg-gray-800 text-white mt-10">
+      <footer className="bg-gray-800 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
@@ -20,7 +20,7 @@ const Footer = () => {
                 Muebles y Electrodomésticos del Meta
               </h3>
               <p className="text-gray-400">
-                Transformando hogares con estilo desde 2023.
+                Transformando hogares con estilo desde 1998.
               </p>
             </div>
             <div>
@@ -60,20 +60,14 @@ const Footer = () => {
                     Preguntas frecuentes
                   </Link>
                 </li>
+
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Envíos y devoluciones
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
+                  <Link
+                    href="/terms-conditions"
+                    className="text-gray-400 hover:text-white"
+                  >
                     Términos y condiciones
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Política de privacidad
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
