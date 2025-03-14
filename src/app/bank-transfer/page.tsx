@@ -92,7 +92,7 @@ const BankTransfer = () => {
     selectedAccount: selectedAccount,
     user: user,
   });
-  const [successfulPurchase, setSuccessfulPurchase] = useState(true);
+  const [successfulPurchase, setSuccessfulPurchase] = useState(false);
   const navigation = useRouter();
 
   const handleConfirmClick = (account: BankAccount) => {

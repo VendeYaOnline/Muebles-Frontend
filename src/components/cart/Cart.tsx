@@ -83,7 +83,7 @@ const Cart = () => {
 
                     {product.discount_price ? (
                       <div className="flex flex-col text-sm">
-                        <label className="font-bold">Precio</label>
+                        <label className="font-bold">Subtotal</label>
 
                         <div className="flex items-center gap-2">
                           <span>{product.discount_price}</span>
@@ -92,7 +92,7 @@ const Cart = () => {
                       </div>
                     ) : (
                       <div className="flex flex-col text-sm">
-                        <label className="font-bold">Precio</label>
+                        <label className="font-bold">Subtotal</label>
                         <span>{product.price}</span>
                       </div>
                     )}
@@ -115,7 +115,7 @@ const Cart = () => {
           </div>
 
           <div className="absolute bottom-20 bg-white w-full">
-            <h1 className="text-xl mb-2">SUBTOTAL: {total}</h1>
+            <h1 className="text-xl mb-2">TOTAL: {total}</h1>
             <Link href="/checkout">
               <button className="p-3 text-md w-[86%] box-content bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300">
                 Ir al carrito y pagar

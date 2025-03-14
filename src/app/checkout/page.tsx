@@ -85,9 +85,9 @@ const Checkout = () => {
             },
           }))
         );
-         if (init_point) {
+        if (init_point) {
           window.location.href = init_point;
-        } 
+        }
       } else {
         toast.error("Completa todos los campos");
       }
@@ -230,7 +230,7 @@ const Checkout = () => {
                       </div>
                     </div>
                     <div className="space-y-4 pt-4">
-                      <Button
+                      {/*                       <Button
                         className="w-full text-white bg-indigo-600 hover:bg-indigo-700"
                         onClick={handlePayment}
                         disabled={loading}
@@ -245,7 +245,7 @@ const Checkout = () => {
                             <CreditCard size={20} />
                           </div>
                         )}
-                      </Button>
+                      </Button> */}
                       <Link href="/bank-transfer">
                         <Button
                           className="w-full text-white bg-indigo-600 hover:bg-indigo-700 mt-3"
