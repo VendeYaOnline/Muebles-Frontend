@@ -149,6 +149,7 @@ const TableProducts = ({
   return (
     <div className="min-h-screen bg-gray-50">
       <ModalDeleteProduct
+        currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalItems={data?.total || 0}
         active={active}

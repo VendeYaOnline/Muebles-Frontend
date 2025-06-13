@@ -10,6 +10,7 @@ import { calculatePageAfterDeletion } from "@/app/dashboard/functions";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
+  currentPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
   totalItems: number;
   active: boolean;
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const ModalDeleteProduct = ({
+  currentPage,
   totalItems,
   active,
   onClose,
@@ -27,7 +29,7 @@ const ModalDeleteProduct = ({
 }: Props) => {
   const { mutateAsync, isPending } = useMutationDeleteProduct();
   const { refetch } = useQueryProducts(
-    calculatePageAfterDeletion(totalItems - 1, 10),
+    calculatePageAfterDeletion(totalItems - 1, 10, currentPage),
     search
   );
 
@@ -70,7 +72,7 @@ const ModalDeleteProduct = ({
           />
           <h1 className="mb-2 font-bold">Eliminar producto</h1>
           <p>¿Deseas eliminar este producto?</p>
-          <Button onClik={handleSubmit} disabled={isPending}>
+          <Button onClick={handleSubmit} disabled={isPending}>
             {isPending ? <div className="loader" /> : "Si, eliminar"}
           </Button>
         </div>
