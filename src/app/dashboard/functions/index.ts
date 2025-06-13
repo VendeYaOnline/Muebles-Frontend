@@ -94,10 +94,10 @@ export const dataGenders = [
 
 export function convertCurrencyToNumber(currency: string): number {
   // Remove the dollar sign and any spaces
-  const sanitized = currency.replace(/[$\s]/g, '');
+  const sanitized = currency.replace(/[$\s]/g, "");
 
   // Replace dots with empty strings to handle thousand separators
-  const numericString = sanitized.replace(/\./g, '');
+  const numericString = sanitized.replace(/\./g, "");
 
   // Parse the resulting string into a number
   const numericValue = parseInt(numericString, 10);
@@ -105,7 +105,6 @@ export function convertCurrencyToNumber(currency: string): number {
   // Return the numeric value
   return numericValue;
 }
-
 
 export const getContrastingColor = (hexColor: string) => {
   // Convertir el color hex a valores RGB
@@ -169,10 +168,12 @@ export function convertPriceDiscount(value: string, discount: number) {
 
 export function calculatePageAfterDeletion(
   totalItems: number,
-  itemsPerPage: number
+  itemsPerPage: number,
+  currentPage: number
 ) {
-  // Calcula el total de páginas antes de la eliminación
-  return Math.ceil(totalItems / itemsPerPage);
+  const totalPagesAfterDeletion = Math.ceil(totalItems / itemsPerPage);
+  // Si la página actual ya no existe (por ejemplo eliminaste el único ítem de la última)
+  return Math.min(currentPage, totalPagesAfterDeletion);
 }
 
 export function menuAttribute(objeto: ValuesAttributes) {

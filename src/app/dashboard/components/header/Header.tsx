@@ -7,7 +7,7 @@ export function Header() {
   const getColor = (rol: string) => {
     switch (rol) {
       case "admin":
-        return "#d52525";
+        return "#254ed5";
 
       case "viewer":
         return "#118B50";
@@ -31,7 +31,7 @@ export function Header() {
         <div className="flex items-center gap-6">
           <h3>{user?.username}</h3>
           <div
-            className="text-white rounded-md p-2"
+            className="text-white rounded-md p-2 text-sm"
             style={{ backgroundColor: getColor(user?.role || "") }}
           >
             {getRole(user?.role || "")}

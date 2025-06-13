@@ -22,14 +22,14 @@ const ProductsStar = () => {
     <section>
       <div className="mb-5">
         <Button
-          onClik={() => setActiveModal(true)}
+          onClick={() => setActiveModal(true)}
           disabled={
             (data && data?.grandTotal >= 8) || userLogin?.role === "viewer"
           }
         >
           {data && data?.grandTotal >= 8
             ? "Límite alcanzado"
-            : "Crear destacado"}
+            : "Crear producto destacado"}
           <Star size={18} />
         </Button>
       </div>

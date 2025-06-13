@@ -9,6 +9,7 @@ import { calculatePageAfterDeletion } from "@/app/dashboard/functions";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
+  currentPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
   totalItems: number;
   refetch: VoidFunction;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const ModalDeleteSale = ({
+  currentPage,
   refetch,
   setCurrentPage,
   totalItems,
@@ -40,7 +42,9 @@ const ModalDeleteSale = ({
     try {
       await mutateAsync(idElement);
       refetch();
-      setCurrentPage(calculatePageAfterDeletion(totalItems - 1, 10));
+      setCurrentPage(
+        calculatePageAfterDeletion(totalItems - 1, 10, currentPage)
+      );
       toast.success("Venta eliminado");
       onClose();
     } catch (error: any) {
@@ -67,7 +71,7 @@ const ModalDeleteSale = ({
           />
           <h1 className="mb-2 font-bold">Eliminar venta</h1>
           <p>¿Deseas eliminar esta venta?</p>
-          <Button onClik={handleSubmit} disabled={isPending}>
+          <Button onClick={handleSubmit} disabled={isPending}>
             {isPending ? <div className="loader" /> : "Si, eliminar"}
           </Button>
         </div>

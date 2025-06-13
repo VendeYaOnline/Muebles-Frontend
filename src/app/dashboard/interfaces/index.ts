@@ -78,6 +78,13 @@ export interface Users {
   role: string;
 }
 
+export interface Contacts {
+  id: number;
+  subject: string;
+  email: string;
+  message: string;
+}
+
 export interface AttributeFind {
   attributes: AttributeUpdated[];
   total: number;
@@ -147,6 +154,13 @@ export interface UserRequest {
   totalPages: number;
 }
 
+export interface ContactRequest {
+  contacts: Contacts[];
+  total: number;
+  grandTotal: number;
+  page: number;
+  totalPages: number;
+}
 export interface FeaturedProductRequest {
   products: ProductElement[];
   total: number;

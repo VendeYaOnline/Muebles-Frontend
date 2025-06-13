@@ -129,6 +129,8 @@ export const colombia = [
   },
 ];
 
+
+
 export const totalSumSale = (
   products: {
     image_product: string;

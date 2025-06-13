@@ -14,6 +14,7 @@ import { ModalDeleteCategory } from "../../modals";
 import Input from "../../input/Input";
 import { PenLine, Trash2 } from "lucide-react";
 import { CategoriesFind } from "@/app/dashboard/interfaces";
+import Pagination from "../../pagination/Pagination";
 
 const headers = ["Nombre de la categoría"];
 interface Props {
@@ -105,6 +106,7 @@ const TableCategories = ({
   return (
     <div className="min-h-screen bg-gray-50">
       <ModalDeleteCategory
+        currentPage={currentPage}
         refetch={refetch}
         setCurrentPage={setCurrentPage}
         totalItems={data?.total || 0}
@@ -205,37 +207,13 @@ const TableCategories = ({
           </div>
         </div>
         {!isFetching && data && data.totalPages > 0 && (
-          <nav className="flex items-center justify-center space-x-2 mt-4">
-            <button
-              className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none"
-              onClick={handlePrevPage}
-              disabled={currentPage === 1}
-            >
-              Anterior
-            </button>
-
-            {Array.from({ length: data?.totalPages || 0 }, (_, index) => (
-              <button
-                key={index}
-                className={`px-3 py-2 rounded-md text-sm font-medium ${
-                  currentPage === index + 1
-                    ? "text-white bg-indigo-600"
-                    : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
-                }`}
-                onClick={() => setCurrentPage(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-
-            <button
-              className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none"
-              onClick={handleNextPage}
-              disabled={currentPage === data.totalPages}
-            >
-              Siguiente
-            </button>
-          </nav>
+          <Pagination
+            currentPage={currentPage}
+            handleNextPage={handleNextPage}
+            handlePrevPage={handlePrevPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={data?.totalPages || 0}
+          />
         )}
       </div>
     </div>

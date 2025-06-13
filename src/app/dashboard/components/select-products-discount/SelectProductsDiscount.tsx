@@ -61,7 +61,7 @@ const SelectProductsDiscount = ({
   }, [data, selectedItem?.current, setProducts]);
 
   const onClose = (newValue: Products) => {
-    if (SelectProductsDiscount.length <= 8) {
+    if (value.length <= 7) {
       const findProduct = value?.find((i) => i.title === newValue.title);
       const removeProduct = value?.filter((i) => i.title !== newValue.title);
       if (findProduct) {
@@ -144,6 +144,8 @@ const SelectProductsDiscount = ({
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 overflow-hidden">
                       <img
+                        width={28}
+                        height={28}
                         src={item.image_product}
                         className="rounded-sm w-full h-full object-cover"
                       />

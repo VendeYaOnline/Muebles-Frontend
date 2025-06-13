@@ -74,7 +74,7 @@ const ModalChangeStatus = ({ active, refetch, onClose, idElement }: Props) => {
             placeholder="Seleciona un estado"
           />
 
-          <Button onClik={handleSubmit} disabled={isPending}>
+          <Button onClick={handleSubmit} disabled={isPending}>
             {isPending ? <div className="loader" /> : "Actualizar"}
           </Button>
         </div>

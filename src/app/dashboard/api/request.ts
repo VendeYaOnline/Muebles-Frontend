@@ -4,10 +4,10 @@ import {
   AttributeUpdated,
   Carousel,
   CategoriesFind,
+  ContactRequest,
   FeaturedProductRequest,
   ImagesFind,
   ProductRequest,
-  Products,
   Sale,
   SaleFind,
   UserData,
@@ -36,6 +36,10 @@ export const updatedAttribute = async ({ id, ...data }: AttributeUpdated) => {
 
 export const deleteAttribute = async (idElement: number) => {
   return axiosConfig.delete(`/delete-attribute/${idElement}`);
+};
+
+export const deleteContact = async (idElement: number) => {
+  return axiosConfig.delete(`/delete-contact/${idElement}`);
 };
 
 // * PRODUCTOS
@@ -145,6 +149,16 @@ export const getUsers = async (page: number, search: string = "") => {
   const result = (
     await axiosConfig.get<UserRequest>(
       `/get-users?page=${page}&search=${search}`
+    )
+  ).data;
+
+  return result;
+};
+
+export const getContacts = async (page: number, search: string = "") => {
+  const result = (
+    await axiosConfig.get<ContactRequest>(
+      `/get-contacts?page=${page}&search=${search}`
     )
   ).data;
 

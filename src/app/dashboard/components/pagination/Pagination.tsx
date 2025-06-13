@@ -45,7 +45,7 @@ const Pagination = ({
             key={page}
             className={`px-3 py-2 rounded-md text-sm font-medium ${
               currentPage === page
-                ? "text-white bg-indigo-600"
+                ? "text-white bg-blue-600"
                 : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
             }`}
             onClick={() => setCurrentPage(page)}

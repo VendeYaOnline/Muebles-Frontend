@@ -141,7 +141,7 @@ const ModalUploadImages = ({
             )}
           </div>
 
-          <Button onClik={handleSubmit} disabled={valid || isPending}>
+          <Button onClick={handleSubmit} disabled={valid || isPending}>
             {isPending ? (
               <div className="loader" />
             ) : (

@@ -10,6 +10,7 @@ import { Dispatch, SetStateAction } from "react";
 import { calculatePageAfterDeletion } from "@/app/dashboard/functions";
 
 interface Props {
+  currentPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
   totalItems: number;
   active: boolean;
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const ModalDeleteAttribute = ({
+  currentPage,
   totalItems,
   active,
   onClose,
@@ -27,7 +29,7 @@ const ModalDeleteAttribute = ({
 }: Props) => {
   const { mutateAsync, isPending } = useMutationDeleteAttribute();
   const { refetch } = useQueryAttribute(
-    calculatePageAfterDeletion(totalItems - 1, 10),
+    calculatePageAfterDeletion(totalItems - 1, 10, currentPage),
     search
   );
 
@@ -84,7 +86,7 @@ const ModalDeleteAttribute = ({
           />
           <h1 className="mb-2 font-bold">Eliminar atributo</h1>
           <p>¿Deseas eliminar este atributo?</p>
-          <Button onClik={handleSubmit} disabled={isPending}>
+          <Button onClick={handleSubmit} disabled={isPending}>
             {isPending ? <div className="loader" /> : "Si, eliminar"}
           </Button>
         </div>

@@ -5,7 +5,7 @@
 }
 
 .addSpecs-active {
-  background-color: #6256ca;
+  background-color: #1b56fd;
   color: white;
   font-size: small;
   border-radius: 5px;
@@ -13,7 +13,7 @@
 }
 
 .addSpecs-disabled {
-  background-color: #7350f381;
+  background-color: #9fb3df;
   color: white;
   font-size: small;
   border-radius: 5px;

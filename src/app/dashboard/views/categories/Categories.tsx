@@ -20,7 +20,7 @@ const Categories = () => {
     <section>
       <div className="mb-5">
         <Button
-          onClik={() => setActiveModal(true)}
+          onClick={() => setActiveModal(true)}
           disabled={
             (data && data?.grandTotal >= 50) || userLogin?.role === "viewer"
           }

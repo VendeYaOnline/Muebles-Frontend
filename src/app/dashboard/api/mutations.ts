@@ -23,6 +23,7 @@ import {
   createCarousel,
   updatedCarousel,
   deleteCarousel,
+  deleteContact,
 } from "./request";
 
 // * ATRIBUTOS
@@ -37,6 +38,10 @@ export const useMutationUpdatedAttribute = () => {
 
 export const useMutationDeleteAttribute = () => {
   return useMutation({ mutationFn: deleteAttribute });
+};
+
+export const useMutationDeleteContact = () => {
+  return useMutation({ mutationFn: deleteContact });
 };
 
 // * PRODUCTOS

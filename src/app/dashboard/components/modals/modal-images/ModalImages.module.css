@@ -80,7 +80,7 @@
 }
 
 .card-option {
-  background-color: #6439ff;
+  background-color: #4668ff;
   transition: 500ms ease;
   color: white;
   width: 100%;
@@ -97,5 +97,5 @@
 }
 
 .card-option:hover {
-  background-color: #4621cf;
+  background-color: #3453dd;
 }

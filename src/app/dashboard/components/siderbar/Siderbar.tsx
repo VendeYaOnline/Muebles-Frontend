@@ -1,5 +1,4 @@
 import {
-  FileText,
   Package,
   Mail,
   PencilRuler,
@@ -9,6 +8,8 @@ import {
   HandCoins,
   ChartBarStacked,
   GalleryHorizontal,
+  ChartPie,
+  AppWindow,
 } from "lucide-react";
 import { SidebarLink } from "./SidebarLink";
 import { Dispatch, SetStateAction } from "react";
@@ -56,35 +57,41 @@ export function Sidebar({ view, setView }: Props) {
           selectItem={() => setView(5)}
           active={view === 5}
         />
-        <SidebarLink
-          icon={<Mail size={20} />}
-          text="Contacto"
+        {/*         <SidebarLink
+          icon={<ChartPie size={20} />}
+          text="Análisis"
           selectItem={() => setView(6)}
           active={view === 6}
-        />
+        /> */}
         <SidebarLink
-          icon={<PencilRuler size={20} />}
-          text="Atributos"
+          icon={<Mail size={20} />}
+          text="Mensajes"
           selectItem={() => setView(7)}
           active={view === 7}
         />
         <SidebarLink
-          icon={<Users size={20} />}
-          text="Usuarios"
+          icon={<PencilRuler size={20} />}
+          text="Atributos"
           selectItem={() => setView(8)}
           active={view === 8}
         />
         <SidebarLink
-          icon={<FileText size={20} />}
-          text="Banner"
+          icon={<Users size={20} />}
+          text="Usuarios"
           selectItem={() => setView(9)}
           active={view === 9}
         />
+        {/*         <SidebarLink
+          icon={<AppWindow size={20} />}
+          text="Banner"
+          selectItem={() => setView(10)}
+          active={view === 10}
+        /> */}
         <SidebarLink
           icon={<Images size={20} />}
           text="Galeria"
-          selectItem={() => setView(10)}
-          active={view === 10}
+          selectItem={() => setView(11)}
+          active={view === 11}
         />
       </nav>
 

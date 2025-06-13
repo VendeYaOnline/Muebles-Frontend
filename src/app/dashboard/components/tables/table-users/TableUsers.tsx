@@ -13,6 +13,7 @@ import TableSkeleton from "../../skeleton/Skeleton";
 import Input from "../../input/Input";
 import { ModalDeleteUser } from "../../modals";
 import { User } from "@/app/dashboard/hooks/useUser";
+import Pagination from "../../pagination/Pagination";
 const headers = ["Nombre del usuario", "Email", "Rol"];
 interface Props {
   currentPage: number;
@@ -93,12 +94,13 @@ const TableUsers = ({
   return (
     <div className="min-h-screen bg-gray-50">
       <ModalDeleteUser
+        currentPage={currentPage}
+        refetch={refetch}
         setCurrentPage={setCurrentPage}
         totalItems={data?.total || 0}
         active={active}
         onClose={onClose}
         idElement={idElement.current}
-        search={search}
       />
       <div className="mx-auto">
         <div className="rounded-lg border border-gray-200 bg-white shadow-sm">
@@ -169,7 +171,7 @@ const TableUsers = ({
                               )}
 
                               {user.role === "admin" && (
-                                <div className="w-28 text-center bg-[#d52525] text-white rounded-lg text-sm p-1">
+                                <div className="w-28 text-center bg-[#254ed5] text-white rounded-lg text-sm p-1">
                                   Administrador
                                 </div>
                               )}
@@ -214,43 +216,18 @@ const TableUsers = ({
           <div className="border-t border-gray-200 px-6 py-4">
             {isFetching && <TableSkeleton columns={4} />}
             <p className="text-sm text-gray-500">
-              Mostrando {data?.users.length || 0} de {data?.total || 0}{" "}
-              usuarios
+              Mostrando {data?.users.length || 0} de {data?.total || 0} usuarios
             </p>
           </div>
         </div>
         {!isFetching && data && data.totalPages > 0 && (
-          <nav className="flex items-center justify-center space-x-2 mt-4">
-            <button
-              className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none"
-              onClick={handlePrevPage}
-              disabled={currentPage === 1}
-            >
-              Anterior
-            </button>
-
-            {Array.from({ length: data?.totalPages || 0 }, (_, index) => (
-              <button
-                key={index}
-                className={`px-3 py-2 rounded-md text-sm font-medium ${
-                  currentPage === index + 1
-                    ? "text-white bg-indigo-600"
-                    : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
-                }`}
-                onClick={() => setCurrentPage(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-
-            <button
-              className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none"
-              onClick={handleNextPage}
-              disabled={currentPage === data.totalPages}
-            >
-              Siguiente
-            </button>
-          </nav>
+          <Pagination
+            currentPage={currentPage}
+            handleNextPage={handleNextPage}
+            handlePrevPage={handlePrevPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={data?.totalPages || 0}
+          />
         )}
       </div>
     </div>

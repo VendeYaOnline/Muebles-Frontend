@@ -4,10 +4,10 @@ import classes from "../ModalDelete.module.css";
 import { CircleX } from "lucide-react";
 import toast from "react-hot-toast";
 import Button from "../../button/Button";
-import { useQueryUsers } from "@/app/dashboard/api/queries";
-import { useMutationDeleteUser } from "@/app/dashboard/api/mutations";
-import { calculatePageAfterDeletion } from "@/app/dashboard/functions";
+import { useQueryContacts } from "@/app/dashboard/api/queries";
+import { useMutationDeleteAttribute, useMutationDeleteContact } from "@/app/dashboard/api/mutations";
 import { Dispatch, SetStateAction } from "react";
+import { calculatePageAfterDeletion } from "@/app/dashboard/functions";
 
 interface Props {
   currentPage: number;
@@ -16,19 +16,22 @@ interface Props {
   active: boolean;
   onClose: () => void;
   idElement: number;
-  refetch: VoidFunction;
+  search: string;
 }
 
-const ModalDeleteUser = ({
+const ModalDeleteContact = ({
   currentPage,
-  refetch,
-  setCurrentPage,
   totalItems,
   active,
   onClose,
   idElement,
+  search,
 }: Props) => {
-  const { mutateAsync, isPending } = useMutationDeleteUser();
+  const { mutateAsync, isPending } = useMutationDeleteContact();
+  const { refetch } = useQueryContacts(
+    calculatePageAfterDeletion(totalItems - 1, 10, currentPage),
+    search
+  );
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -43,16 +46,27 @@ const ModalDeleteUser = ({
     try {
       await mutateAsync(idElement);
       refetch();
-      setCurrentPage(
-        calculatePageAfterDeletion(totalItems - 1, 60, currentPage)
-      );
-      toast.success("Usuario eliminado");
+      toast.success("Mensaje eliminado");
       onClose();
     } catch (error: any) {
-      if (error.response && error.response.data.code === 403) {
+      if (error?.response?.data?.code === 403) {
         toast.error("Acción denegada");
+      } else if (error?.message === "Network Error") {
+        toast.error(
+          "No se pudo conectar al servidor. Verifica tu conexión a internet."
+        );
+      } else if (error?.code === "ECONNABORTED") {
+        toast.error(
+          "La conexión está tardando demasiado. Inténtalo nuevamente."
+        );
+      } else if (error?.response?.status) {
+        toast.error(
+          `Error ${error.response.status}: ${
+            error.response.statusText || "Error desconocido"
+          }`
+        );
       } else {
-        toast.error("Error al eliminar el usuario");
+        toast.error("Error al eliminar el atributo");
       }
     }
   };
@@ -70,8 +84,8 @@ const ModalDeleteUser = ({
               onClose();
             }}
           />
-          <h1 className="mb-2 font-bold">Eliminar usuario</h1>
-          <p>¿Deseas eliminar este usuario?</p>
+          <h1 className="mb-2 font-bold">Eliminar mensaje</h1>
+          <p>¿Deseas eliminar este mensaje?</p>
           <Button onClick={handleSubmit} disabled={isPending}>
             {isPending ? <div className="loader" /> : "Si, eliminar"}
           </Button>
@@ -81,4 +95,4 @@ const ModalDeleteUser = ({
   );
 };
 
-export default ModalDeleteUser;
+export default ModalDeleteContact;

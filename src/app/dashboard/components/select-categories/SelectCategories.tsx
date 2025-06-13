@@ -94,19 +94,24 @@ const SelectCategories = ({ label, categories, setCategories }: Props) => {
             <ArrowLeft size={13} />
           </button>
 
-          {Array.from({ length: data?.totalPages || 0 }, (_, index) => (
-            <button
-              key={index}
-              className={`h-5 w-5 p-1 my-2 rounded-md justify-center items-center text-[10px] ${
-                currentPage === index + 1
-                  ? "text-white bg-indigo-600"
-                  : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
-              }`}
-              onClick={() => setCurrentPage(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
+          {data && data.totalPages > 1 && (
+            <nav className="flex items-center space-x-2">
+              {Array.from({ length: data?.totalPages || 0 }, (_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  className={`w-5 h-5 rounded-md text-xs font-medium ${
+                    currentPage === index + 1
+                      ? "text-white bg-blue-600"
+                      : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
+                  }`}
+                  onClick={() => setCurrentPage(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </nav>
+          )}
 
           <button
             className="p-1 rounded-md text-sm font-sm text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none"

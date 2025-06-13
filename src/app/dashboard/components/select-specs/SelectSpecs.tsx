@@ -67,7 +67,7 @@ const SelectSpecs = ({ specs, setSpecs }: Props) => {
         {specs.map((item) => (
           <div
             key={item.title}
-            className="bg-[#6256ca] text-white p-1 rounded-md text-xs flex items-center gap-2"
+            className="bg-[#1B56FD] text-white p-1 rounded-md text-xs flex items-center gap-2"
           >
             {item.title}
             <CircleX

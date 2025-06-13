@@ -27,11 +27,11 @@ const ModalDetailsSale = ({ sale, onClose }: Props) => {
   const getStatusStyles = (status: string): string => {
     switch (status) {
       case "Pago pendiente":
-        return "bg-red-100 text-red-800";
+        return "bg-amber-100 text-amber-800";
       case "En tránsito":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-purple-100 text-purple-800";
       case "Gestionando pedido":
-        return "bg-orange-100 text-orange-800";
+        return "bg-blue-100 text-blue-800";
       case "Pedido entregado":
         return "bg-green-100 text-green-800";
       default:
@@ -44,7 +44,7 @@ const ModalDetailsSale = ({ sale, onClose }: Props) => {
       case "ticket":
         return "Efecty";
       case "bank_transfer":
-        return "PSE";
+        return "Transferencia";
       case "account_money":
         return "Cuenta de mercado pago";
       case "debit_card":
@@ -66,7 +66,7 @@ const ModalDetailsSale = ({ sale, onClose }: Props) => {
       >
         <div className={classes["form-modal"]} onClick={handleFormClick}>
           {/* Header */}
-          <div className="relative bg-gradient-to-r from-indigo-500 to-purple-600 p-6 rounded-t-2xl">
+          <div className="relative bg-gradient-to-r from-blue-700 to-blue-500 p-6">
             <button
               onClick={onClose}
               className="absolute right-4 top-4 text-white/80 hover:text-white transition-colors"
@@ -97,18 +97,15 @@ const ModalDetailsSale = ({ sale, onClose }: Props) => {
                 <div className="block text-sm">
                   {sale.products.map((product, index) => (
                     <div key={index} className="flex flex-col">
-                      <div
-                        className="skeleton-loader-image-product"
-                        style={{ width: 30 }}
-                      >
-                        <Image
-                          src={product.image_product}
-                          width={30}
-                          height={30}
-                          alt="imagen del producto"
-                          className="rounded-[5px]"
-                        />
-                      </div>
+                      <Image
+                        src={product.image_product}
+                        alt="Imagen del producto"
+                        width={80}
+                        height={80}
+                        sizes="(max-width: 768px) 60px, 80px"
+                        style={{ objectFit: "cover" }}
+                        className="rounded-[5px]"
+                      />
                       <span>
                         <strong>Producto: </strong>
 

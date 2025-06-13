@@ -15,7 +15,8 @@ interface Props {
   active: boolean;
   onClose: () => void;
   idElement: number;
-  search: string;
+  refetch: VoidFunction;
+  currentPage: number;
 }
 
 const ModalDeleteFeaturedProduct = ({
@@ -24,13 +25,10 @@ const ModalDeleteFeaturedProduct = ({
   active,
   onClose,
   idElement,
-  search,
+  currentPage,
+  refetch,
 }: Props) => {
   const { mutateAsync, isPending } = useMutationDeleteFeaturedProduct();
-  const { refetch } = useQueryFeaturedProducts(
-    calculatePageAfterDeletion(totalItems - 1, 10),
-    search
-  );
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -45,21 +43,31 @@ const ModalDeleteFeaturedProduct = ({
     try {
       await mutateAsync(idElement);
       refetch();
-      setCurrentPage(calculatePageAfterDeletion(totalItems - 1, 5));
+      setCurrentPage(
+        calculatePageAfterDeletion(totalItems - 1, 10, currentPage)
+      );
       toast.success("Producto destacado eliminado");
       onClose();
     } catch (error: any) {
       if (error?.response?.data?.code === 403) {
         toast.error("Acción denegada");
       } else if (error?.message === "Network Error") {
-        toast.error("No se pudo conectar al servidor. Verifica tu conexión a internet.");
+        toast.error(
+          "No se pudo conectar al servidor. Verifica tu conexión a internet."
+        );
       } else if (error?.code === "ECONNABORTED") {
-        toast.error("La conexión está tardando demasiado. Inténtalo nuevamente.");
+        toast.error(
+          "La conexión está tardando demasiado. Inténtalo nuevamente."
+        );
       } else if (error?.response?.status) {
-        toast.error(`Error ${error.response.status}: ${error.response.statusText || "Error desconocido"}`);
+        toast.error(
+          `Error ${error.response.status}: ${
+            error.response.statusText || "Error desconocido"
+          }`
+        );
       } else {
         toast.error("Error al eliminar el producto destacado");
-      }      
+      }
     }
   };
 
@@ -78,7 +86,7 @@ const ModalDeleteFeaturedProduct = ({
           />
           <h1 className="mb-2 font-bold">Eliminar producto destacado</h1>
           <p>¿Deseas eliminar este producto destacado?</p>
-          <Button onClik={handleSubmit} disabled={isPending}>
+          <Button onClick={handleSubmit} disabled={isPending}>
             {isPending ? <div className="loader" /> : "Si, eliminar"}
           </Button>
         </div>

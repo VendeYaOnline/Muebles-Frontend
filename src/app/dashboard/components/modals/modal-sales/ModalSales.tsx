@@ -28,6 +28,35 @@ interface Props {
   onClose: () => void;
 }
 
+const initialFormState: Sale = {
+  type_purchase: "local",
+  first_name: "",
+  last_name: "",
+  phone: "",
+  department: "",
+  city: "",
+  address: "",
+  additional_info: "",
+  email: "",
+  order_number: "",
+  products: [],
+  quantity: "",
+  status: "",
+  id_number: "",
+  payment_method: "",
+  purchase_date: new Date(),
+};
+
+const paymentMethodMap: Record<string, string> = {
+  Efecty: "ticket",
+  Transferencia: "bank_transfer",
+  "Mercado pago": "account_money",
+  "Tarjeta de débito": "debit_card",
+  "Tarjeta de crédito": "credit_card",
+  Efectivo: "cash",
+  Otro: "other",
+};
+
 const ModalSales = ({
   currentPage,
   query,
@@ -35,106 +64,67 @@ const ModalSales = ({
   active,
   onClose,
 }: Props) => {
-  const [product, setProduct] = useState<undefined | ProductSale>();
+  const [valuesForm, setValuesForm] = useState<Sale>({ ...initialFormState });
+  const [product, setProduct] = useState<ProductSale>();
+  const [errorMessage, setErrorMessage] = useState("");
+  const quantity = useRef(0);
+
   const { mutateAsync, isPending } = useMutationSales();
   const { refetch } = useQuerySales(currentPage, query);
-  const quantity = useRef(0);
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [valuesForm, setValuesForm] = useState<Sale>({
-    type_purchase: "local",
-    first_name: "",
-    last_name: "",
-    phone: "",
-    department: "",
-    city: "",
-    address: "",
-    additional_info: "",
-    email: "",
-    order_number: "",
-    products: [],
-    quantity: "",
-    status: "",
-    id_number: "",
-    payment_method: "",
-    purchase_date: new Date(),
-  });
 
-  const paymentMethod = (type: string) => {
-    switch (type) {
-      case "Efecty":
-        return "ticket";
-      case "PSE":
-        return "bank_transfer";
-      case "Mercado pago":
-        return "account_money";
-      case "Tarjeta de débito":
-        return "debit_card";
-      case "Tarjeta de crédito":
-        return "credit_card";
-      case "Efectivo":
-        return "cash";
-      default:
-        return "other";
-    }
+  const resetForm = () => {
+    setValuesForm({ ...initialFormState });
+    quantity.current = 0;
+    setProduct(undefined);
   };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
     try {
-      const productsWithoutId = valuesForm.products.map(
-        ({ id, ...rest }) => rest
-      );
-      const updatedValuesForm = {
+      const products = valuesForm.products.map(({ id, ...rest }) => rest);
+      const total = totalSumSale(products);
+      const payload = {
         ...valuesForm,
-        total: totalSumSale(productsWithoutId),
-        payment_method: paymentMethod(valuesForm.payment_method),
-        quantity: quantity.current + "",
-        products: productsWithoutId,
+        total,
+        payment_method: paymentMethodMap[valuesForm.payment_method],
+        quantity: quantity.current.toString(),
+        products,
       };
 
-      await mutateAsync(updatedValuesForm);
-      refetch();
-      setValuesForm({
-        type_purchase: "local",
-        first_name: "",
-        last_name: "",
-        phone: "",
-        department: "",
-        city: "",
-        address: "",
-        additional_info: "",
-        email: "",
-        order_number: "",
-        products: [],
-        quantity: "",
-        status: "",
-        id_number: "",
-        payment_method: "",
-        purchase_date: new Date(),
-      });
-      quantity.current = 0;
+      await mutateAsync(payload);
+      await refetch();
+      resetForm();
       onClose();
       toast.success("Venta creada");
     } catch {
       toast.error("Error al crear la venta");
     }
   };
+
   const removeProduct = (title: string) => {
-    const productToRemove = valuesForm.products.find(
-      (product) => product.title === title
+    const updatedProducts = valuesForm.products.filter(
+      (p) => p.title !== title
     );
-
-    if (productToRemove) {
-      quantity.current -= Number(productToRemove.quantity);
-
-      const result = valuesForm.products.filter(
-        (product) => product.title !== title
-      );
-
-      setValuesForm({ ...valuesForm, products: result });
+    const removedProduct = valuesForm.products.find((p) => p.title === title);
+    if (removedProduct) {
+      quantity.current -= Number(removedProduct.quantity);
+      setValuesForm({ ...valuesForm, products: updatedProducts });
     }
   };
 
+  const handlePhoneChange = (value: string) => {
+    if (/^\d*$/.test(value)) {
+      setValuesForm((prev) => ({ ...prev, phone: value }));
+    }
+  };
+
+  const handleQuantityChange = (value: string) => {
+    if (/^\d*$/.test(value)) {
+      setValuesForm((prev) => ({ ...prev, quantity: value }));
+    }
+  };
+
+  if (!active) return null;
   return (
     active && (
       <section className={classes["container-modal"]}>
@@ -184,7 +174,7 @@ const ModalSales = ({
                 onChange={(date) =>
                   setValuesForm({ ...valuesForm, purchase_date: date })
                 }
-                className="border border-[#7350f381] focus:border-[#6439ff] focus:outline-none rounded-[5px] w-full p-[7px]"
+                className="border border-[#DBDBDB] focus:border-[#1B56FD] focus:outline-none rounded-[5px] w-full p-[7px]"
               />
             </div>
 
@@ -193,12 +183,7 @@ const ModalSales = ({
               <Input
                 value={valuesForm.phone}
                 maxLength={10}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (/^\d*$/.test(value)) {
-                    setValuesForm({ ...valuesForm, phone: value });
-                  }
-                }}
+                onChange={(e) => handlePhoneChange(e.target.value)}
               />
             </div>
           </div>
@@ -319,7 +304,11 @@ const ModalSales = ({
                 <label>Producto</label>
                 <span className="text-red-600">*</span>
               </div>
-              <SelectSearchProducts value={product} setValue={setProduct} />
+              <SelectSearchProducts
+                value={product}
+                setValue={setProduct}
+                products={valuesForm.products}
+              />
             </div>
 
             <div className="flex flex-col gap-1 w-[216px]">
@@ -331,12 +320,7 @@ const ModalSales = ({
                 <Input
                   value={valuesForm.quantity}
                   maxLength={4}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (/^\d*$/.test(value)) {
-                      setValuesForm({ ...valuesForm, quantity: value });
-                    }
-                  }}
+                  onChange={(e) => handleQuantityChange(e.target.value)}
                 />
                 <button
                   type="button"
@@ -395,7 +379,7 @@ const ModalSales = ({
             <div className="text-red-500 text-xs">{errorMessage}</div>
           )}
 
-          <div className="flex gap-5 w-full flex-wrap">
+          <div className="flex gap-2 w-full flex-wrap max-h-[150px] overflow-auto">
             {valuesForm.products.map((product, index) => (
               <div key={index} className="burble">
                 {product.title} X {product.quantity}
@@ -459,7 +443,7 @@ const ModalSales = ({
                   { id: 2, name: "Tarjeta de crédito" },
                   { id: 3, name: "Tarjeta de débito" },
                   { id: 4, name: "Efecty" },
-                  { id: 5, name: "PSE" },
+                  { id: 5, name: "Transferencia" },
                   { id: 6, name: "Mercado pago" },
                   { id: 7, name: "Otro" },
                 ]}

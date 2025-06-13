@@ -12,13 +12,15 @@ import classes from "./SelectSearchProducts.module.css";
 import { Check, X } from "lucide-react";
 import { ProductSale } from "../../interfaces";
 import { useQueryProductsSearch } from "../../api/queries";
+import Image from "next/image";
 
 interface Props {
   value?: ProductSale;
+  products: ProductSale[];
   setValue: Dispatch<SetStateAction<ProductSale | undefined>>;
 }
 
-const SelectSearchProducts = ({ value, setValue }: Props) => {
+const SelectSearchProducts = ({ value, setValue, products }: Props) => {
   const [activeSelect, setActiveSelect] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -95,7 +97,7 @@ const SelectSearchProducts = ({ value, setValue }: Props) => {
               type="button"
               className={`w-4 h-4 rounded-md text-xs ${
                 currentPage === index + 1
-                  ? "text-white bg-indigo-600"
+                  ? "text-white bg-blue-600"
                   : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
               }`}
               onClick={() => setCurrentPage(index + 1)}
@@ -112,15 +114,16 @@ const SelectSearchProducts = ({ value, setValue }: Props) => {
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 overflow-hidden">
-                  <img
+                  <Image
+                    alt={value.title}
                     src={value.image_product}
+                    width={20}
+                    height={20}
                     className="rounded-sm w-full h-full object-cover"
                   />
                 </div>
-                <span>
-                  {value.title.length > 13
-                    ? value.title.slice(0, 13) + ".."
-                    : value.title}
+                <span className="text-sm w-32 truncate whitespace-nowrap overflow-hidden cursor-pointer">
+                  {value.title}
                 </span>
               </div>
 
@@ -152,7 +155,7 @@ const SelectSearchProducts = ({ value, setValue }: Props) => {
               data.products
                 .filter((i) => i.stock)
                 .map((item) => (
-                  <span
+                  <div
                     key={item.id}
                     onClick={() =>
                       onClose({
@@ -167,29 +170,33 @@ const SelectSearchProducts = ({ value, setValue }: Props) => {
                         purchase_total: "",
                       })
                     }
-                    className={
-                      item.title === value?.title
-                        ? `${classes.active} flex justify-between items-center`
-                        : "flex justify-between items-center"
-                    }
                   >
-                    <div className="flex items-center gap-2">
+                    <div
+                      className={`flex items-center gap-2 w-full px-2 ${
+                        products.find((i) => i.title === item.title)
+                          ? "bg-gray-200"
+                          : null
+                      }`}
+                    >
                       <div className="skeleton-loader-image-product">
                         <div className="w-7 h-7 overflow-hidden">
-                          <img
+                          <Image
+                            alt={item.title}
                             src={item.image_product}
+                            width={20}
+                            height={20}
                             className="rounded-sm w-full h-full object-cover"
                           />
                         </div>
                       </div>
 
-                      {item.title.length > 13
-                        ? item.title.slice(0, 13) + ".."
-                        : item.title}
+                      <span className="text-sm w-full truncate whitespace-nowrap overflow-hidden cursor-pointer">
+                        {item.title}
+                      </span>
                     </div>
 
                     {item.title === value?.title && <Check size={12} />}
-                  </span>
+                  </div>
                 ))
             ) : (
               <span>No hay productos</span>

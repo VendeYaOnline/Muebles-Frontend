@@ -1,7 +1,7 @@
 .input {
   width: 100%;
   border: none;
-  border: 1px solid #7350f381;
+  border: 1px solid #dbdbdb;
   outline: none;
   padding: 7px;
   border-radius: 5px;
@@ -9,5 +9,5 @@
 }
 
 .input:focus {
-  border: 1px solid #6439ff;
+  border: 1px solid #1b56fd;
 }

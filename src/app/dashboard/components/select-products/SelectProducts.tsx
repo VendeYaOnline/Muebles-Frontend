@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import classes from "./SelectProducts.module.css";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import { ProductRequest, Products } from "../../interfaces";
+import Image from "next/image";
 
 interface Props {
   value?: Products;
@@ -76,30 +77,35 @@ const SelectProducts = ({ data, value, setValue, placeholder }: Props) => {
       </div>
       {activeSelect && (
         <div className={classes.list}>
-          {data?.products.length && data.products.some(i => i.stock) ? (
-            data.products.filter(i => i.stock).map((item) => (
-              <span
-                key={item.id}
-                onClick={() => onClose(item)}
-                className={
-                  item.title === value?.title
-                    ? `${classes.active} flex justify-between items-center`
-                    : "flex justify-between items-center"
-                }
-              >
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 overflow-hidden">
-                    <img
-                      src={item.image_product}
-                      className="rounded-sm w-full h-full object-cover"
-                    />
+          {data?.products.length && data.products.some((i) => i.stock) ? (
+            data.products
+              .filter((i) => i.stock)
+              .map((item) => (
+                <span
+                  key={item.id}
+                  onClick={() => onClose(item)}
+                  className={
+                    item.title === value?.title
+                      ? `${classes.active} flex justify-between items-center`
+                      : "flex justify-between items-center"
+                  }
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 overflow-hidden">
+                      <Image
+                        src={item.image_product}
+                        width={40}
+                        height={40}
+                        className="rounded-sm w-full h-full object-cover"
+                        alt={item.title}
+                      />
+                    </div>
+                    {item.title}
                   </div>
-                  {item.title}
-                </div>
 
-                {item.title === value?.title && <Check size={12} />}
-              </span>
-            ))
+                  {item.title === value?.title && <Check size={12} />}
+                </span>
+              ))
           ) : (
             <span>No hay productos con stock</span>
           )}

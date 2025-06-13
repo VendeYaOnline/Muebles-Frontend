@@ -1,3 +1,5 @@
+"use client";
+
 import classes from "./Login.module.css";
 import Input from "../input/Input";
 import Button from "../button/Button";
@@ -9,44 +11,48 @@ import { verifyToken } from "../../api/request";
 
 const Login = () => {
   const { mutateAsync, isPending } = useMutationLoginUser();
-  const [isLoading, setIsloading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasMounted, setHasMounted] = useState(false);
   const [values, setValues] = useState({ email: "", password: "" });
   const { setUser } = useUser();
 
-  const verify = async () => {
-    try {
-      const token = localStorage.getItem("token-vendeyaonline");
-      const user = localStorage.getItem("user-vendeyaonline");
-
-      if (!token || !user) {
-        setUser(undefined);
-        return;
-      }
-
-      await verifyToken();
-      setUser(JSON.parse(user));
-    } catch (error: any) {
-      if (error?.message === "Network Error") {
-        toast.error("No se pudo conectar. Verifica tu conexión a internet.");
-      } else if (error?.code === "ECONNABORTED") {
-        toast.error(
-          "La conexión está tardando demasiado. Inténtalo nuevamente."
-        );
-      }
-      localStorage.removeItem("token-vendeyaonline");
-      localStorage.removeItem("user-vendeyaonline");
-    } finally {
-      setIsloading(false);
-    }
-  };
-
   useEffect(() => {
-    verify();
+    setHasMounted(true);
   }, []);
 
+  useEffect(() => {
+    const verify = async () => {
+      try {
+        const token = localStorage.getItem("token-vendeyaonline");
+        const user = localStorage.getItem("user-vendeyaonline");
+
+        if (!token || !user) {
+          setUser(undefined);
+          return;
+        }
+
+        await verifyToken();
+        setUser(JSON.parse(user));
+      } catch (error: any) {
+        if (error?.message === "Network Error") {
+          toast.error("No se pudo conectar. Verifica tu conexión a internet.");
+        } else if (error?.code === "ECONNABORTED") {
+          toast.error("La conexión está tardando demasiado. Inténtalo nuevamente.");
+        }
+        localStorage.removeItem("token-vendeyaonline");
+        localStorage.removeItem("user-vendeyaonline");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (hasMounted) verify();
+  }, [hasMounted]);
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     try {
-      e.preventDefault();
       const response = await mutateAsync(values);
       const { token, user } = response.data;
 
@@ -56,22 +62,14 @@ const Login = () => {
       toast.success("Login exitoso");
       setUser(user);
     } catch (error: any) {
-      if (error?.response?.data?.message === "Invalid credentials") {
-        toast.error("Credenciales no válidas");
-      } else if (error?.response?.data?.message === "User not found") {
+      if (error?.response?.data?.message === "Invalid credentials" || error?.response?.data?.message === "User not found") {
         toast.error("Credenciales no válidas");
       } else if (error?.message === "Network Error") {
         toast.error("No se pudo conectar. Verifica tu conexión a internet.");
       } else if (error?.code === "ECONNABORTED") {
-        toast.error(
-          "La conexión está tardando demasiado. Inténtalo nuevamente."
-        );
+        toast.error("La conexión está tardando demasiado. Inténtalo nuevamente.");
       } else if (error?.response?.status) {
-        toast.error(
-          `Error ${error.response.status}: ${
-            error.response.statusText || "Error desconocido"
-          }`
-        );
+        toast.error(`Error ${error.response.status}: ${error.response.statusText || "Error desconocido"}`);
       } else {
         toast.error("Error al iniciar sesión");
       }
@@ -80,6 +78,8 @@ const Login = () => {
 
   const isButtonDisabled = !values.email || !values.password || isPending;
 
+  if (!hasMounted) return null;
+
   return (
     <section className={classes["container-login"]}>
       {isLoading ? (
@@ -87,21 +87,24 @@ const Login = () => {
       ) : (
         <form className={classes["form-modal"]} onSubmit={handleSubmit}>
           <h1 className="font-bold text-xl">Acceso de usuario</h1>
+
           <label className="text-slate-600">Correo electrónico</label>
           <Input
             type="string"
             value={values.email}
             onChange={(e) => setValues({ ...values, email: e.target.value })}
           />
+
           <label className="text-slate-600">Contraseña</label>
           <Input
             type="password"
             value={values.password}
             onChange={(e) => setValues({ ...values, password: e.target.value })}
           />
+
           <br />
           <Button disabled={isButtonDisabled}>
-            {isPending ? <div className="loader" /> : "Iniciar de sesión"}
+            {isPending ? <div className="loader" /> : "Iniciar sesión"}
           </Button>
         </form>
       )}

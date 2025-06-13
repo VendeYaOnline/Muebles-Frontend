@@ -16,8 +16,7 @@
 
 .form-modal {
   width: 500px;
-  max-height: 550px;
-  overflow: auto;
+  max-height: 800px;
   margin-bottom: 30px;
   background-color: white;
   border-radius: 10px;

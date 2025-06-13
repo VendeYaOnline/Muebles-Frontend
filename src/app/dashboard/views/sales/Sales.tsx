@@ -20,7 +20,7 @@ const Sales = () => {
     <section>
       <div className="mb-5">
         <Button
-          onClik={() => setActiveModal(true)}
+          onClick={() => setActiveModal(true)}
           disabled={userLogin?.role === "viewer"}
         >
           Crear venta

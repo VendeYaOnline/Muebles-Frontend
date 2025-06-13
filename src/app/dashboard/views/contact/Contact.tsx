@@ -1,13 +1,38 @@
-import { Code } from "lucide-react";
+import { useRef, useState } from "react";
+import { Contacts } from "../../interfaces";
+import { useUser } from "../../hooks";
+import TableContact from "../../components/tables/table-contacts/TableContact";
 
 const Contact = () => {
+  const [activeModal, setActiveModal] = useState(false);
+  const { user: userLogin } = useUser();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
+  // const { data } = useQueryContacts(currentPage, search);
+  const selectedItem = useRef<Contacts | undefined>(undefined);
+
   return (
-    <div className="flex justify-center">
-      <div className="p-5 rounded-lg shadow-lg border-2 text-xl mt-5 flex justify-center flex-col">
-        <h1>En desarrollo</h1>
-        <Code className="m-auto mt-2" />
-      </div>
-    </div>
+    <section>
+      {/*       <ModalUsers
+        currentPage={currentPage}
+        active={activeModal}
+        selectedItem={selectedItem}
+        search={search}
+        onClose={() => {
+          setActiveModal(false);
+          selectedItem.current = undefined;
+        }}
+      /> */}
+      <TableContact
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        selectedItem={selectedItem}
+        setActiveModal={setActiveModal}
+        setSearch={setSearch}
+        search={search}
+        userLogin={userLogin}
+      />
+    </section>
   );
 };
 

@@ -18,7 +18,7 @@ const Attributes = () => {
     <section>
       <div className="mb-5">
         <Button
-          onClik={() => setActiveModal(true)}
+          onClick={() => setActiveModal(true)}
           disabled={
             (data && data?.grandTotal >= 30) || userLogin?.role === "viewer"
           }
