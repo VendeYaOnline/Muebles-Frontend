@@ -73,7 +73,7 @@ li {
 }
 
 .burble {
-  background-color: #6256ca;
+  background-color: #1841c9;
   color: white;
   display: flex;
   align-items: center;
@@ -86,7 +86,7 @@ li {
 }
 
 .burble-table {
-  background-color: #6256ca;
+  background-color: #1841c9;
   color: white;
   display: flex;
   align-items: center;
@@ -161,7 +161,7 @@ li {
 
 .loader-mini {
   border: 2px solid #f3f3f3;
-  border-top: 2px solid #441eda;
+  border-top: 2px solid #1344ca;
   border-radius: 50%;
   width: 13px;
   height: 13px;
@@ -170,7 +170,7 @@ li {
 
 .loader {
   border: 3px solid #f3f3f3;
-  border-top: 3px solid #441eda;
+  border-top: 3px solid #1344ca;
   border-radius: 50%;
   width: 30px;
   height: 30px;
@@ -178,7 +178,7 @@ li {
 }
 .loader-2 {
   border: 2px solid #f3f3f3;
-  border-top: 2px solid #441eda;
+  border-top: 2px solid #1344ca;
   border-radius: 50%;
   width: 20px;
   height: 20px;
@@ -187,7 +187,7 @@ li {
 
 .loader-3 {
   border: 5px solid #f3f3f3;
-  border-top: 5px solid #441eda;
+  border-top: 5px solid #1344ca;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -277,7 +277,7 @@ li {
   width: 20px; /* Tamaño del cuadrado */
   height: 20px; /* Igual que width */
   background-color: #fff;
-  border: 2px solid #6439ff;
+  border: 2px solid #1344ca;
   border-radius: 4px; /* Ajustar a 50% si lo quieres redondo */
   margin-right: 10px;
   position: relative;
@@ -287,8 +287,8 @@ li {
 
 /* Mostrar marca de verificación cuando está seleccionado */
 .custom-checkbox input:checked + .checkmark {
-  background-color: #6439ff;
-  border-color: #6439ff;
+  background-color: #1344ca;
+  border-color: #0b35aa;
 }
 
 /* Estilo para el símbolo de check */

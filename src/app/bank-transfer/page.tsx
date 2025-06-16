@@ -241,7 +241,7 @@ const BankTransfer = () => {
     <section className="min-h-screen flex justify-center items-center">
       <Link href="/checkout">
         <button
-          className={`absolute top-[90px] text-white py-[10px] px-[20px] left-5 rounded-[10px] bg-indigo-600 transition-all hover:bg-indigo-500`}
+          className={`absolute top-[90px] text-white py-[10px] px-[20px] left-5 rounded-[10px] bg-blue-600 transition-all hover:bg-blue-500`}
         >
           <ArrowLeftFromLine size={17} />
         </button>

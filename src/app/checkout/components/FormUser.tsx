@@ -215,13 +215,13 @@ const FormUser = ({ setCurrentStep }: Props) => {
       <div className="flex gap-2 w-full justify-center mt-10">
         <Button
           disabled
-          className="text-white bg-indigo-600 hover:bg-indigo-700"
+          className="text-white bg-blue-600 hover:bg-blue-700"
         >
           Anterior
         </Button>
         <Button
           disabled={!isFilled}
-          className="text-white bg-indigo-600 hover:bg-indigo-700"
+          className="text-white bg-blue-600 hover:bg-blue-700"
         >
           Siguiente
         </Button>

@@ -21,7 +21,7 @@ const FAQ = () => {
             value="item-1"
             className="border rounded-lg shadow-sm px-6 py-2 bg-white"
           >
-            <AccordionTrigger className="text-indigo-600 hover:text-indigo-700 hover:no-underline text-left">
+            <AccordionTrigger className="text-blue-600 hover:text-blue-700 hover:no-underline text-left">
               ¿Debo registrarme para poder comprar en MEM.com?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 pt-2">
@@ -35,7 +35,7 @@ const FAQ = () => {
             value="item-2"
             className="border rounded-lg shadow-sm px-6 py-2 bg-white"
           >
-            <AccordionTrigger className="text-indigo-600 hover:text-indigo-700 hover:no-underline text-left">
+            <AccordionTrigger className="text-blue-600 hover:text-blue-700 hover:no-underline text-left">
               ¿Cuál es el proceso para comprar en MEM.com?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 pt-2">
@@ -75,7 +75,7 @@ const FAQ = () => {
             value="item-3"
             className="border rounded-lg shadow-sm px-6 py-2 bg-white"
           >
-            <AccordionTrigger className="text-indigo-600 hover:text-indigo-700 hover:no-underline text-left">
+            <AccordionTrigger className="text-blue-600 hover:text-blue-700 hover:no-underline text-left">
               ¿En MEM.com tengo los mismos precios y descuentos que en tienda?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 pt-2">
@@ -89,7 +89,7 @@ const FAQ = () => {
             value="item-4"
             className="border rounded-lg shadow-sm px-6 py-2 bg-white"
           >
-            <AccordionTrigger className="text-indigo-600 hover:text-indigo-700 hover:no-underline text-left">
+            <AccordionTrigger className="text-blue-600 hover:text-blue-700 hover:no-underline text-left">
               ¿Encuentro los mismos productos tanto en tienda física como en
               MEM.com?
             </AccordionTrigger>

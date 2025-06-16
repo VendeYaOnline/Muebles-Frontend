@@ -248,7 +248,7 @@ const Checkout = () => {
                       </Button> */}
                       <Link href="/bank-transfer">
                         <Button
-                          className="w-full text-white bg-indigo-600 hover:bg-indigo-700 mt-3"
+                          className="w-full text-white bg-blue-600 hover:bg-blue-700 mt-3"
                           disabled={loading}
                         >
                           <div className="flex items-center gap-3">
@@ -269,13 +269,13 @@ const Checkout = () => {
           <div className="flex gap-2 w-full justify-center mt-10 m-auto">
             <Button
               onClick={() => setCurrentStep(1)}
-              className="text-white bg-indigo-600 hover:bg-indigo-700"
+              className="text-white bg-blue-600 hover:bg-blue-700"
             >
               Anterior
             </Button>
             <Button
               disabled
-              className="text-white bg-indigo-600 hover:bg-indigo-700"
+              className="text-white bg-blue-600 hover:bg-blue-700"
             >
               Siguiente
             </Button>

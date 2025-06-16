@@ -46,7 +46,7 @@ const DetailProduct = () => {
     <div className={classes["container-menu"]}>
       <Link href="/products">
         <button
-          className={`${classes["button-back"]} bg-indigo-600 transition-all hover:bg-indigo-500`}
+          className={`${classes["button-back"]} bg-blue-600 transition-all hover:bg-blue-500`}
         >
           <ArrowLeftFromLine size={17} />
         </button>
@@ -120,7 +120,7 @@ const DetailProduct = () => {
           {products.find(
             (a) => a.product.id === product.id && a.variant === selectColor
           ) ? (
-            <button className="flex items-center justify-between mt-5 text-md w-full bg-indigo-400 text-white py-3 px-4 rounded-md transition duration-300">
+            <button className="flex items-center justify-between mt-5 text-md w-full bg-blue-400 text-white py-3 px-4 rounded-md transition duration-300">
               Producto agregado
               <ShoppingCartIcon size={17} />
             </button>
@@ -130,7 +130,7 @@ const DetailProduct = () => {
                 addProduct(product, selectColor);
                 toast.success("Producto agregado");
               }}
-              className="mt-5 text-md w-full bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 transition duration-300"
+              className="mt-5 text-md w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition duration-300"
             >
               Agregar al carrito
             </button>

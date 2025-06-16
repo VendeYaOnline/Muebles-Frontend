@@ -48,7 +48,7 @@ export default function DropdownMenu({
               key={index}
               className={
                 itemSelected === item.text
-                  ? "text-xs w-full px-4 py-1 text-left bg-indigo-600 text-white flex items-center gap-2 transition-colors"
+                  ? "text-xs w-full px-4 py-1 text-left bg-blue-600 text-white flex items-center gap-2 transition-colors"
                   : "text-xs w-full px-4 py-1 text-left text-gray-700 flex items-center gap-2 transition-colors"
               }
               onClick={() => {

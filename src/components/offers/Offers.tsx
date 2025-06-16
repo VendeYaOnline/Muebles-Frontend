@@ -37,7 +37,7 @@ export default function ProductCarousel() {
                     <Button
                       size="icon"
                       variant="ghost"
-                      className="absolute right-2 top-2 text-indigo-500 hover:text-indigo-600"
+                      className="absolute right-2 top-2 text-blue-500 hover:text-blue-600"
                     >
                       <Plus className="h-6 w-6" />
                     </Button>
@@ -63,7 +63,7 @@ export default function ProductCarousel() {
                         <p className="text-gray-500 line-through text-sm">
                           {product.price}
                         </p>
-                        <p className="text-2xl font-bold text-indigo-600">
+                        <p className="text-2xl font-bold text-blue-600">
                           {product.discount_price}
                           <span className="text-sm font-normal ml-1">Hoy</span>
                         </p>
@@ -94,7 +94,7 @@ export default function ProductCarousel() {
               <div
                 key={index}
                 className={`h-2 w-2 rounded-full ${
-                  index === 0 ? "bg-indigo-600" : "bg-white/50"
+                  index === 0 ? "bg-blue-600" : "bg-white/50"
                 }`}
               />
             ))}

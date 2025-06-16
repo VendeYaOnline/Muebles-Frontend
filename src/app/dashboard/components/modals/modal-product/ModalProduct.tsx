@@ -655,7 +655,7 @@ const ModalProduct = ({
                   key={index}
                   className={`w-5 h-5 rounded-md text-xs font-medium ${
                     currentPage === index + 1
-                      ? "text-white bg-indigo-600"
+                      ? "text-white bg-blue-600"
                       : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
                   }`}
                   onClick={() => setCurrenPageAttribute(index + 1)}

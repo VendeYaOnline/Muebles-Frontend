@@ -37,7 +37,7 @@ export const useQueryProductsByCategory = (
   return useQuery({
     queryKey: ["products", validPage],
     queryFn: () => getProductsByCategory(validPage, search, categoryId),
-    staleTime: 1000 * 60 * 5, // Evita que los datos se vuelvan "stale" inmediatamente
+    staleTime: 1000 * 60 * 10, // Evita que los datos se vuelvan "stale" inmediatamente
     retry: 1, // Reintenta una vez en caso de fallo
     refetchOnWindowFocus: false, // Evita refetch automático al cambiar de pestaña
   });

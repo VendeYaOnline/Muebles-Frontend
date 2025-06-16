@@ -20,7 +20,7 @@ const Timeline = ({ steps, currentStep }: TimelineProps) => {
           key={step}
           className={`z-20 w-9 h-9 rounded-full flex justify-center flex-col items-center relative mb-3 ${
             index < animatedStep
-              ? "bg-indigo-500 text-white"
+              ? "bg-blue-500 text-white"
               : "bg-gray-200 text-white"
           }`}
         >
@@ -42,7 +42,7 @@ const Timeline = ({ steps, currentStep }: TimelineProps) => {
         style={{
           width: currentStep === 1 ? "0%" : "100%",
         }}
-        className="bg-indigo-600 rounded-lg absolute transition-all duration-500 ease-in-out h-1 bottom-7"
+        className="bg-blue-600 rounded-lg absolute transition-all duration-500 ease-in-out h-1 bottom-7"
       />
     </div>
   );

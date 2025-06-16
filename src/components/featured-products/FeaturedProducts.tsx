@@ -71,7 +71,7 @@ const FeaturedProducts = () => {
                   {/*      <p className="text-sm text-gray-600 mb-4">
                       {product.description}
                     </p> */}
-                  <button className=" text-sm w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
+                  <button className=" text-sm w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
                     Agregar al carrito
                   </button>
                 </div>

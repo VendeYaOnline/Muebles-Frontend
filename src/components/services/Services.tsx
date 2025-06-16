@@ -1,4 +1,4 @@
-import { Package, CreditCard, Headphones } from "lucide-react";
+import { CreditCard, Headphones, ShieldCheck } from "lucide-react";
 import classes from "./Services.module.css";
 
 export default function Services() {
@@ -7,35 +7,35 @@ export default function Services() {
       <div className={classes["container-services"]}>
         <div className="flex items-center space-x-4">
           <div>
-            <Package className="w-12 h-12 text-primary" size={50} />
+            <ShieldCheck size={50} strokeWidth={1.5} />
           </div>
           <div>
             <h3 className="sm:text-lg md:text-xl lg:text-xl xl:text-xl font-semibold">
-              Envío Gratis
+              Términos de Garantía
             </h3>
-            <p className="text-muted-foreground">Sin cargo por cada entrega</p>
+            <p className="text-muted-foreground">Garantía de los productos</p>
           </div>
         </div>
         <div className="flex items-center space-x-4">
           <div>
-            <CreditCard className="w-12 h-12 text-primary" />
+            <CreditCard size={50} strokeWidth={1.5} />
           </div>
           <div>
             <h3 className="sm:text-lg md:text-xl lg:text-xl xl:text-xl font-semibold">
-              Pago Rápido
+              Pago Transfrencia
             </h3>
             <p className="text-muted-foreground">Pago 100% seguro</p>
           </div>
         </div>
         <div className="flex items-center space-x-4">
           <div>
-            <Headphones className="w-12 h-12 text-primary" />
+            <Headphones size={50} strokeWidth={1.5} />
           </div>
           <div>
             <h3 className="sm:text-lg md:text-xl lg:text-xl xl:text-xl font-semibold">
               Soporte
             </h3>
-            <p className="text-muted-foreground">Asistencia rápida</p>
+            <p className="text-muted-foreground">Asistencia por Whatsapp</p>
           </div>
         </div>
       </div>

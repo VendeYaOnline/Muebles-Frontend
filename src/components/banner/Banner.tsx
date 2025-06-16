@@ -12,16 +12,14 @@ const Banner = () => {
           <div className={classes["container-text"]}>
             <h1 className="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
               <span className="block">Transforma tu hogar</span>
-              <span className="block text-indigo-500">
-                con estilo y confort
-              </span>
+              <span className="block text-blue-700">con estilo y confort</span>
             </h1>
             <p className="mt-5 text-base text-gray-300 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
               Descubre nuestra colección de muebles y electrodomésticos de alta
               calidad para crear el espacio perfecto que siempre has soñado.
             </p>
             <Link href="/products">
-              <Button className="mt-8 flex items-center justify-center border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 md:py-4 md:text-lg md:px-10">
+              <Button className="mt-8 flex items-center justify-center border border-transparent text-base font-medium rounded-md text-white bg-blue-800 hover:bg-blue-900 md:py-4 md:text-lg md:px-10">
                 Ver catálogo
               </Button>
             </Link>

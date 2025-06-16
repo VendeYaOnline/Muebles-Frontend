@@ -117,7 +117,7 @@ const Cart = () => {
           <div className="absolute bottom-20 bg-white w-full">
             <h1 className="text-xl mb-2">TOTAL: {total}</h1>
             <Link href="/checkout">
-              <button className="p-3 text-md w-[86%] box-content bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300">
+              <button className="p-3 text-md w-[86%] box-content bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
                 Ir al carrito y pagar
               </button>
             </Link>

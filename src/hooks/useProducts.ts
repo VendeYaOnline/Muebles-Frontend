@@ -1,7 +1,7 @@
 import { IProduct } from "@/interfaces";
 import { create } from "zustand";
 
-interface ProductWithQuantity {
+export interface ProductWithQuantity {
   quantity: number;
   product: IProduct;
   variant: string;
