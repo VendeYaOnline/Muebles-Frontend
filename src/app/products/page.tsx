@@ -228,6 +228,7 @@ function CardProduct({
           src={product.image_product}
           alt={product.title}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-contain"
           placeholder="empty"
           quality={75}

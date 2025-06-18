@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Star, Shield, Truck } from "lucide-react";
 import Modal from "./Modal";
 import Image from "next/image";
@@ -22,10 +22,10 @@ const ProductModal: React.FC<ProductModalProps> = ({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const allImages = [product.image_product, ...product.images];
   const { addProduct } = useProducts();
-  const isAdded = products.find((a) => a.product.id === product.id);
-  const selectFirtsColor = product.attributes.Color[0]?.color;
-
-  const [variant, setVariant] = useState(selectFirtsColor || "");
+  const [variant, setVariant] = useState("");
+  const isAdded = products.find(
+    (a) => a.product.id === product.id && a.variant === variant
+  );
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
   };
@@ -35,9 +35,19 @@ const ProductModal: React.FC<ProductModalProps> = ({
       (prev) => (prev - 1 + allImages.length) % allImages.length
     );
   };
+  const handleClose = useCallback(() => {
+    onClose();
+    setVariant("");
+    setCurrentImageIndex(0);
+  }, []);
+
+  useEffect(() => {
+    const selectFirtsColor = product.attributes.Color[0]?.color;
+    setVariant(selectFirtsColor);
+  }, [isOpen]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="xl">
+    <Modal isOpen={isOpen} onClose={handleClose} size="xl">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6">
         {/* Galería de imágenes */}
         <div className="space-y-4">

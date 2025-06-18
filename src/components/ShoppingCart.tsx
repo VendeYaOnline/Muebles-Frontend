@@ -63,9 +63,9 @@ const ShoppingCartComponent = ({
           </div>
 
           <div className="max-h-96 overflow-y-auto">
-            {items.map((item) => (
+            {items.map((item, index) => (
               <div
-                key={item.product.id}
+                key={index}
                 className="p-4 border-b border-gray-100 last:border-b-0"
               >
                 <div className="flex items-center space-x-3">
@@ -156,7 +156,7 @@ const ShoppingCartComponent = ({
               <span className="text-lg font-bold text-blue-700">{total}</span>
             </div>
 
-            <Link href="/checkout">
+            <Link href="/checkout" onClick={() => setIsOpen(false)}>
               <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200 font-medium">
                 Proceder al Pago
               </button>

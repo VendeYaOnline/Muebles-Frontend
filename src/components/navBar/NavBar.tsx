@@ -62,7 +62,6 @@ const Navbar = () => {
     }
     setActiveDropdown(title);
   };
-  console.log("pathname", pathname);
   const handleMouseLeave = () => {
     dropdownTimeoutRef.current = setTimeout(() => {
       setActiveDropdown(null);
