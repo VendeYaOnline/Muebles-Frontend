@@ -113,17 +113,37 @@ const ShoppingCartComponent = ({
                     <X className="w-4 h-4" />
                   </button>
                 </div>
+                {item.variant ? (
+                  <div className="mt-2 flex justify-between items-center">
+                    <div className="text-sm flex items-center gap-2">
+                      Color:
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: item.variant }}
+                      />
+                    </div>
 
-                <div className="mt-2 text-right">
-                  <span className="text-sm font-semibold text-gray-900">
-                    {calculateTotal(
-                      item.product.discount_price
-                        ? item.product.discount_price
-                        : item.product.price,
-                      item.quantity
-                    )}
-                  </span>
-                </div>
+                    <span className="text-sm font-semibold text-gray-900">
+                      {calculateTotal(
+                        item.product.discount_price
+                          ? item.product.discount_price
+                          : item.product.price,
+                        item.quantity
+                      )}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="mt-2 text-right">
+                    <span className="text-sm font-semibold text-gray-900">
+                      {calculateTotal(
+                        item.product.discount_price
+                          ? item.product.discount_price
+                          : item.product.price,
+                        item.quantity
+                      )}
+                    </span>
+                  </div>
+                )}
               </div>
             ))}
           </div>

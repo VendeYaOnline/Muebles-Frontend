@@ -6,6 +6,8 @@ import IconVisa from "/public/icons/visa.svg";
 import IconMasterCard from "/public/icons/mastercard.svg";
 import IconPse from "/public/icons/pse.png";
 import IconEfecty from "/public/icons/efecty.png";
+import IconBbva from "/public/logo-bbva.png";
+import IconBancolombia from "/public/logo-bancolombia.svg";
 import Image from "next/image";
 
 const Footer = () => {
@@ -75,31 +77,17 @@ const Footer = () => {
               <h4 className="text-lg font-semibold mb-4">Medios de pago</h4>
               <div className="flex space-x-4 flex-wrap gap-3">
                 <Image
-                  src={IconVisa}
-                  width={30}
-                  height={30}
-                  alt="icono de visa"
-                  style={{ width: 30, height: 30 }}
+                  src={IconBbva}
+                  width={50}
+                  height={50}
+                  alt="icono de bbva"
+                  style={{ width: 60, height: 20 }}
                 />
                 <Image
-                  src={IconMasterCard}
+                  src={IconBancolombia}
                   width={30}
                   height={30}
-                  alt="icono de mastercard"
-                  style={{ width: 30, height: 30 }}
-                />
-                <Image
-                  src={IconPse}
-                  width={30}
-                  height={30}
-                  alt="icono de pse"
-                  style={{ width: 30, height: 30 }}
-                />
-                <Image
-                  src={IconEfecty}
-                  width={30}
-                  height={30}
-                  alt="icono de efecty"
+                  alt="icono de bancolombia"
                   style={{ width: 30, height: 30 }}
                 />
               </div>

@@ -12,6 +12,7 @@ import {
   Package,
   Check,
   ShoppingCartIcon,
+  Eye,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -25,7 +26,6 @@ import {
 import { Pagination } from "@/components";
 import SkeletonCategories from "@/components/skeleton-categories/SkeletonCategories";
 import Image from "next/image";
-import Link from "next/link";
 import toast from "react-hot-toast";
 
 import { useCategory, useProduct, useProducts } from "@/hooks";
@@ -33,20 +33,20 @@ import { IProduct } from "@/interfaces";
 import { useDebounce } from "@/hooks/useDebounce"; // nuevo hook debounce
 
 import classes from "./products.module.css";
+import ProductModal from "@/components/ProductModal";
 
 function Products() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const debouncedSearch = useDebounce(search);
   const debouncedCategory = useDebounce(selectedCategories);
 
-  const { setProduct } = useProduct();
+  const { setProduct, product: productCart } = useProduct();
   const { categories } = useCategory();
   const { addProduct, products } = useProducts();
-
   const { data: categoryData, isLoading: loadingCategories } =
     useQueryCategoriesStore();
 
@@ -158,6 +158,8 @@ function Products() {
                     setProduct={setProduct}
                     addCart={addCart}
                     products={products}
+                    isModalOpen={isModalOpen}
+                    setIsModalOpen={setIsModalOpen}
                   />
                 ))}
               </div>
@@ -183,12 +185,27 @@ function Products() {
           )}
         </section>
       </div>
+
+      {productCart && (
+        <ProductModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          product={productCart}
+          products={products}
+        />
+      )}
     </div>
   );
 }
 
 // Subcomponente para producto individual
-function CardProduct({ product, setProduct, addCart, products }: any) {
+function CardProduct({
+  product,
+  setProduct,
+  addCart,
+  products,
+  setIsModalOpen,
+}: any) {
   const isAdded = products.find((a: any) => a.product.id === product.id);
 
   return (
@@ -196,19 +213,27 @@ function CardProduct({ product, setProduct, addCart, products }: any) {
       className="bg-white rounded-lg shadow-md overflow-hidden relative"
       onClick={() => setProduct(product)}
     >
-      <Link href={`/products/${product.title.toLowerCase()}-${product.id}`}>
-        <div className="relative h-44">
-          <Image
-            src={product.image_product}
-            alt={product.title}
-            fill
-            className="object-contain"
-            placeholder="empty"
-            quality={75}
-            priority={product.id === 1}
-          />
+      <div className="relative h-44" onClick={() => setIsModalOpen(true)}>
+        <div className="w-full h-full absolute top-0 bottom-0 z-20 transition-all duration-700 hover:bg-[#d2d3d693] flex justify-center items-center cursor-pointer">
+          <div className="relative group w-full h-full">
+            <div className="w-full h-full absolute top-0 bottom-0 z-20 transition-all duration-700 group-hover:bg-[#d2d3d693] flex justify-center items-center cursor-pointer">
+              <Eye
+                className="opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                color="white"
+              />
+            </div>
+          </div>
         </div>
-      </Link>
+        <Image
+          src={product.image_product}
+          alt={product.title}
+          fill
+          className="object-contain"
+          placeholder="empty"
+          quality={75}
+          priority={product.id === 1}
+        />
+      </div>
       {product.discount > 0 && (
         <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 m-2 rounded-md">
           {product.discount}% OFF
