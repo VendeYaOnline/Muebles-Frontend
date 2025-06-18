@@ -100,6 +100,7 @@ const TableAttribute = ({
         onClose={onClose}
         idElement={idElement.current}
         search={search}
+        currentPage={currentPage}
       />
       <div className="mx-auto">
         <div className="rounded-lg border border-gray-200 bg-white shadow-sm">
