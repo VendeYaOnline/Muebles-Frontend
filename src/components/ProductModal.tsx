@@ -23,9 +23,9 @@ const ProductModal: React.FC<ProductModalProps> = ({
   const allImages = [product.image_product, ...product.images];
   const { addProduct } = useProducts();
   const isAdded = products.find((a) => a.product.id === product.id);
-  const selectFirtsColor = product.attributes.Color[0].color;
+  const selectFirtsColor = product.attributes.Color[0]?.color;
 
-  const [variant, setVariant] = useState(selectFirtsColor);
+  const [variant, setVariant] = useState(selectFirtsColor || "");
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
   };
