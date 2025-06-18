@@ -57,6 +57,8 @@ const PaymentMethodBadge = ({ method }: { method: string }) => {
     cash: "Efectivo",
     ticket: "Efecty",
     other: "Otro medio de pago",
+    bank_transfer_bancolombia: "Transferencia Bancolombia",
+    bank_transfer_bbva: "Transferencia BBVA",
   };
   return (
     <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
