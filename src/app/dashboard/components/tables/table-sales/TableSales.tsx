@@ -203,93 +203,112 @@ const TableSales = ({
             </div>
           </div>
 
-          {!isFetching && data?.sales?.length ? (
+          {!isFetching && (
             <div className="container-table">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="border-t border-gray-200 bg-gray-50/50">
-                    {headers.map((h, i) => (
-                      <th key={i} className="px-6 py-3 text-left">
-                        <div className="flex items-center gap-2 font-medium text-gray-500">
-                          {h}
-                        </div>
-                      </th>
-                    ))}
-                    <th className="px-6 py-3 text-right text-gray-500 font-medium">
-                      Acciones
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {data.sales.map((sale) => (
-                    <tr
-                      key={sale.id}
-                      className="group hover:bg-gray-50/50 transition-colors"
-                    >
-                      <td className="px-6 py-4 text-gray-600">
-                        {sale.purchase_date}
-                      </td>
-                      <td className="px-6 py-4 text-gray-600">{sale.city}</td>
-                      <td className="px-6 py-4 text-gray-600">{sale.phone}</td>
-                      <td className="py-4 min-w-48">
-                        <StatusBadge status={sale.status} />
-                      </td>
-                      <td className="px-6 py-4">{sale.order_number}</td>
-                      <td className="py-4 min-w-40">
-                        <PaymentMethodBadge method={sale.payment_method} />
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        {userLogin?.role === "viewer" ? (
-                          <div className="flex justify-end gap-3">
-                            <Eye size={17} color="#3d530047" />
-                            {sale.type_purchase === "local" && (
-                              <Trash2 size={17} color="#fa3f3282" />
-                            )}
+              {data?.sales?.length ? (
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-t border-gray-200 bg-gray-50/50">
+                      {headers.map((h, i) => (
+                        <th key={i} className="px-6 py-3 text-left">
+                          <div className="flex items-center gap-2 font-medium text-gray-500">
+                            {h}
                           </div>
-                        ) : (
-                          <div className="flex justify-end gap-3">
-                            <Eye
-                              size={17}
-                              className="cursor-pointer text-gray-500"
-                              onClick={() => setSale(sale)}
-                            />
-                            <PenLine
-                              size={17}
-                              className="cursor-pointer"
-                              onClick={() => {
-                                idElement.current = sale.id;
-                                setActiveStatusModal(true);
-                              }}
-                            />
-                            {sale.type_purchase === "local" && (
-                              <Trash2
+                        </th>
+                      ))}
+                      <th className="px-6 py-3 text-right text-gray-500 font-medium">
+                        Acciones
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {data?.sales.map((sale) => (
+                      <tr
+                        key={sale.id}
+                        className="group hover:bg-gray-50/50 transition-colors"
+                      >
+                        <td className="px-6 py-4 text-gray-600">
+                          {sale.purchase_date}
+                        </td>
+                        <td className="px-6 py-4 text-gray-600">{sale.city}</td>
+                        <td className="px-6 py-4 text-gray-600">
+                          {sale.phone}
+                        </td>
+                        <td className="py-4 min-w-48">
+                          <StatusBadge status={sale.status} />
+                        </td>
+                        <td className="px-6 py-4">{sale.order_number}</td>
+                        <td className="py-4 min-w-40">
+                          <PaymentMethodBadge method={sale.payment_method} />
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          {userLogin?.role === "viewer" ? (
+                            <div className="flex justify-end gap-3">
+                              <Eye size={17} color="#3d530047" />
+                              {sale.type_purchase === "local" && (
+                                <Trash2 size={17} color="#fa3f3282" />
+                              )}
+                            </div>
+                          ) : (
+                            <div className="flex justify-end gap-3">
+                              <Eye
                                 size={17}
-                                className="cursor-pointer text-red-700"
+                                className="cursor-pointer text-gray-500"
+                                onClick={() => setSale(sale)}
+                              />
+                              <PenLine
+                                size={17}
+                                className="cursor-pointer"
                                 onClick={() => {
                                   idElement.current = sale.id;
-                                  setActiveDelete(true);
+                                  setActiveStatusModal(true);
                                 }}
                               />
-                            )}
-                          </div>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                              {sale.type_purchase === "local" && (
+                                <Trash2
+                                  size={17}
+                                  className="cursor-pointer text-red-700"
+                                  onClick={() => {
+                                    idElement.current = sale.id;
+                                    setActiveDelete(true);
+                                  }}
+                                />
+                              )}
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div>
+                  <div className="px-6 h-10">
+                    <h1 className="text-slate-400">No hay productos</h1>
+                  </div>
+
+                  <div className="border-t rounded-b-lg border-gray-200 px-6 py-4 bg-white">
+                    <p className="text-sm text-gray-500">
+                      Mostrando {data?.sales.length || 0} de {data?.total || 0}{" "}
+                      ventas
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
-          ) : (
-            <TableSkeleton />
           )}
         </div>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={data?.totalPages || 1}
-          handleNextPage={handleNextPage}
-          handlePrevPage={handlePrevPage}
-          setCurrentPage={setCurrentPage}
-        />
+        {isFetching ? (
+          <TableSkeleton columns={10} />
+        ) : (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={data?.totalPages || 1}
+            handleNextPage={handleNextPage}
+            handlePrevPage={handlePrevPage}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
       </div>
     </div>
   );
