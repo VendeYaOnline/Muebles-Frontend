@@ -3,7 +3,16 @@
 import { initMercadoPago } from "@mercadopago/sdk-react";
 import Image from "next/image";
 import { useProducts, useUser } from "@/hooks";
-import { Landmark, Minus, Plus, Trash2, ChevronLeft, ShieldCheck, Truck, Tag } from "lucide-react";
+import {
+  Landmark,
+  Minus,
+  Plus,
+  Trash2,
+  ChevronLeft,
+  ShieldCheck,
+  Truck,
+  Tag,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "../dashboard/hooks";
@@ -17,7 +26,14 @@ import toast from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Checkout = () => {
-  const { products, addProduct, removeProduct, deleteProduct, totalQuantity, totalDiscount } = useProducts();
+  const {
+    products,
+    addProduct,
+    removeProduct,
+    deleteProduct,
+    totalQuantity,
+    totalDiscount,
+  } = useProducts();
   const { setActive } = useCart();
   const navigator = useRouter();
   const total = totalSum(products);
@@ -25,9 +41,15 @@ const Checkout = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const { user } = useUser();
 
-  useEffect(() => { if (!products.length) navigator.push("/products"); }, [products]);
-  useEffect(() => { setActive(false); }, []);
-  useEffect(() => { if (user) setCurrentStep(2); }, [user]);
+  useEffect(() => {
+    if (!products.length) navigator.push("/products");
+  }, [products]);
+  useEffect(() => {
+    setActive(false);
+  }, []);
+  useEffect(() => {
+    if (user) setCurrentStep(2);
+  }, [user]);
 
   initMercadoPago(process.env.NEXT_PUBLIC_API_KEY || "", { locale: "es-CO" });
 
@@ -38,7 +60,9 @@ const Checkout = () => {
         const { init_point } = await createPreference(products, user);
         const date = getDate();
         await saveData(
-          user.email, total, date,
+          user.email,
+          total,
+          date,
           products.map((item) => ({
             ...item,
             product: {
@@ -51,10 +75,14 @@ const Checkout = () => {
               quantity: item.quantity,
               purchase_total:
                 item.product.discount !== 0
-                  ? convertCurrencyToNumber(item.product.discount_price) * Number(item.quantity) + ""
-                  : convertCurrencyToNumber(item.product.price) * Number(item.quantity) + "",
+                  ? convertCurrencyToNumber(item.product.discount_price) *
+                      Number(item.quantity) +
+                    ""
+                  : convertCurrencyToNumber(item.product.price) *
+                      Number(item.quantity) +
+                    "",
             },
-          }))
+          })),
         );
         if (init_point) window.location.href = init_point;
       } else {
@@ -81,7 +109,10 @@ const Checkout = () => {
             className="flex flex-col gap-2"
           >
             <div className="gold-line" />
-            <h1 className="text-2xl text-charcoal" style={{ fontFamily: "var(--font-bold)" }}>
+            <h1
+              className="text-2xl text-charcoal"
+              style={{ fontFamily: "var(--font-bold)" }}
+            >
               Checkout
             </h1>
           </motion.div>
@@ -90,7 +121,10 @@ const Checkout = () => {
 
       <div className="max-w-6xl mx-auto px-6 lg:px-8 py-12">
         {/* Timeline */}
-        <Timeline steps={["Datos del comprador", "Resumen y pago"]} currentStep={currentStep} />
+        <Timeline
+          steps={["Datos del comprador", "Resumen y pago"]}
+          currentStep={currentStep}
+        />
 
         {/* Step content */}
         <AnimatePresence mode="wait">
@@ -117,7 +151,10 @@ const Checkout = () => {
               <div className="flex flex-col gap-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="gold-line" />
-                  <h2 className="text-lg text-charcoal" style={{ fontFamily: "var(--font-semibold)" }}>
+                  <h2
+                    className="text-lg text-charcoal"
+                    style={{ fontFamily: "var(--font-semibold)" }}
+                  >
                     Tus productos
                   </h2>
                 </div>
@@ -144,16 +181,26 @@ const Checkout = () => {
 
                       {/* Info */}
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-sm text-charcoal mb-0.5 line-clamp-1" style={{ fontFamily: "var(--font-semibold)" }}>
+                        <h3
+                          className="text-sm text-charcoal mb-0.5 line-clamp-1"
+                          style={{ fontFamily: "var(--font-semibold)" }}
+                        >
                           {product.title}
                         </h3>
                         {product.Categories.length > 0 && (
-                          <p className="text-xs text-warm-gray mb-1">{product.Categories[0].name}</p>
+                          <p className="text-xs text-warm-gray mb-1">
+                            {product.Categories[0].name}
+                          </p>
                         )}
                         {variant && (
                           <div className="flex items-center gap-1.5 mb-1.5">
-                            <div className="w-3 h-3 rounded-full border border-warm-border" style={{ backgroundColor: variant }} />
-                            <span className="text-[10px] text-warm-gray">Color</span>
+                            <div
+                              className="w-3 h-3 rounded-full border border-warm-border"
+                              style={{ backgroundColor: variant }}
+                            />
+                            <span className="text-[10px] text-warm-gray">
+                              Color
+                            </span>
                           </div>
                         )}
 
@@ -165,7 +212,10 @@ const Checkout = () => {
                           >
                             <Minus size={10} className="text-charcoal" />
                           </button>
-                          <span className="w-5 text-center text-xs text-charcoal" style={{ fontFamily: "var(--font-semibold)" }}>
+                          <span
+                            className="w-5 text-center text-xs text-charcoal"
+                            style={{ fontFamily: "var(--font-semibold)" }}
+                          >
                             {quantity}
                           </span>
                           <button
@@ -188,13 +238,21 @@ const Checkout = () => {
                         <div className="text-right">
                           {product.discount_price ? (
                             <>
-                              <p className="text-xs text-warm-gray line-through">{product.price}</p>
-                              <p className="text-sm text-charcoal" style={{ fontFamily: "var(--font-bold)" }}>
+                              <p className="text-xs text-warm-gray line-through">
+                                {product.price}
+                              </p>
+                              <p
+                                className="text-sm text-charcoal"
+                                style={{ fontFamily: "var(--font-bold)" }}
+                              >
                                 {product.discount_price}
                               </p>
                             </>
                           ) : (
-                            <p className="text-sm text-charcoal" style={{ fontFamily: "var(--font-bold)" }}>
+                            <p
+                              className="text-sm text-charcoal"
+                              style={{ fontFamily: "var(--font-bold)" }}
+                            >
                               {product.price}
                             </p>
                           )}
@@ -209,7 +267,10 @@ const Checkout = () => {
               <div className="flex flex-col gap-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="gold-line" />
-                  <h2 className="text-lg text-charcoal" style={{ fontFamily: "var(--font-semibold)" }}>
+                  <h2
+                    className="text-lg text-charcoal"
+                    style={{ fontFamily: "var(--font-semibold)" }}
+                  >
                     Resumen
                   </h2>
                 </div>
@@ -219,27 +280,43 @@ const Checkout = () => {
                   <div className="p-6 flex flex-col gap-4">
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-warm-gray">Productos</span>
-                      <span className="text-charcoal" style={{ fontFamily: "var(--font-semibold)" }}>
+                      <span
+                        className="text-charcoal"
+                        style={{ fontFamily: "var(--font-semibold)" }}
+                      >
                         {totalQuantity}
                       </span>
                     </div>
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-warm-gray">Envío</span>
-                      <span className="text-green-600 text-xs font-medium">Gratis</span>
+                      <span className="text-green-600 text-xs font-medium">
+                        Gratis
+                      </span>
                     </div>
                     {totalDiscount > 0 && (
                       <div className="flex justify-between items-center text-sm">
                         <span className="text-warm-gray flex items-center gap-1">
                           <Tag className="w-3 h-3" /> Ahorraste
                         </span>
-                        <span className="text-gold text-xs" style={{ fontFamily: "var(--font-semibold)" }}>
+                        <span
+                          className="text-gold text-xs"
+                          style={{ fontFamily: "var(--font-semibold)" }}
+                        >
                           {`$ ${totalDiscount.toLocaleString("es-CO")}`}
                         </span>
                       </div>
                     )}
                     <div className="border-t border-warm-border pt-4 flex justify-between items-center">
-                      <span className="text-charcoal" style={{ fontFamily: "var(--font-semibold)" }}>Total</span>
-                      <span className="text-xl text-charcoal" style={{ fontFamily: "var(--font-bold)" }}>
+                      <span
+                        className="text-charcoal"
+                        style={{ fontFamily: "var(--font-semibold)" }}
+                      >
+                        Total
+                      </span>
+                      <span
+                        className="text-xl text-charcoal"
+                        style={{ fontFamily: "var(--font-bold)" }}
+                      >
                         {total}
                       </span>
                     </div>
@@ -248,8 +325,8 @@ const Checkout = () => {
                   {/* Trust badges */}
                   <div className="px-6 py-4 bg-cream border-t border-warm-border flex flex-col gap-2">
                     {[
-                      { icon: ShieldCheck, text: "Compra 100% segura" },
-                      { icon: Truck, text: "Envío a toda Colombia" },
+                      { icon: ShieldCheck, text: "Compra segura" },
+                      { icon: Truck, text: "Envío a todo el llano colombiano" },
                     ].map(({ icon: Icon, text }) => (
                       <div key={text} className="flex items-center gap-2">
                         <Icon className="w-3.5 h-3.5 text-gold flex-shrink-0" />

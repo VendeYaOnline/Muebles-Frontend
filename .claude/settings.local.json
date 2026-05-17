@@ -10,7 +10,11 @@
       "Bash(npx tsc *)",
       "Bash(npm run *)",
       "Bash(timeout 10)",
-      "Bash(ping -n 6 127.0.0.1)"
+      "Bash(ping -n 6 127.0.0.1)",
+      "Bash(npm audit *)",
+      "Bash(node -e \"const pkg = require\\('./package.json'\\); console.log\\('next:', pkg.dependencies.next\\)\")",
+      "Bash(npx next *)",
+      "Bash(npm uninstall *)"
     ]
   }
 }

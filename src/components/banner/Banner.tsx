@@ -30,8 +30,13 @@ const Banner = () => {
   return (
     <section className="relative bg-charcoal min-h-[92vh] flex items-center overflow-hidden">
       {/* Background texture */}
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #fff 1px, transparent 0)", backgroundSize: "32px 32px" }}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, #fff 1px, transparent 0)",
+          backgroundSize: "32px 32px",
+        }}
       />
 
       {/* Warm gradient overlay */}
@@ -39,10 +44,8 @@ const Banner = () => {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-charcoal/60 to-transparent" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-24">
-
         {/* Left: Text content */}
         <div className="flex flex-col gap-6">
-
           {/* Badge */}
           <motion.div
             custom={0}
@@ -54,7 +57,7 @@ const Banner = () => {
             <div className="flex items-center gap-2 border border-gold/40 rounded-full px-4 py-1.5 bg-gold/10 backdrop-blur-sm">
               <Sparkles className="w-3.5 h-3.5 text-gold" />
               <span className="text-gold text-xs tracking-[0.15em] uppercase font-medium">
-                Colección 2025
+                Colección {new Date().getFullYear()}
               </span>
             </div>
           </motion.div>
@@ -78,7 +81,7 @@ const Banner = () => {
               initial="hidden"
               animate="visible"
               variants={textVariants}
-              className="text-5xl sm:text-6xl lg:text-7xl leading-[1.05]"
+              className="text-5xl sm:text-6xl lg:text-7xl leading-[1.05] mb-3"
               style={{ fontFamily: "var(--font-bold)", color: "#b8975a" }}
             >
               tu hogar.
@@ -151,10 +154,15 @@ const Banner = () => {
               { value: "100%", label: "Garantía" },
             ].map((stat) => (
               <div key={stat.label} className="flex flex-col">
-                <span className="text-2xl text-gold" style={{ fontFamily: "var(--font-bold)" }}>
+                <span
+                  className="text-2xl text-gold"
+                  style={{ fontFamily: "var(--font-bold)" }}
+                >
                   {stat.value}
                 </span>
-                <span className="text-white/40 text-xs tracking-wide">{stat.label}</span>
+                <span className="text-white/40 text-xs tracking-wide">
+                  {stat.label}
+                </span>
               </div>
             ))}
           </motion.div>
@@ -180,7 +188,12 @@ const Banner = () => {
               alt="Sala de estar moderna"
               width={600}
               height={600}
-              style={{ height: "auto", width: "auto", maxHeight: "70vh", objectFit: "cover" }}
+              style={{
+                height: "auto",
+                width: "auto",
+                maxHeight: "70vh",
+                objectFit: "cover",
+              }}
               priority
             />
             {/* Image overlay */}
@@ -198,7 +211,9 @@ const Banner = () => {
               <Sparkles className="w-4 h-4 text-white" />
             </div>
             <div>
-              <p className="text-white text-xs font-medium">Envío a toda Colombia</p>
+              <p className="text-white text-xs font-medium">
+                Envío a todo el llano colombiano
+              </p>
               <p className="text-white/50 text-xs">Consulta condiciones</p>
             </div>
           </motion.div>
@@ -212,7 +227,9 @@ const Banner = () => {
         transition={{ delay: 1.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-white/30 text-xs tracking-[0.2em] uppercase">Scroll</span>
+        <span className="text-white/30 text-xs tracking-[0.2em] uppercase">
+          Scroll
+        </span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
