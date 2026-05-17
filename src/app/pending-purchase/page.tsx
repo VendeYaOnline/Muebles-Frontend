@@ -1,6 +1,6 @@
 "use client";
 
-import { Clock, RefreshCw, MessageCircle, ArrowRight } from "lucide-react";
+import { Clock, MessageCircle, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
@@ -51,7 +51,7 @@ const PendingPurchase = () => {
               { label: "Pago recibido", done: true },
               { label: "En verificación", active: true },
               { label: "Confirmación final", done: false },
-            ].map(({ label, done, active }, i) => (
+            ].map(({ label, done, active }) => (
               <div key={label} className="flex items-center gap-3">
                 <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
                   done ? "bg-gold" : active ? "bg-amber-400" : "bg-warm-border"

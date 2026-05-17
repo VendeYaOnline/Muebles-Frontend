@@ -7,7 +7,6 @@ import { IProduct } from "@/interfaces";
 import { calculateTotal } from "@/utils";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 interface ShoppingCartProps {
   items: ProductWithQuantity[];
@@ -115,7 +114,7 @@ const ShoppingCartComponent = ({
               <>
                 <div className="max-h-80 overflow-y-auto">
                   <AnimatePresence initial={false}>
-                    {items.map((item, index) => (
+                    {items.map((item) => (
                       <motion.div
                         key={`${item.product.id}-${item.variant}`}
                         initial={{ opacity: 0, x: -10 }}

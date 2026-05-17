@@ -12,8 +12,6 @@ import { useProducts } from "@/hooks";
 import { ProductWithQuantity } from "@/hooks/useProducts";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
-
 interface ProductModalProps {
   isOpen: boolean;
   onClose: () => void;

@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo, useCallback } from "react";
 import { useQueryCategoriesStore, useQueryProductsByCategory } from "@/api/queries";
 import {
   Search, SlidersHorizontal, Frown, CheckCircle2, ShoppingBag,
-  Eye, Tag, X, LayoutGrid, List, ChevronDown, ArrowUpDown,
+  Eye, Tag, X, LayoutGrid, List,
   Sparkles, Package,
 } from "lucide-react";
 import { Pagination } from "@/components";

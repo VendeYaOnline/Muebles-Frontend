@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Mail, FileText, ShieldCheck, Package, CreditCard, Truck, RefreshCw, AlertTriangle, Settings, Scale } from "lucide-react";
-import Link from "next/link";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 

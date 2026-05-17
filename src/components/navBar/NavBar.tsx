@@ -1,18 +1,13 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { ChevronDown, Menu, X, ShoppingBag } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import ShoppingCartComponent from "../ShoppingCart";
 import { useCategory, useProducts } from "@/hooks";
 import { totalSum } from "@/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const menuItems = [
   {

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { CheckCircle, AlertCircle, User, MapPin, Mail, Phone, Hash, ArrowRight, ShoppingBag } from "lucide-react";
+import { CheckCircle, AlertCircle, User, MapPin, Hash, ArrowRight, ShoppingBag } from "lucide-react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import Link from "next/link";

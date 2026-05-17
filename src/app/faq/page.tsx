@@ -7,8 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { motion } from "framer-motion";
-import { MessageCircle, ShoppingCart, CreditCard, Package, Truck, RefreshCw } from "lucide-react";
-import Link from "next/link";
+import { MessageCircle, ShoppingCart, CreditCard, Package, Truck } from "lucide-react";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
