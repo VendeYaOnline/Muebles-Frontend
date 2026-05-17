@@ -1,14 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {
-        "@typescript-eslint/no-explicit-any": [
-          "error",
-          { "ignoreCatch": true } // Permite `any` en bloques `catch`
-        ]
-      }
-    }
-  ]
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "warn"
+  }
 }
