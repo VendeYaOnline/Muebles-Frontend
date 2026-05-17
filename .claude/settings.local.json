@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\USUARIO\\\\Desktop\\\\VENDEYAONLINE\\\\ECOMMERCES DE CLIENTES\\\\Muebles\\\\Frontend-MEM\" -Recurse -Depth 3)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(xargs ls -la)",
+      "Bash(npm install *)",
+      "Bash(npm update *)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(timeout 10)",
+      "Bash(ping -n 6 127.0.0.1)"
+    ]
+  }
+}

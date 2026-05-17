@@ -2,112 +2,162 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import IconVisa from "/public/icons/visa.svg";
-import IconMasterCard from "/public/icons/mastercard.svg";
-import IconPse from "/public/icons/pse.png";
-import IconEfecty from "/public/icons/efecty.png";
 import IconBbva from "/public/logo-bbva.png";
 import IconBancolombia from "/public/logo-bancolombia.svg";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { Instagram, Facebook, Mail } from "lucide-react";
+
+const footerLinks = {
+  Navegación: [
+    { label: "Inicio", href: "/" },
+    { label: "Catálogo", href: "/products" },
+    { label: "Contacto", href: "/contact" },
+  ],
+  Soporte: [
+    { label: "Preguntas frecuentes", href: "/faq" },
+    { label: "Términos y condiciones", href: "/terms-conditions" },
+  ],
+};
 
 const Footer = () => {
   const pathname = usePathname();
+
+  if (pathname === "/17312678/admin") return null;
+
   return (
-    pathname !== "/17312678/admin" && (
-      <footer className="bg-gray-800 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-warm-dark text-white">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Main footer grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-12 py-16 border-b border-white/5"
+        >
+          {/* Brand column */}
+          <div className="flex flex-col gap-5">
             <div>
-              <h3 className="text-lg font-semibold mb-4">
-                Muebles y Electrodomésticos del Meta
+              <h3
+                className="text-2xl tracking-widest text-white"
+                style={{ fontFamily: "var(--font-bold)" }}
+              >
+                MEM
               </h3>
-              <p className="text-gray-400">
-                Transformando hogares con estilo desde 1998.
+              <p className="text-[9px] tracking-[0.25em] text-white/30 uppercase mt-0.5">
+                Muebles & Hogar
               </p>
             </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Enlaces rápidos</h4>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="/" className="text-gray-400 hover:text-white">
-                    Inicio
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/products"
-                    className="text-gray-400 hover:text-white"
-                  >
-                    Productos
-                  </Link>
-                </li>
+            <p className="text-white/40 text-sm leading-relaxed max-w-xs">
+              Transformando hogares con estilo y calidad desde 1998. Tu espacio
+              perfecto nos inspira.
+            </p>
 
-                <li>
-                  <Link
-                    href="/contact"
-                    className="text-gray-400 hover:text-white"
-                  >
-                    Contacto
-                  </Link>
-                </li>
-              </ul>
+            {/* Social links */}
+            <div className="flex items-center gap-3">
+              {[
+                { icon: Instagram, label: "Instagram" },
+                { icon: Facebook, label: "Facebook" },
+                { icon: Mail, label: "Email" },
+              ].map(({ icon: Icon, label }) => (
+                <motion.div
+                  key={label}
+                  whileHover={{ scale: 1.1, backgroundColor: "#b8975a" }}
+                  className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center cursor-pointer transition-colors duration-200"
+                >
+                  <Icon className="w-4 h-4 text-white/50" />
+                </motion.div>
+              ))}
             </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">
-                Atención al cliente
+          </div>
+
+          {/* Link columns */}
+          {Object.entries(footerLinks).map(([title, links]) => (
+            <div key={title} className="flex flex-col gap-4">
+              <h4
+                className="text-xs text-gold tracking-[0.15em] uppercase"
+                style={{ fontFamily: "var(--font-semibold)" }}
+              >
+                {title}
               </h4>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="/faq" className="text-gray-400 hover:text-white">
-                    Preguntas frecuentes
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    href="/terms-conditions"
-                    className="text-gray-400 hover:text-white"
-                  >
-                    Términos y condiciones
-                  </Link>
-                </li>
+              <ul className="flex flex-col gap-2.5">
+                {links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-white/40 hover:text-gold transition-colors duration-200"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Medios de pago</h4>
-              <div className="flex space-x-4 flex-wrap gap-3">
-                <Image
-                  src={IconBbva}
-                  width={50}
-                  height={50}
-                  alt="icono de bbva"
-                  style={{ width: 60, height: 20 }}
-                />
+          ))}
+
+          {/* Payment column */}
+          <div className="flex flex-col gap-4">
+            <h4
+              className="text-xs text-gold tracking-[0.15em] uppercase"
+              style={{ fontFamily: "var(--font-semibold)" }}
+            >
+              Medios de pago
+            </h4>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/5 w-fit">
                 <Image
                   src={IconBancolombia}
-                  width={30}
-                  height={30}
-                  alt="icono de bancolombia"
-                  style={{ width: 30, height: 30 }}
+                  width={24}
+                  height={24}
+                  alt="Bancolombia"
+                  style={{
+                    width: 24,
+                    height: 24,
+                    filter: "brightness(0) invert(1) opacity(0.6)",
+                  }}
+                />
+                <span className="text-xs text-white/50">Bancolombia</span>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/5 w-fit">
+                <Image
+                  src={IconBbva}
+                  width={40}
+                  height={16}
+                  alt="BBVA"
+                  style={{
+                    width: 40,
+                    height: 16,
+                    filter: "brightness(0) invert(1) opacity(0.6)",
+                  }}
                 />
               </div>
             </div>
-          </div>
-          <div className="mt-8 border-t border-gray-700 pt-8 text-center">
-            <p className="text-gray-400">
-              &copy; 2023 Muebles y Electrodomésticos del Meta. Todos los
-              derechos reservados.
+            <p className="text-xs text-white/30 leading-relaxed mt-1">
+              Transferencia bancaria 100% segura
             </p>
-            <span className="text-xs">
-              Desarrollado por{" "}
-              <Link href="https://vendeyaonline.com/" target="_blank">
-                <strong>VendeYaOnline</strong>
-              </Link>
-            </span>
           </div>
+        </motion.div>
+
+        {/* Bottom bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-6">
+          <p className="text-white/25 text-xs">
+            © 2025 Muebles y Electrodomésticos del Meta. Todos los derechos
+            reservados.
+          </p>
+          <span className="text-white/20 text-xs">
+            Desarrollado por{" "}
+            <Link
+              href="https://vendeyaonline.com/"
+              target="_blank"
+              className="hover:text-gold transition-colors duration-200"
+            >
+              VendeYaOnline
+            </Link>
+          </span>
         </div>
-      </footer>
-    )
+      </div>
+    </footer>
   );
 };
 

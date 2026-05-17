@@ -8,101 +8,128 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
 import { useQueryCarousels } from "@/api/queries";
+import { motion } from "framer-motion";
+import { Tag } from "lucide-react";
 
 export default function ProductCarousel() {
   const { data } = useQueryCarousels();
-  return data && data?.length ? (
-    data.map((carousel) => (
-      <div
-        key={carousel.id}
-        className="mt-20 mb-20 px-4 sm:px-6 lg:px-8 max-w-7xl m-auto"
-      >
-        <h2 className="mx-auto text-2xl font-semibold text-gray-800 md:text-left lg:text-left xl:text-left text-center mb-6">
-          Promociones imperdibles
-        </h2>
 
-        <div className="w-full mx-auto p-4 bg-gray-900 rounded-lg">
-          <Carousel className="w-full" opts={{ slidesToScroll: 1 }}>
-            <CarouselContent className="-ml-2 md:-ml-4">
-              {carousel.products.map((product) => (
-                <CarouselItem
-                  key={product.id}
-                  className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3"
-                >
-                  <Card className="relative bg-white">
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      className="absolute right-2 top-2 text-blue-500 hover:text-blue-600"
+  if (!data?.length) return <div className="my-10" />;
+
+  return (
+    <>
+      {data.map((carousel) => (
+        <section
+          key={carousel.id}
+          className="py-20 bg-charcoal overflow-hidden"
+        >
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            {/* Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6 }}
+              className="mb-12 flex flex-col gap-3"
+            >
+              <div className="gold-line" />
+              <p className="text-xs text-gold tracking-[0.2em] uppercase">Ofertas</p>
+              <h2
+                className="text-3xl text-white"
+                style={{ fontFamily: "var(--font-semibold)" }}
+              >
+                Promociones imperdibles
+              </h2>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <Carousel className="w-full" opts={{ slidesToScroll: 1 }}>
+                <CarouselContent className="-ml-4">
+                  {carousel.products.map((product, index) => (
+                    <CarouselItem
+                      key={product.id}
+                      className="pl-4 md:basis-1/2 lg:basis-1/3"
                     >
-                      <Plus className="h-6 w-6" />
-                    </Button>
-                    <CardContent className="p-4">
-                      <div className="aspect-square relative mb-4">
-                        <Image
-                          src={product.image_product || "/placeholder.svg"}
-                          alt={product.title}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      {/*     <div className="flex items-center gap-2 mb-2">
-                      <StarRating rating={product.rating} />
-                      <span className="text-sm text-gray-500">
-                        ({product.reviews})
-                      </span>
-                    </div> */}
-                      <h3 className="font-medium text-sm mb-2 line-clamp-2">
-                        {product.title}
-                      </h3>
-                      <div className="space-y-1">
-                        <p className="text-gray-500 line-through text-sm">
-                          {product.price}
-                        </p>
-                        <p className="text-2xl font-bold text-blue-600">
-                          {product.discount_price}
-                          <span className="text-sm font-normal ml-1">Hoy</span>
-                        </p>
-                      </div>
-                    </CardContent>
-                    {/*          <CardFooter className="p-4 pt-0">
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
-                        <CreditCard className="h-4 w-4" />
-                        <span>{product.discount_price}</span>
-                        <Button
-                          variant="link"
-                          className="text-xs text-indigo-600 p-0 h-auto"
-                        >
-                          Aplican T&C
-                        </Button>
-                      </div>
-                    </CardFooter> */}
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="hidden md:flex" />
-            <CarouselNext className="hidden md:flex" />
-          </Carousel>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.08, duration: 0.5 }}
+                        whileHover={{ y: -4 }}
+                        className="group bg-warm-dark border border-white/5 rounded-2xl overflow-hidden hover:border-gold/20 transition-all duration-300"
+                      >
+                        {/* Image */}
+                        <div className="relative aspect-square bg-white/5 overflow-hidden">
+                          <motion.div
+                            whileHover={{ scale: 1.04 }}
+                            transition={{ duration: 0.5 }}
+                            className="w-full h-full"
+                          >
+                            <Image
+                              src={product.image_product || "/placeholder.svg"}
+                              alt={product.title}
+                              fill
+                              className="object-contain p-4"
+                            />
+                          </motion.div>
 
-          <div className="flex justify-center gap-2 mt-4">
-            {[0, 1, 2].map((index) => (
-              <div
-                key={index}
-                className={`h-2 w-2 rounded-full ${
-                  index === 0 ? "bg-blue-600" : "bg-white/50"
-                }`}
-              />
-            ))}
+                          {/* Discount overlay */}
+                          {product.discount_price && (
+                            <div className="absolute top-3 left-3 flex items-center gap-1 bg-gold text-white text-[10px] tracking-wide px-2.5 py-1 rounded-full">
+                              <Tag className="w-2.5 h-2.5" />
+                              Oferta
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Info */}
+                        <div className="p-5 flex flex-col gap-3">
+                          <h3 className="text-white/90 text-sm leading-snug line-clamp-2" style={{ fontFamily: "var(--font-semibold)" }}>
+                            {product.title}
+                          </h3>
+
+                          <div className="flex items-baseline gap-2">
+                            {product.discount_price && (
+                              <span className="text-warm-gray text-xs line-through">
+                                {product.price}
+                              </span>
+                            )}
+                            <span
+                              className="text-gold text-xl"
+                              style={{ fontFamily: "var(--font-bold)" }}
+                            >
+                              {product.discount_price || product.price}
+                            </span>
+                            {product.discount_price && (
+                              <span className="text-white/40 text-xs">Hoy</span>
+                            )}
+                          </div>
+
+                          <motion.button
+                            whileHover={{ backgroundColor: "#c9a86a" }}
+                            whileTap={{ scale: 0.97 }}
+                            className="w-full bg-gold/90 text-white text-xs tracking-wide py-2.5 rounded-xl transition-colors duration-200 mt-1"
+                          >
+                            Ver oferta
+                          </motion.button>
+                        </div>
+                      </motion.div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="hidden md:flex -left-5 bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-gold/30" />
+                <CarouselNext className="hidden md:flex -right-5 bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-gold/30" />
+              </Carousel>
+            </motion.div>
           </div>
-        </div>
-      </div>
-    ))
-  ) : (
-    <div className="my-10" />
+        </section>
+      ))}
+    </>
   );
 }
