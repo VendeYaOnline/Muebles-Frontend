@@ -92,7 +92,7 @@ const sections = [
 
 export default function TermsAndConditions() {
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="min-h-screen bg-cream overflow-x-hidden">
 
       {/* Header */}
       <div className="bg-ivory border-b border-warm-border">
@@ -116,8 +116,8 @@ export default function TermsAndConditions() {
       </div>
 
       {/* Body */}
-      <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-16">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+      <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-16 w-full">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 lg:items-start">
 
           {/* Sticky TOC sidebar */}
           <motion.aside
@@ -154,7 +154,7 @@ export default function TermsAndConditions() {
           </motion.aside>
 
           {/* Sections */}
-          <div className="flex-1 flex flex-col gap-4">
+          <div className="flex-1 flex flex-col gap-4 w-full min-w-0">
 
             {/* Intro note */}
             <motion.div
