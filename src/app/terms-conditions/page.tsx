@@ -221,11 +221,11 @@ export default function TermsAndConditions() {
                   Escríbenos y te responderemos a la brevedad.
                 </p>
               </div>
-              <a href={`mailto:${SUPPORT_EMAIL}`}>
+              <a href={`mailto:${SUPPORT_EMAIL}`} className="w-full sm:w-auto min-w-0">
                 <motion.button
                   whileHover={{ scale: 1.03, backgroundColor: "#c9a86a" }}
                   whileTap={{ scale: 0.97 }}
-                  className="flex items-center gap-2 bg-gold text-white px-7 py-3 rounded-full text-sm tracking-wide transition-colors duration-200 flex-shrink-0 max-w-full"
+                  className="flex items-center gap-2 bg-gold text-white px-7 py-3 rounded-full text-sm tracking-wide transition-colors duration-200 w-full sm:w-auto overflow-hidden"
                 >
                   <Mail className="w-4 h-4 flex-shrink-0" />
                   <span className="truncate">{SUPPORT_EMAIL}</span>

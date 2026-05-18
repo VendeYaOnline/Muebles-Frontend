@@ -76,7 +76,7 @@ export default function Contacto() {
                       {item.label}
                     </p>
                     {item.lines.map((line, i) => (
-                      <p key={i} className="text-sm text-charcoal leading-relaxed">
+                      <p key={i} className="text-sm text-charcoal leading-relaxed break-all">
                         {line}
                       </p>
                     ))}
