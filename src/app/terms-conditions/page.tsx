@@ -117,7 +117,7 @@ export default function TermsAndConditions() {
 
       {/* Body */}
       <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-16">
-        <div className="flex gap-12 lg:gap-16 items-start">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
 
           {/* Sticky TOC sidebar */}
           <motion.aside
@@ -192,11 +192,11 @@ export default function TermsAndConditions() {
                     </div>
 
                     {/* Content */}
-                    <div className="flex flex-col gap-2 flex-1">
+                    <div className="flex flex-col gap-2 flex-1 min-w-0">
                       <h2 className="text-base text-charcoal" style={{ fontFamily: "var(--font-semibold)" }}>
                         {s.title}
                       </h2>
-                      <p className="text-sm text-warm-gray leading-relaxed">
+                      <p className="text-sm text-warm-gray leading-relaxed break-words">
                         {s.content}
                       </p>
                     </div>
@@ -225,10 +225,10 @@ export default function TermsAndConditions() {
                 <motion.button
                   whileHover={{ scale: 1.03, backgroundColor: "#c9a86a" }}
                   whileTap={{ scale: 0.97 }}
-                  className="flex items-center gap-2 bg-gold text-white px-7 py-3 rounded-full text-sm tracking-wide transition-colors duration-200 flex-shrink-0"
+                  className="flex items-center gap-2 bg-gold text-white px-7 py-3 rounded-full text-sm tracking-wide transition-colors duration-200 flex-shrink-0 max-w-full"
                 >
-                  <Mail className="w-4 h-4" />
-                  {SUPPORT_EMAIL}
+                  <Mail className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate">{SUPPORT_EMAIL}</span>
                 </motion.button>
               </a>
             </motion.div>

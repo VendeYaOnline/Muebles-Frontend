@@ -118,7 +118,7 @@ const ShoppingCartComponent = ({
               }
               className={
                 isMobile
-                  ? "fixed bottom-0 left-0 right-0 z-50 bg-ivory border-t border-warm-border rounded-t-3xl shadow-2xl shadow-charcoal/20 overflow-hidden"
+                  ? "fixed bottom-0 left-0 right-0 z-50 bg-ivory border-t border-warm-border rounded-t-3xl shadow-2xl shadow-charcoal/20 overflow-hidden flex flex-col max-h-[85vh]"
                   : "absolute right-0 top-full mt-3 w-96 bg-ivory border border-warm-border rounded-2xl shadow-2xl shadow-charcoal/10 z-50 overflow-hidden origin-top-right"
               }
             >
@@ -152,7 +152,7 @@ const ShoppingCartComponent = ({
 
               {/* Items */}
               {items.length === 0 ? (
-                <div className="flex flex-col items-center gap-3 py-12 px-6 text-center">
+                <div className={`flex flex-col items-center gap-3 py-12 px-6 text-center ${isMobile ? "flex-1 justify-center" : ""}`}>
                   <div className="w-14 h-14 rounded-2xl bg-cream flex items-center justify-center">
                     <PackageOpen className="w-7 h-7 text-warm-gray" strokeWidth={1.5} />
                   </div>
@@ -168,7 +168,7 @@ const ShoppingCartComponent = ({
                 </div>
               ) : (
                 <>
-                  <div className={isMobile ? "max-h-[45vh] overflow-y-auto" : "max-h-80 overflow-y-auto"}>
+                  <div className={isMobile ? "flex-1 min-h-0 overflow-y-auto" : "max-h-80 overflow-y-auto"}>
                     <AnimatePresence initial={false}>
                       {items.map((item) => (
                         <motion.div
