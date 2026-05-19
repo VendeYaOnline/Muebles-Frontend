@@ -35,12 +35,41 @@ const ShoppingCartComponent = ({
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Lock body scroll when mobile cart is open
+  const scrollPosition = useRef(0);
+  const wasLocked = useRef(false);
+
   useEffect(() => {
-    if (isMobile) {
-      document.body.style.overflow = isOpen ? "hidden" : "";
+    if (!isMobile || !isOpen) {
+      if (wasLocked.current) {
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.width = "";
+        document.body.style.overflow = "";
+        window.scrollTo(0, scrollPosition.current);
+        scrollPosition.current = 0;
+        wasLocked.current = false;
+      }
+      return;
     }
-    return () => { document.body.style.overflow = ""; };
+
+    scrollPosition.current = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollPosition.current}px`;
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
+    wasLocked.current = true;
+
+    return () => {
+      if (wasLocked.current) {
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.width = "";
+        document.body.style.overflow = "";
+        window.scrollTo(0, scrollPosition.current);
+        scrollPosition.current = 0;
+        wasLocked.current = false;
+      }
+    };
   }, [isOpen, isMobile]);
 
   useEffect(() => {
@@ -118,7 +147,7 @@ const ShoppingCartComponent = ({
               }
               className={
                 isMobile
-                  ? "fixed bottom-0 left-0 right-0 z-50 bg-ivory border-t border-warm-border rounded-t-3xl shadow-2xl shadow-charcoal/20 overflow-hidden flex flex-col max-h-[85vh]"
+                  ? "fixed bottom-0 left-0 right-0 z-50 bg-ivory border-t border-warm-border rounded-t-3xl shadow-2xl shadow-charcoal/20 flex flex-col max-h-[85vh]"
                   : "absolute right-0 top-full mt-3 w-96 bg-ivory border border-warm-border rounded-2xl shadow-2xl shadow-charcoal/10 z-50 overflow-hidden origin-top-right"
               }
             >
