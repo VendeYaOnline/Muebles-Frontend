@@ -12,6 +12,10 @@ axiosConfig.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
 
+    if (process.env.NEXT_PUBLIC_COMPANY_ID) {
+      config.headers["X-Company-Id"] = process.env.NEXT_PUBLIC_COMPANY_ID;
+    }
+
     return config;
   },
   (error) => {
