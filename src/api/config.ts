@@ -13,7 +13,7 @@ axiosConfig.interceptors.request.use(
     }
 
     if (process.env.NEXT_PUBLIC_COMPANY_ID) {
-      config.headers["Company-Id"] = process.env.NEXT_PUBLIC_COMPANY_ID;
+      config.headers["X-Company-Id"] = process.env.NEXT_PUBLIC_COMPANY_ID;
     }
 
     return config;
