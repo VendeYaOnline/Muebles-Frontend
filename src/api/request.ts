@@ -7,10 +7,34 @@ import {
   ProductsResponse,
   Sale,
   Transaction,
+  ValuesAttributes,
 } from "@/interfaces";
 import { axiosConfig } from "./config";
 
 // * PRODUCTOS
+
+const EMPTY_ATTRIBUTES: ValuesAttributes = {
+  Talla: [],
+  Peso: [],
+  Dimensión: [],
+  Género: [],
+  Mililitro: [],
+  Color: [],
+};
+
+/** El backend devuelve un objeto; las versiones antiguas enviaban texto JSON. */
+const parseAttributes = (raw: string | ValuesAttributes | null | undefined): ValuesAttributes => {
+  let parsed: unknown = raw;
+  if (typeof raw === "string") {
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      parsed = null;
+    }
+  }
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return EMPTY_ATTRIBUTES;
+  return { ...EMPTY_ATTRIBUTES, ...(parsed as Partial<ValuesAttributes>) };
+};
 
 export const getFeatured = async (page: number, search: string = "") => {
   const result = (
@@ -50,7 +74,7 @@ export const getProductsByCategory = async (
     ...result,
     products: result.products.map((i) => ({
       ...i,
-      attributes: JSON.parse(i.attributes),
+      attributes: parseAttributes(i.attributes),
     })),
   };
 };
@@ -69,7 +93,7 @@ export const getProductById = async (id?: number) => {
   ).data;
   const product: IProduct = {
     ...result.product,
-    attributes: JSON.parse(result.product.attributes),
+    attributes: parseAttributes(result.product.attributes),
   };
   return product;
 };
@@ -104,6 +128,10 @@ export const saveData = async (
     quantity: number;
     variant: string;
     product: {
+      id?: number;
+      variant_key?: string;
+      variant_label?: string;
+      bundle_items?: { variant_key: string; variant_label: string }[];
       image_product: string;
       title: string;
       price: string;

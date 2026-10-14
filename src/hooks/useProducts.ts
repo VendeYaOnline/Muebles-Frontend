@@ -4,16 +4,36 @@ import { create } from "zustand";
 export interface ProductWithQuantity {
   quantity: number;
   product: IProduct;
+  /** Hex del color elegido (compatibilidad con el carrito anterior). */
   variant: string;
+  /** Variante exacta (color + talla, etc.) que descuenta el inventario al vender. */
+  variantKey?: string;
+  /** Texto legible de la variante: "Rojo · M". */
+  variantLabel?: string;
+  /** Unidades disponibles de la variante al agregarla (tope del carrito). */
+  available?: number;
+  /** Producto vendido como set: variante elegida para cada pieza. */
+  bundleItems?: { variantKey: string; variantLabel: string }[];
 }
+
+export interface VariantChoice {
+  variantKey?: string;
+  variantLabel?: string;
+  available?: number;
+  bundleItems?: { variantKey: string; variantLabel: string }[];
+}
+
+/** Identidad de una línea del carrito: producto + variante exacta (o color). */
+export const lineKey = (productId: number, variant: string, variantKey?: string) =>
+  `${productId}::${variantKey ?? variant}`;
 
 interface ProductStore {
   products: ProductWithQuantity[];
   totalQuantity: number;
   totalDiscount: number;
-  addProduct: (product: IProduct, variant: string) => void;
-  removeProduct: (productId: number, variant: string) => void;
-  deleteProduct: (productId: number, variant: string) => void;
+  addProduct: (product: IProduct, variant: string, choice?: VariantChoice) => void;
+  removeProduct: (productId: number, variant: string, variantKey?: string) => void;
+  deleteProduct: (productId: number, variant: string, variantKey?: string) => void;
   clearProducts: () => void;
 }
 
@@ -22,21 +42,34 @@ export const useProducts = create<ProductStore>((set) => ({
   totalQuantity: 0,
   totalDiscount: 0,
 
-  addProduct: (product, variant) =>
+  addProduct: (product, variant, choice) =>
     set((state) => {
+      const key = lineKey(product.id, variant, choice?.variantKey);
       const existingProductIndex = state.products.findIndex(
-        (p) => p.product.id === product.id && p.variant === variant
+        (p) => lineKey(p.product.id, p.variant, p.variantKey) === key
       );
 
       let updatedProducts;
 
       if (existingProductIndex !== -1) {
         updatedProducts = [...state.products];
-        updatedProducts[existingProductIndex].quantity += 1;
+        const line = updatedProducts[existingProductIndex];
+        // No se puede pedir más de lo disponible en la variante.
+        if (line.available === undefined || line.quantity < line.available) {
+          line.quantity += 1;
+        }
       } else {
         updatedProducts = [
           ...state.products,
-          { quantity: 1, product, variant },
+          {
+            quantity: 1,
+            product,
+            variant,
+            variantKey: choice?.variantKey,
+            variantLabel: choice?.variantLabel,
+            available: choice?.available,
+            bundleItems: choice?.bundleItems,
+          },
         ];
       }
 
@@ -47,10 +80,11 @@ export const useProducts = create<ProductStore>((set) => ({
       };
     }),
 
-  removeProduct: (productId, variant) =>
+  removeProduct: (productId, variant, variantKey) =>
     set((state) => {
+      const key = lineKey(productId, variant, variantKey);
       const existingProductIndex = state.products.findIndex(
-        (p) => p.product.id === productId && p.variant === variant
+        (p) => lineKey(p.product.id, p.variant, p.variantKey) === key
       );
 
       if (existingProductIndex !== -1) {
@@ -76,10 +110,11 @@ export const useProducts = create<ProductStore>((set) => ({
       return state;
     }),
 
-  deleteProduct: (productId, variant) =>
+  deleteProduct: (productId, variant, variantKey) =>
     set((state) => {
+      const key = lineKey(productId, variant, variantKey);
       const updatedProducts = state.products.filter(
-        (p) => !(p.product.id === productId && p.variant === variant)
+        (p) => lineKey(p.product.id, p.variant, p.variantKey) !== key
       );
 
       return {

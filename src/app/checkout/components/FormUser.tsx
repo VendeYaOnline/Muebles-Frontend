@@ -4,7 +4,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useUser } from "@/hooks";
+import { useProducts, useUser } from "@/hooks";
+import { saveStoreCart } from "@/api/store-cart";
 import { motion } from "framer-motion";
 import { User, Phone, MapPin, Mail, CreditCard, Info, ChevronRight } from "lucide-react";
 
@@ -22,6 +23,8 @@ interface FormData {
   additional_info: string;
   email: string;
   id_number: string;
+  /** "Quiero recibir promociones": desmarcada por defecto (consentimiento explícito). */
+  marketing_consent: boolean;
 }
 
 const schema = yup.object().shape({
@@ -34,6 +37,7 @@ const schema = yup.object().shape({
   additional_info: yup.string().max(20, "Máximo 20 caracteres").default(""),
   email: yup.string().email("Correo inválido").required("El correo es obligatorio"),
   id_number: yup.string().required("El número de identificación es obligatorio").matches(/^\d{8,12}$/, "Debe tener entre 8 y 12 dígitos"),
+  marketing_consent: yup.boolean().default(false),
 });
 
 const fieldVariants = {
@@ -87,9 +91,10 @@ const inputClass = "w-full bg-cream border border-warm-border rounded-xl px-4 py
 const FormUser = ({ setCurrentStep }: Props) => {
   const [isFilled, setIsFilled] = useState(false);
   const { user, setUser } = useUser();
+  const { products } = useProducts();
 
   const { register, handleSubmit, control, formState: { errors } } = useForm<FormData>({
-    defaultValues: user,
+    defaultValues: { marketing_consent: false, ...user },
     resolver: yupResolver<FormData>(schema),
   });
 
@@ -99,13 +104,16 @@ const FormUser = ({ setCurrentStep }: Props) => {
     if (Object.keys(formValues).length) {
       setIsFilled(
         Object.entries(formValues)
-          .filter(([key]) => key !== "additional_info")
-          .every(([, value]) => value?.trim() !== "")
+          // Opcionales: la información adicional y la casilla de promociones.
+          .filter(([key]) => key !== "additional_info" && key !== "marketing_consent")
+          .every(([, value]) => typeof value === "string" && value.trim() !== "")
       );
     }
   }, [formValues]);
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
+    // Con sus datos, la tienda puede recordarle el carrito si no termina la compra.
+    saveStoreCart(data, products);
     setUser(data);
     setCurrentStep(2);
   };
@@ -170,6 +178,17 @@ const FormUser = ({ setCurrentStep }: Props) => {
             <input id="id_number" {...register("id_number")} placeholder="1118203462" className={inputClass} />
           </FormField>
         </div>
+
+        <label className="mx-8 mb-6 flex cursor-pointer items-start gap-3 text-sm text-warm-gray">
+          <input
+            type="checkbox"
+            {...register("marketing_consent")}
+            className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-[#c9a86a]"
+          />
+          <span>
+            Quiero recibir promociones y novedades por correo o WhatsApp. Puedo darme de baja cuando quiera.
+          </span>
+        </label>
 
         {/* Footer actions */}
         <div className="px-8 py-5 border-t border-warm-border bg-cream flex justify-end">

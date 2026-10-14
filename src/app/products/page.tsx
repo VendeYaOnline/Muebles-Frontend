@@ -15,6 +15,7 @@ import { useCategory, useProduct, useProducts } from "@/hooks";
 import { IProduct } from "@/interfaces";
 import { useDebounce } from "@/hooks/useDebounce";
 import ProductModal from "@/components/ProductModal";
+import { getInventoryAttributes } from "@/lib/variants";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
@@ -339,6 +340,12 @@ export default function Products() {
   const clearFilters = () => { setSelectedCategories([]); setSearch(""); setCurrentPage(1); };
 
   const addCart = (product: IProduct) => {
+    // Con variantes el comprador debe elegir (color, talla...): se abre el detalle.
+    if (getInventoryAttributes(product).length > 0 || (product.bundle_size ?? 0) > 1) {
+      setProduct(product);
+      setIsModalOpen(true);
+      return;
+    }
     addProduct(product, product.attributes.Color?.[0]?.color || "");
     toast.custom(
       (t) => (

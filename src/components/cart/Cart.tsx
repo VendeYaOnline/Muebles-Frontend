@@ -62,9 +62,9 @@ const Cart = () => {
                 {/* Item list */}
                 <div className="flex-1 overflow-y-auto px-6 py-4 flex flex-col gap-3">
                   <AnimatePresence initial={false}>
-                    {products.map(({ product, quantity, variant }, index) => (
+                    {products.map(({ product, quantity, variant, variantKey, variantLabel, available }, index) => (
                       <motion.div
-                        key={`${product.id}-${variant}-${index}`}
+                        key={`${product.id}-${variantKey ?? variant}-${index}`}
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 20, height: 0, marginBottom: 0 }}
@@ -94,21 +94,23 @@ const Cart = () => {
                             </h2>
                             <motion.button
                               whileHover={{ scale: 1.1 }}
-                              onClick={() => deleteProduct(product.id, variant)}
+                              onClick={() => deleteProduct(product.id, variant, variantKey)}
                               className="p-1 rounded-lg text-warm-gray hover:text-charcoal hover:bg-cream transition-all flex-shrink-0"
                             >
                               <Trash2 size={12} />
                             </motion.button>
                           </div>
 
-                          {/* Color variant */}
-                          {variant && (
+                          {/* Variante elegida (color, talla...) */}
+                          {(variant || variantLabel) && (
                             <div className="flex items-center gap-1.5">
-                              <div
-                                className="w-3 h-3 rounded-full border border-warm-border"
-                                style={{ backgroundColor: variant }}
-                              />
-                              <span className="text-[10px] text-warm-gray">Color</span>
+                              {variant && (
+                                <div
+                                  className="w-3 h-3 rounded-full border border-warm-border"
+                                  style={{ backgroundColor: variant }}
+                                />
+                              )}
+                              <span className="text-[10px] text-warm-gray">{variantLabel ?? "Color"}</span>
                             </div>
                           )}
 
@@ -117,7 +119,7 @@ const Cart = () => {
                             {/* Qty controls */}
                             <div className="flex items-center gap-2">
                               <button
-                                onClick={() => removeProduct(product.id, variant)}
+                                onClick={() => removeProduct(product.id, variant, variantKey)}
                                 className="w-6 h-6 rounded-lg bg-cream border border-warm-border flex items-center justify-center hover:border-gold/40 transition-colors"
                               >
                                 <Minus size={10} className="text-charcoal" />
@@ -126,8 +128,10 @@ const Cart = () => {
                                 {quantity}
                               </span>
                               <button
-                                onClick={() => addProduct(product, variant)}
-                                className="w-6 h-6 rounded-lg bg-cream border border-warm-border flex items-center justify-center hover:border-gold/40 transition-colors"
+                                onClick={() => addProduct(product, variant, { variantKey, variantLabel, available })}
+                                disabled={available !== undefined && quantity >= available}
+                                title={available !== undefined && quantity >= available ? "No hay más unidades" : undefined}
+                                className="w-6 h-6 rounded-lg bg-cream border border-warm-border flex items-center justify-center hover:border-gold/40 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                               >
                                 <Plus size={10} className="text-charcoal" />
                               </button>

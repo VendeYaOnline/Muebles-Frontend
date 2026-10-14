@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { ShoppingBag, Plus, Minus, X, ArrowRight, PackageOpen } from "lucide-react";
-import { ProductWithQuantity } from "@/hooks/useProducts";
+import { ProductWithQuantity, VariantChoice } from "@/hooks/useProducts";
 import { IProduct } from "@/interfaces";
 import { calculateTotal } from "@/utils";
 import Link from "next/link";
@@ -10,9 +10,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface ShoppingCartProps {
   items: ProductWithQuantity[];
-  addQuantity: (product: IProduct, variant: string) => void;
-  removeQuantity: (id: number, variant: string) => void;
-  onRemoveItem: (productId: number, variant: string) => void;
+  addQuantity: (product: IProduct, variant: string, choice?: VariantChoice) => void;
+  removeQuantity: (id: number, variant: string, variantKey?: string) => void;
+  onRemoveItem: (productId: number, variant: string, variantKey?: string) => void;
   total: string;
 }
 
@@ -201,7 +201,7 @@ const ShoppingCartComponent = ({
                     <AnimatePresence initial={false}>
                       {items.map((item) => (
                         <motion.div
-                          key={`${item.product.id}-${item.variant}`}
+                          key={`${item.product.id}-${item.variantKey ?? item.variant}`}
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           exit={{ opacity: 0, x: 10, height: 0 }}
@@ -223,12 +223,17 @@ const ShoppingCartComponent = ({
                               {item.product.title}
                             </p>
 
-                            {item.variant && (
+                            {(item.variant || item.variantLabel) && (
                               <div className="flex items-center gap-1.5 mb-1.5">
-                                <div
-                                  className="w-3 h-3 rounded-full border border-warm-border flex-shrink-0"
-                                  style={{ backgroundColor: item.variant }}
-                                />
+                                {item.variant && (
+                                  <div
+                                    className="w-3 h-3 rounded-full border border-warm-border flex-shrink-0"
+                                    style={{ backgroundColor: item.variant }}
+                                  />
+                                )}
+                                {item.variantLabel && (
+                                  <span className="text-[10px] text-charcoal">{item.variantLabel} ·</span>
+                                )}
                                 <span className="text-[10px] text-warm-gray">
                                   {calculateTotal(
                                     item.product.discount_price || item.product.price,
@@ -241,7 +246,7 @@ const ShoppingCartComponent = ({
                             {/* Qty controls */}
                             <div className="flex items-center gap-2">
                               <button
-                                onClick={() => removeQuantity(item.product.id, item.variant)}
+                                onClick={() => removeQuantity(item.product.id, item.variant, item.variantKey)}
                                 className="w-6 h-6 rounded-lg bg-cream border border-warm-border flex items-center justify-center hover:border-gold/40 transition-colors"
                               >
                                 <Minus className="w-2.5 h-2.5 text-charcoal" />
@@ -250,8 +255,15 @@ const ShoppingCartComponent = ({
                                 {item.quantity}
                               </span>
                               <button
-                                onClick={() => addQuantity(item.product, item.variant)}
-                                className="w-6 h-6 rounded-lg bg-cream border border-warm-border flex items-center justify-center hover:border-gold/40 transition-colors"
+                                onClick={() =>
+                                  addQuantity(item.product, item.variant, {
+                                    variantKey: item.variantKey,
+                                    variantLabel: item.variantLabel,
+                                    available: item.available,
+                                  })
+                                }
+                                disabled={item.available !== undefined && item.quantity >= item.available}
+                                className="w-6 h-6 rounded-lg bg-cream border border-warm-border flex items-center justify-center hover:border-gold/40 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                               >
                                 <Plus className="w-2.5 h-2.5 text-charcoal" />
                               </button>
@@ -261,7 +273,7 @@ const ShoppingCartComponent = ({
                           {/* Price + remove */}
                           <div className="flex flex-col items-end justify-between flex-shrink-0">
                             <button
-                              onClick={() => onRemoveItem(item.product.id, item.variant)}
+                              onClick={() => onRemoveItem(item.product.id, item.variant, item.variantKey)}
                               className="p-1 text-warm-gray hover:text-charcoal transition-colors"
                             >
                               <X className="w-3.5 h-3.5" />

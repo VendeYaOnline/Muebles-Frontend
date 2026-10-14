@@ -10,6 +10,8 @@ interface User {
   additional_info: string;
   email: string;
   id_number: string;
+  /** Casilla "Quiero recibir promociones" (va a la venta y a Mercado Pago). */
+  marketing_consent?: boolean;
 }
 
 interface Props {

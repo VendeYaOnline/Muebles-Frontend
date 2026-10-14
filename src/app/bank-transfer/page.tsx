@@ -125,6 +125,14 @@ const BankTransfer = () => {
         ...user,
         products: products.map((item) => ({
           ...item,
+          // Con id y variant_key el backend descuenta el inventario vendido.
+          id: item.product.id,
+          variant_key: item.bundleItems ? undefined : item.variantKey,
+          variant_label: item.variantLabel,
+          bundle_items: item.bundleItems?.map((piece) => ({
+            variant_key: piece.variantKey,
+            variant_label: piece.variantLabel,
+          })),
           image_product: item.product.image_product,
           title: item.product.title,
           price: item.product.price,
@@ -145,11 +153,11 @@ const BankTransfer = () => {
         payment_method: "bank_transfer_" + selectedAccount.bank.toLowerCase(),
       });
       await createTransfer({
-        products: products.map(({ product, variant, quantity }) => ({
+        products: products.map(({ product, variant, variantLabel, quantity }) => ({
           name: product.title,
           image: product.image_product,
           price: product.discount_price || product.price,
-          variant,
+          variant: variantLabel ?? variant,
           quantity: quantity + "",
         })),
         bank: selectedAccount.bank,

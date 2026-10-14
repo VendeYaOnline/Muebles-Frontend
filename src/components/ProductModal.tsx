@@ -8,8 +8,10 @@ import {
 import Modal from "./Modal";
 import Image from "next/image";
 import { IProduct } from "@/interfaces";
-import { useProducts } from "@/hooks";
-import { ProductWithQuantity } from "@/hooks/useProducts";
+import { useBundleSelection, useProducts, useVariantSelection } from "@/hooks";
+import { ProductWithQuantity, lineKey } from "@/hooks/useProducts";
+import VariantSelector from "./VariantSelector";
+import BundleSelector from "./BundleSelector";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ProductModalProps {
@@ -25,7 +27,22 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product, p
   const allImages = [product.image_product, ...product.images];
   const { addProduct } = useProducts();
 
-  const isAdded = products.find((a) => a.product.id === product.id && a.variant === variant);
+  // Variantes reales (color + talla, etc.) cuando el producto las tiene; si
+  // no, se usa el selector de color heredado (`variant` = hex).
+  const variantSelection = useVariantSelection(product, isOpen);
+  // Producto vendido como set: cada pieza lleva su propia combinación.
+  const bundle = useBundleSelection(product, isOpen);
+  const choice = bundle.isBundle ? bundle.choice : variantSelection.choice;
+  const effectiveColor = bundle.isBundle
+    ? ""
+    : variantSelection.hasVariants
+      ? variantSelection.colorHex
+      : variant;
+  const currentLine = lineKey(product.id, effectiveColor, choice?.variantKey);
+  const isAdded = products.find(
+    (a) => lineKey(a.product.id, a.variant, a.variantKey) === currentLine,
+  );
+  const canAdd = bundle.isBundle ? bundle.canAdd : variantSelection.canAdd;
 
   const nextImage = () => setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
   const prevImage = () => setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
@@ -215,8 +232,41 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product, p
 
             <div className="h-px bg-warm-border" />
 
-            {/* Color selector */}
-            {product.attributes.Color.length > 0 && (
+            {/* Set de N piezas: una selección por pieza */}
+            {bundle.isBundle && <BundleSelector product={product} bundle={bundle} />}
+            {bundle.isBundle && (
+              <p
+                className={`text-xs ${canAdd ? "text-warm-gray" : "text-red-500"}`}
+                style={{ fontFamily: "var(--font-semibold)" }}
+              >
+                {canAdd
+                  ? `Precio por set de ${bundle.size}. Puedes armar ${choice?.available ?? 0} ${(choice?.available ?? 0) === 1 ? "set" : "sets"} con el stock actual.`
+                  : "Alguna pieza del set no tiene unidades: cambia su color o talla."}
+              </p>
+            )}
+
+            {/* Variantes con inventario (color, talla...) */}
+            {!bundle.isBundle && variantSelection.hasVariants && (
+              <VariantSelector
+                product={product}
+                attributes={variantSelection.attributes}
+                selection={variantSelection.selection}
+                onChange={variantSelection.setValue}
+              />
+            )}
+            {!bundle.isBundle && variantSelection.hasVariants && (
+              <p
+                className={`text-xs ${canAdd ? "text-warm-gray" : "text-red-500"}`}
+                style={{ fontFamily: "var(--font-semibold)" }}
+              >
+                {canAdd
+                  ? `${variantSelection.available} ${variantSelection.available === 1 ? "unidad disponible" : "unidades disponibles"}`
+                  : "Esta combinación está agotada"}
+              </p>
+            )}
+
+            {/* Color selector (productos sin variantes) */}
+            {!bundle.isBundle && !variantSelection.hasVariants && product.attributes.Color.length > 0 && (
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between">
                   <p
@@ -356,14 +406,15 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product, p
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  whileHover={{ scale: 1.01, backgroundColor: "#c9a86a" }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={() => addProduct(product, variant)}
-                  className="w-full flex items-center justify-center gap-2.5 bg-gold text-white py-3.5 rounded-2xl text-sm tracking-wide transition-colors duration-200"
+                  whileHover={canAdd ? { scale: 1.01, backgroundColor: "#c9a86a" } : undefined}
+                  whileTap={canAdd ? { scale: 0.97 } : undefined}
+                  disabled={!canAdd}
+                  onClick={() => addProduct(product, effectiveColor, choice)}
+                  className="w-full flex items-center justify-center gap-2.5 bg-gold text-white py-3.5 rounded-2xl text-sm tracking-wide transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ fontFamily: "var(--font-semibold)" }}
                 >
                   <ShoppingBag className="w-4 h-4" strokeWidth={1.5} />
-                  Agregar al carrito
+                  {canAdd ? "Agregar al carrito" : "Agotado"}
                 </motion.button>
               )}
             </AnimatePresence>

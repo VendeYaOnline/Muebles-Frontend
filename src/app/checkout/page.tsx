@@ -66,6 +66,13 @@ const Checkout = () => {
           products.map((item) => ({
             ...item,
             product: {
+              id: item.product.id,
+              variant_key: item.bundleItems ? undefined : item.variantKey,
+              variant_label: item.variantLabel,
+              bundle_items: item.bundleItems?.map((piece) => ({
+                variant_key: piece.variantKey,
+                variant_label: piece.variantLabel,
+              })),
               image_product: item.product.image_product,
               title: item.product.title,
               price: item.product.price,
@@ -160,7 +167,7 @@ const Checkout = () => {
                 </div>
 
                 <div className="flex flex-col gap-3 max-h-[520px] overflow-auto pr-1">
-                  {products.map(({ product, quantity, variant }, index) => (
+                  {products.map(({ product, quantity, variant, variantKey, variantLabel, available }, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, y: 10 }}
@@ -192,14 +199,16 @@ const Checkout = () => {
                             {product.Categories[0].name}
                           </p>
                         )}
-                        {variant && (
+                        {(variant || variantLabel) && (
                           <div className="flex items-center gap-1.5 mb-1.5">
-                            <div
-                              className="w-3 h-3 rounded-full border border-warm-border"
-                              style={{ backgroundColor: variant }}
-                            />
+                            {variant && (
+                              <div
+                                className="w-3 h-3 rounded-full border border-warm-border"
+                                style={{ backgroundColor: variant }}
+                              />
+                            )}
                             <span className="text-[10px] text-warm-gray">
-                              Color
+                              {variantLabel ?? "Color"}
                             </span>
                           </div>
                         )}
@@ -207,7 +216,7 @@ const Checkout = () => {
                         {/* Qty */}
                         <div className="flex items-center gap-2">
                           <button
-                            onClick={() => removeProduct(product.id, variant)}
+                            onClick={() => removeProduct(product.id, variant, variantKey)}
                             className="w-6 h-6 rounded-lg bg-cream border border-warm-border flex items-center justify-center hover:border-gold/40 transition-colors"
                           >
                             <Minus size={10} className="text-charcoal" />
@@ -219,8 +228,9 @@ const Checkout = () => {
                             {quantity}
                           </span>
                           <button
-                            onClick={() => addProduct(product, variant)}
-                            className="w-6 h-6 rounded-lg bg-cream border border-warm-border flex items-center justify-center hover:border-gold/40 transition-colors"
+                            onClick={() => addProduct(product, variant, { variantKey, variantLabel, available })}
+                            disabled={available !== undefined && quantity >= available}
+                            className="w-6 h-6 rounded-lg bg-cream border border-warm-border flex items-center justify-center hover:border-gold/40 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                           >
                             <Plus size={10} className="text-charcoal" />
                           </button>
@@ -230,7 +240,7 @@ const Checkout = () => {
                       {/* Price + delete */}
                       <div className="flex flex-col items-end gap-2 flex-shrink-0">
                         <button
-                          onClick={() => deleteProduct(product.id, variant)}
+                          onClick={() => deleteProduct(product.id, variant, variantKey)}
                           className="p-1.5 rounded-lg text-warm-gray hover:text-charcoal hover:bg-cream transition-all"
                         >
                           <Trash2 size={14} />
